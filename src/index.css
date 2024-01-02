@@ -1,2 +1,8 @@
-@import './vendor/normalize.css';
-@import './vendor/fonts/fonts.css';
+/* Vendor */
+
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
+
+/* Global */
+
+@import url(./variables/variables.css);
