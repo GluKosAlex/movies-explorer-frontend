@@ -1,3 +1,36 @@
-.App {
-  text-align: center;
+.page {
+  display: flex;
+  min-height: 100vh; /* for sticky footer */
+
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 16px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+}
+
+.page__wrapper {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-width: 320px;
+  max-width: 880px;
+  padding-bottom: 36px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 619px) {
+  .page__wrapper {
+    padding-left: var(--main-padding-size);
+    padding-right: var(--main-padding-size);
+    padding-bottom: 60px;
+  }
 }
