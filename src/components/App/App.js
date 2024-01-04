@@ -1,11 +1,13 @@
-import logo from '../../images/logo.svg';
+import { Routes, Route } from 'react-router-dom';
+
 import './App.css';
-import Preloader from './../Preloader/Preloader';
 
 function App() {
   return (
     <>
-      <Preloader />
+      <Routes>
+        <Route />
+      </Routes>
     </>
   );
 }
