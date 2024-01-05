@@ -21,6 +21,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
+    'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['warn', { endOfLine: 'auto' }],
     // 'no-underscore-dangle': ['error', { allow: ['_id'] }],
