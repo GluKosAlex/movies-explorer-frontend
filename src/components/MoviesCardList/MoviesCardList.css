@@ -1,0 +1,13 @@
+.movie-card-list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+
+.movie-card-list__btn {
+  min-width: 240px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--main-footer-line-color, #424242);
+  background-color: transparent;
+}
