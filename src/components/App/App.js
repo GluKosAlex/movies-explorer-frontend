@@ -11,12 +11,13 @@ import Register from './../Register/Register';
 import MoviesLayout from './../MoviesLayout/MoviesLayout';
 import NotFound from './../NotFound/NotFound';
 
+import { user } from './../../constants/db_mock';
+
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="*" element={<NotFound />} />
           <Route index element={<Main />} />
 
           <Route path="/" element={<MoviesLayout />}>
@@ -24,8 +25,11 @@ function App() {
 
             <Route path="saved-movies" element={<SavedMovies />} />
           </Route>
-          <Route path="profile" element={<Profile />} />
         </Route>
+
+        <Route path="profile" element={<Profile user={user} />} />
+
+        <Route path="*" element={<NotFound />} />
 
         <Route path="/signin" element={<Login />} />
 

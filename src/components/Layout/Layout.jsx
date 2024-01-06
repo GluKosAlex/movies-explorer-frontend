@@ -9,7 +9,9 @@ export default function Layout() {
     <>
       <Header />
 
-      <Outlet />
+      <main className="page__content">
+        <Outlet />
+      </main>
 
       <Footer />
     </>

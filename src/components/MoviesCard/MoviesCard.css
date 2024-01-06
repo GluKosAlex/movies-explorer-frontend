@@ -1,18 +1,89 @@
 .movie-card {
   display: flex;
-  flex-wrap: wrap;
+  flex-basis: 168px;
+  flex-direction: column;
+  position: relative;
+}
+
+.movie-card__image {
+  height: 168px;
+  object-fit: cover;
+  border-radius: 6px;
+
+  color: var(--main-text-color);
+  background-color: var(--main-text-mid-color);
+}
+
+.movie-card__caption {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 .movie-card__header {
   margin-right: auto;
 }
 
-.movie-card__image {
-  width: 100%;
-  object-fit: contain;
-  order: -1;
-  flex-grow: 1;
+.movie-card__time {
+  width: max-content;
+  flex-shrink: 0;
 }
 
 .movie-card__btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  min-height: 21px;
+  min-width: 21px;
+  padding: 6px 10px;
+
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 9px;
+  text-align: center;
+  display: flex;
+
+  border-radius: 11px;
+  border: none;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  transition:
+    background-color 0.2s ease,
+    font-size 0.2s ease;
+}
+
+.movie-card__btn:hover {
+  opacity: 0.8;
+}
+
+.movie-card__btn_type_unsaved {
+  color: var(--main-text-color);
+  background-color: var(--main-btn-mid-bg-color, #313131);
+}
+
+.movie-card__btn_type_saved {
+  font-size: 0;
+  background-color: var(--main-accent-color);
+  background-image: url(./../../images/icon-card-saved.svg);
+}
+
+.movie-card__btn_type_delete {
+  font-size: 0;
+  background-color: var(--main-btn-mid-bg-color, #313131);
+  background-image: url(./../../images/icon-card-delete.svg);
+}
+
+@keyframes blink {
+  from {
+    opacity: 0.8;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+.movie-card__btn_pending {
+  animation: blink 0.5s infinite alternate ease-in-out;
 }

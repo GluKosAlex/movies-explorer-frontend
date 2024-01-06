@@ -1,28 +1,42 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
+import './Navigation.css';
+
 export default function Navigation() {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <NavLink to="/">Главная</NavLink>
+      <nav className="navigation">
+        <ul className="navigation__list">
+          <li className="navigation__item">
+            <NavLink className="navigation__link" to="/">
+              Главная
+            </NavLink>
           </li>
-          <li>
-            <NavLink to="movies">Фильмы</NavLink>
+          <li className="navigation__item">
+            <NavLink className="navigation__link" to="movies">
+              Фильмы
+            </NavLink>
           </li>
-          <li>
-            <NavLink to="saved-movies">Сохранённые фильмы</NavLink>
+          <li className="navigation__item">
+            <NavLink className="navigation__link" to="saved-movies">
+              Сохранённые фильмы
+            </NavLink>
           </li>
-          <li>
-            <Link to="profile">Аккаунт</Link>
+          <li className="navigation__item">
+            <Link className="navigation__link" to="profile">
+              Аккаунт
+            </Link>
           </li>
-          <li>
-            <Link to="signin">Войти</Link>
+          <li className="navigation__item">
+            <Link className="navigation__link" to="signin">
+              Войти
+            </Link>
           </li>
-          <li>
-            <Link to="signup">Регистрация</Link>
+          <li className="navigation__item">
+            <Link className="navigation__link" to="signup">
+              Регистрация
+            </Link>
           </li>
         </ul>
       </nav>
