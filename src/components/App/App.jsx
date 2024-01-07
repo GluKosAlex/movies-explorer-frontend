@@ -1,17 +1,17 @@
 import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
-import Main from './../Main/Main';
-import Layout from './../Layout/Layout';
-import Movies from './../Movies/Movies';
-import SavedMovies from './../SavedMovies/SavedMovies';
-import Profile from './../Profile/Profile';
-import Login from './../Login/Login';
-import Register from './../Register/Register';
-import MoviesLayout from './../MoviesLayout/MoviesLayout';
-import NotFound from './../NotFound/NotFound';
+import Main from '../Main/Main';
+import Layout from '../Layout/Layout';
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile';
+import Login from '../Login/Login';
+import Register from '../Register/Register';
+import MoviesLayout from '../MoviesLayout/MoviesLayout';
+import NotFound from '../NotFound/NotFound';
 
-import { user } from './../../constants/db_mock';
+import { user } from '../../constants/db_mock';
 
 function App() {
   return (
@@ -31,9 +31,9 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
 
-        <Route path="/signin" element={<Login />} />
+        <Route path="signin" element={<Login />} />
 
-        <Route path="/signup" element={<Register />} />
+        <Route path="signup" element={<Register />} />
       </Routes>
     </>
   );

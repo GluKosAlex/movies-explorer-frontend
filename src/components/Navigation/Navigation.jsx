@@ -14,41 +14,42 @@ export default function Navigation() {
             </NavLink>
           </li>
           <li className="navigation__item">
-            <NavLink className="navigation__link" to="movies">
+            <NavLink className="navigation__link" to="/movies">
               Фильмы
             </NavLink>
           </li>
           <li className="navigation__item">
-            <NavLink className="navigation__link" to="saved-movies">
+            <NavLink className="navigation__link" to="/saved-movies">
               Сохранённые фильмы
             </NavLink>
           </li>
           <li className="navigation__item">
-            <Link className="navigation__link" to="profile">
+            <Link className="navigation__link" to="/profile">
               Аккаунт
             </Link>
           </li>
           <li className="navigation__item">
-            <Link className="navigation__link" to="signin">
-              Войти
-            </Link>
-          </li>
-          <li className="navigation__item">
-            <Link className="navigation__link" to="signup">
+            <Link className="navigation__link" to="/signup">
               Регистрация
             </Link>
           </li>
+          <li className="navigation__item">
+            <Link className="navigation__link navigation__link_type_login" to="/signin">
+              Войти
+            </Link>
+          </li>
         </ul>
+
+        <button
+          className="navigation__toggle navigation__toggle_closed"
+          onClick={(e) => {
+            e.target.classList.toggle('navigation__toggle_closed');
+            e.target.parentNode.classList.toggle('header__navigation_closed');
+          }}
+        >
+          <span>Открыть меню</span>
+        </button>
       </nav>
-      <button
-        className="menu__toggle menu__toggle_closed"
-        onClick={(e) => {
-          e.target.classList.toggle('menu__toggle_closed');
-          e.target.parentNode.classList.toggle('header__menu_closed');
-        }}
-      >
-        <span>Открыть меню</span>
-      </button>
     </>
   );
 }

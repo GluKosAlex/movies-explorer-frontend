@@ -1,0 +1,61 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  width: 100%;
+  max-width: 396px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.register__logo-link {
+  align-self: center;
+  margin-top: 28px;
+  margin-bottom: 50px;
+  text-decoration: none;
+}
+
+.register__logo-img {
+  width: 38px;
+  height: 38px;
+}
+
+.register__title {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 50px;
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+  line-height: normal;
+}
+
+.register__form {
+  flex-grow: 1;
+}
+
+.register__footnote {
+  margin: 0;
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  color: var(--main-text-mid-color, #a0a0a0);
+}
+
+.register__footnote-link {
+  margin-left: 7px;
+  color: var(--main-btn-accent-bg-color, #4285f4);
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.register__footnote-link:hover {
+  opacity: 0.8;
+}
