@@ -14,27 +14,27 @@ export default function Navigation() {
             </NavLink>
           </li>
           <li className="navigation__item">
-            <NavLink className="navigation__link" to="movies">
+            <NavLink className="navigation__link" to="/movies">
               Фильмы
             </NavLink>
           </li>
           <li className="navigation__item">
-            <NavLink className="navigation__link" to="saved-movies">
+            <NavLink className="navigation__link" to="/saved-movies">
               Сохранённые фильмы
             </NavLink>
           </li>
           <li className="navigation__item">
-            <Link className="navigation__link" to="profile">
+            <Link className="navigation__link" to="/profile">
               Аккаунт
             </Link>
           </li>
           <li className="navigation__item">
-            <Link className="navigation__link" to="signin">
+            <Link className="navigation__link" to="/signin">
               Войти
             </Link>
           </li>
           <li className="navigation__item">
-            <Link className="navigation__link" to="signup">
+            <Link className="navigation__link" to="/signup">
               Регистрация
             </Link>
           </li>

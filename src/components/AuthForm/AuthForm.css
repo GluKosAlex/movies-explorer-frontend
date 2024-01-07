@@ -1,0 +1,17 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form__input-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.auth-form__input-list-item {
+}

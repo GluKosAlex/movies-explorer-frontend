@@ -31,9 +31,9 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
 
-        <Route path="/signin" element={<Login />} />
+        <Route path="signin" element={<Login />} />
 
-        <Route path="/signup" element={<Register />} />
+        <Route path="signup" element={<Register />} />
       </Routes>
     </>
   );

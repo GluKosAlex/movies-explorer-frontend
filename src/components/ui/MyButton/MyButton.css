@@ -8,4 +8,9 @@
   background-color: var(--main-btn-accent-bg-color);
   color: var(--main-text-color);
   cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.button:hover {
+  opacity: 0.8;
 }
