@@ -1,5 +1,8 @@
 .search-form {
+  box-sizing: border-box;
   padding: 0 14px;
+  max-width: var(--main-max-width);
+  margin: 0 auto;
 }
 
 .search-form__form {
@@ -24,6 +27,19 @@
   clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
+}
+
+.search-form__fieldset {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.search-form__input {
+  flex-grow: 1;
 }
 
 .search-form__btn {
@@ -55,11 +71,4 @@
 
 .search-form__btn:active::before {
   left: 17px;
-}
-
-.search-form__fieldset {
-  display: flex;
-  gap: 10px;
-  border: none;
-  padding: 0;
 }

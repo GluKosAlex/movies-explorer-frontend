@@ -1,17 +1,23 @@
-import React from 'react';
+import './NavTab.css';
 
-export default function NavTab() {
+export default function NavTab({ className: classList }) {
   return (
-    <nav>
-      <ul>
-        <li>
-          <a href="#">О проекте</a>
+    <nav className={`nav-tab ${classList}`}>
+      <ul className="nav-tab__list">
+        <li className="nav-tab__list-item">
+          <a className="nav-tab__link" href="#">
+            О проекте
+          </a>
         </li>
-        <li>
-          <a href="#">Технологии</a>
+        <li className="nav-tab__list-item">
+          <a className="nav-tab__link" href="#">
+            Технологии
+          </a>
         </li>
-        <li>
-          <a href="#">Студент</a>
+        <li className="nav-tab__list-item">
+          <a className="nav-tab__link" href="#">
+            Студент
+          </a>
         </li>
       </ul>
     </nav>

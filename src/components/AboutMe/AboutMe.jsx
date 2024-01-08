@@ -9,7 +9,7 @@ export default function AboutMe() {
       <h2>Студент</h2>
 
       <section>
-        <img src={avatar} alt="Портретная фотография автора" />
+        <img src={avatar} alt="Портретная фотография автора" width={290} />
         <h3>Константин</h3>
         <p>Фронтенд-разработчик, 38 лет</p>
         <p>

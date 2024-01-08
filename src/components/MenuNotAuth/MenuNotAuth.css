@@ -1,5 +1,6 @@
 .menu-not-auth {
   position: relative;
+  margin-left: auto;
 }
 
 .menu-not-auth__list {

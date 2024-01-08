@@ -8,23 +8,25 @@ export default function MenuAuth() {
     <>
       <nav className="menu-auth menu-auth_closed">
         <ul className="menu-auth__list">
-          <li className="menu-auth__item">
-            <NavLink className="menu-auth__link" to="/">
-              Главная
-            </NavLink>
-          </li>
+          <div className="menu-auth_links-group">
+            <li className="menu-auth__item menu-auth__item_type_home">
+              <NavLink className="menu-auth__link" to="/">
+                Главная
+              </NavLink>
+            </li>
 
-          <li className="menu-auth__item">
-            <NavLink className="menu-auth__link" to="/movies">
-              Фильмы
-            </NavLink>
-          </li>
+            <li className="menu-auth__item">
+              <NavLink className="menu-auth__link" to="/movies">
+                Фильмы
+              </NavLink>
+            </li>
 
-          <li className="menu-auth__item">
-            <NavLink className="menu-auth__link" to="/saved-movies">
-              Сохранённые фильмы
-            </NavLink>
-          </li>
+            <li className="menu-auth__item">
+              <NavLink className="menu-auth__link" to="/saved-movies">
+                Сохранённые фильмы
+              </NavLink>
+            </li>
+          </div>
 
           <li className="menu-auth__item menu-auth__item_type_profile">
             <Link className="menu-auth__link menu-auth__link_type_profile" to="/profile">

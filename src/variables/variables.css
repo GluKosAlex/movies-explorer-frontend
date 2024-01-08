@@ -11,4 +11,7 @@
   --main-input-bg-color: #2f2f2f;
   --main-footer-line-color: #424242;
   --main-hr-color: #dadada;
+
+  /* sizes */
+  --main-max-width: 1200px;
 }
