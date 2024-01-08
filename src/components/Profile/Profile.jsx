@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import Header from '../Header/Header';
 import './Profile.css';
 import MyButton from '../ui/MyButton/MyButton';
+import { CurrentUserContext } from './../../contexts/CurrentUserContext';
 
-export default function Profile({ user }) {
-  const [userInfo, setUserInfo] = useState({ name: user.name, email: user.email });
+export default function Profile() {
+  const { currentUser, setCurrentUser, setLoggedIn } = useContext(CurrentUserContext);
+
   const [editUserInfo, setEditUserInfo] = useState(false);
 
   const editUserInfoHandler = (e) => {
@@ -20,6 +22,7 @@ export default function Profile({ user }) {
 
   const logoutClickHandler = (e) => {
     e.preventDefault();
+    setLoggedIn(false);
   };
 
   useEffect(() => {
@@ -33,7 +36,7 @@ export default function Profile({ user }) {
     <>
       <Header />
       <main className="page__content profile">
-        <h1 className="profile__header">Привет, {userInfo.name}!</h1>
+        <h1 className="profile__header">Привет, {currentUser.name}!</h1>
         <form className="profile__form" onSubmit={formSubmitHandler}>
           <ul className="profile__input-list">
             <li className="profile__input-list-item">
@@ -44,8 +47,8 @@ export default function Profile({ user }) {
                 className="profile__input"
                 id="userName"
                 type="text"
-                value={userInfo.name}
-                onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+                value={currentUser.name}
+                onChange={(e) => setCurrentUser({ ...currentUser, name: e.target.value })}
                 disabled={!editUserInfo}
               />
             </li>
@@ -57,8 +60,8 @@ export default function Profile({ user }) {
                 className="profile__input"
                 id="userEmail"
                 type="email"
-                value={userInfo.email}
-                onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+                value={currentUser.email}
+                onChange={(e) => setCurrentUser({ ...currentUser, email: e.target.value })}
                 disabled={!editUserInfo}
               />
             </li>

@@ -1,0 +1,38 @@
+.menu-not-auth {
+  position: relative;
+}
+
+.menu-not-auth__list {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+
+  margin: 0;
+  padding: 0;
+
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 16px;
+
+  list-style: none;
+}
+
+.menu-not-auth__link {
+  text-decoration: none;
+  color: var(--main-text-color);
+}
+
+.menu-not-auth__link_type_login {
+  display: inline-block;
+  padding: 5px 12px;
+
+  background-color: var(--main-accent-color, #3ddc84);
+  border-radius: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.menu-not-auth__link_type_login:hover {
+  opacity: 0.8;
+}

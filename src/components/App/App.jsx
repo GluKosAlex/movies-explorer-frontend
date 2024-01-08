@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -10,12 +11,27 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import MoviesLayout from '../MoviesLayout/MoviesLayout';
 import NotFound from '../NotFound/NotFound';
+import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
 
 import { user } from '../../constants/db_mock';
 
 function App() {
+  const loggedInFromStorage = JSON.parse(localStorage.getItem('loggedIn'));
+  const [loggedIn, setLoggedIn] = useState(JSON.parse(loggedInFromStorage));
+
+  const [currentUser, setCurrentUser] = useState({
+    name: '...',
+    email: '...',
+  });
+
+  useEffect(() => {
+    setCurrentUser(user); // mockup user data
+    // setLoggedIn(true); // mockup login
+    localStorage.setItem('loggedIn', 'true');
+  }, [loggedIn]);
+
   return (
-    <>
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loggedIn, setLoggedIn }}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
@@ -27,7 +43,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route path="profile" element={<Profile user={user} />} />
+        <Route path="profile" element={<Profile />} />
 
         <Route path="*" element={<NotFound />} />
 
@@ -35,7 +51,7 @@ function App() {
 
         <Route path="signup" element={<Register />} />
       </Routes>
-    </>
+    </CurrentUserContext.Provider>
   );
 }
 
