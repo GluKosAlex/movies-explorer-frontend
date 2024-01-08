@@ -29,13 +29,13 @@ export default function Navigation() {
             </Link>
           </li>
           <li className="navigation__item">
-            <Link className="navigation__link" to="/signup">
-              Регистрация
+            <Link className="navigation__link" to="signin">
+              Войти
             </Link>
           </li>
           <li className="navigation__item">
-            <Link className="navigation__link navigation__link_type_login" to="/signin">
-              Войти
+            <Link className="navigation__link" to="signup">
+              Регистрация
             </Link>
           </li>
         </ul>
