@@ -1,4 +1,3 @@
-import React from 'react';
 import FilterCheckbox from './../FilterCheckbox/FilterCheckbox';
 import MyInput from './../ui/MyInput/MyInput';
 import MyButton from './../ui/MyButton/MyButton';

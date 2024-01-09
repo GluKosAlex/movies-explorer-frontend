@@ -17,9 +17,6 @@
 }
 
 .about-project__description-list {
-  display: flex;
-  flex-direction: column;
-
   list-style: none;
   padding: 0;
   margin: 0;
@@ -27,7 +24,7 @@
 }
 
 .about-project__description-item {
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 .about-project__subtitle {

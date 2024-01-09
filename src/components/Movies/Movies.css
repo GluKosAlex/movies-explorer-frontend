@@ -1,12 +1,14 @@
 .movies {
   display: flex;
   flex-direction: column;
+  padding: 40px 10px;
 }
 
 .movie__more-btn {
   min-width: 240px;
   padding: 10px;
   margin: 0 auto;
+  margin-bottom: 40px;
   border-radius: 6px;
   border: 1px solid var(--main-footer-line-color, #424242);
   background-color: transparent;

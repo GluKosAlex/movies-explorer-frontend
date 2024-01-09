@@ -1,5 +1,3 @@
-import React from 'react';
-
 import MoviesCardList from './../MoviesCardList/MoviesCardList';
 import MyButton from './../ui/MyButton/MyButton';
 import './Movies.css';

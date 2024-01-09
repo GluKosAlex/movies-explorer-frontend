@@ -1,5 +1,6 @@
 .nav-tab {
-  padding: 7px;
+  box-sizing: border-box;
+  padding: 0 17px 17px;
 }
 
 .nav-tab__list {

@@ -1,15 +1,14 @@
-import React from 'react';
-
 import MoviesCard from './../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
 export default function MoviesCardList() {
   return (
     <ul className="movie-card-list">
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
-      <MoviesCard />
+      <MoviesCard className="movie-card-list__item" />
+      <MoviesCard className="movie-card-list__item" />
+      <MoviesCard className="movie-card-list__item" />
+      <MoviesCard className="movie-card-list__item" />
+      <MoviesCard className="movie-card-list__item" />
     </ul>
   );
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import MyInput from './../ui/MyInput/MyInput';
 
 import './AuthInput.css';

@@ -1,7 +1,6 @@
 .header {
   box-sizing: border-box;
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
 
   padding: 18px 14px;
@@ -11,6 +10,7 @@
 
 .header__logo-link {
   margin-right: 14px;
+  line-height: 0;
 }
 
 .header__logo-img {

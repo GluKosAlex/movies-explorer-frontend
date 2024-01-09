@@ -3,6 +3,7 @@
   padding: 0 14px;
   max-width: var(--main-max-width);
   margin: 0 auto;
+  margin-bottom: 10px;
 }
 
 .search-form__form {

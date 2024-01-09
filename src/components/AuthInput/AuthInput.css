@@ -8,8 +8,11 @@
   line-height: normal;
 }
 .auth-input__input-field {
+  padding: 15px;
   font-size: 13px;
   font-weight: 500;
+  line-height: normal;
+
   color: var(--main-text-color, #fff);
 }
 

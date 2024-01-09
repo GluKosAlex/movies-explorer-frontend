@@ -5,7 +5,7 @@
   inset: 0;
   background-color: #dadada4d;
   z-index: 2;
-  transition: opacity 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .menu-auth_links-group {
@@ -15,7 +15,7 @@
 }
 
 .menu-auth_closed {
-  display: none;
+  visibility: hidden;
   opacity: 0;
 }
 
@@ -61,7 +61,8 @@
 
 .menu-auth__link.active {
   text-decoration: underline;
-  text-underline-offset: 7px;
+  text-underline-offset: 11px;
+  text-decoration-thickness: 2px;
 }
 
 .menu-auth__link_type_profile {
@@ -89,7 +90,7 @@
   }
 
   .menu-auth_closed {
-    display: flex;
+    visibility: visible;
   }
 
   .menu-auth_closed .menu-auth__list {

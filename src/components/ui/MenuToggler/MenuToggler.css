@@ -3,8 +3,8 @@
   top: 28px;
   right: 23px;
 
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 20px;
   padding: 0;
   margin: 0;
 
@@ -26,8 +26,8 @@
   position: absolute;
   left: 0;
   margin: auto;
-  width: 31px;
-  height: 3px;
+  width: 26px;
+  height: 2px;
   background-color: var(--main-text-color);
   transition: all 0.2s ease;
 }
@@ -60,18 +60,18 @@
 }
 
 .menu-toggler_closed span {
-  width: 24px;
-  height: 3px;
+  width: 22px;
+  height: 2px;
   opacity: 1;
 }
 
 .menu-toggler_closed::before {
-  width: 24px;
+  width: 22px;
   transform: rotate(0);
 }
 
 .menu-toggler_closed::after {
-  width: 24px;
+  width: 22px;
   transform: rotate(0);
 }
 
