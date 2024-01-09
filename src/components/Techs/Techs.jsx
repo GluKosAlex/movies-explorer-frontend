@@ -1,18 +1,21 @@
-import React from 'react';
+import './Techs.css';
 
 export default function Techs() {
   return (
-    <section>
-      <h2>7 технологий</h2>
-      <p>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
-      <ul>
-        <li>HTML</li>
-        <li>CSS</li>
-        <li>JS</li>
-        <li>React</li>
-        <li>Git</li>
-        <li>Express.js</li>
-        <li>mongoDB</li>
+    <section className="techs">
+      <h2 className="techs__title">Технологии</h2>
+      <h3 className="techs__lead">7 технологий</h3>
+      <p className="techs__text">
+        На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.
+      </p>
+      <ul className="techs__tags-list">
+        <li className="techs__tag">HTML</li>
+        <li className="techs__tag">CSS</li>
+        <li className="techs__tag">JS</li>
+        <li className="techs__tag">React</li>
+        <li className="techs__tag">Git</li>
+        <li className="techs__tag">Express.js</li>
+        <li className="techs__tag">mongoDB</li>
       </ul>
     </section>
   );

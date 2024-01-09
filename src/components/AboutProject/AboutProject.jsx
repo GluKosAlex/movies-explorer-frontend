@@ -1,4 +1,4 @@
-import React from 'react';
+import './AboutProject.css';
 
 export default function AboutProject() {
   return (
@@ -22,10 +22,10 @@ export default function AboutProject() {
         </li>
       </ul>
       <dl className="about-project__time-line">
-        <dt className="about-project__time">1 неделя</dt>
+        <dt className="about-project__time about-project__time_type_back">1 неделя</dt>
         <dd className="about-project__time-description">Back-end</dd>
 
-        <dt className="about-project__time">4 недели</dt>
+        <dt className="about-project__time about-project__time_type_front">4 недели</dt>
         <dd className="about-project__time-description">Front-end</dd>
       </dl>
     </section>
