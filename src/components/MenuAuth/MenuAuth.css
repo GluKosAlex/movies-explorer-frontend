@@ -66,6 +66,7 @@
 }
 
 .menu-auth__link_type_profile {
+  display: block;
   padding: 8px 20px;
 
   background-color: var(--main-btn-mid-bg-color);
@@ -79,6 +80,11 @@
 @media screen and (min-width: 520px) {
   .menu-auth__list {
     width: 520px;
+    padding: 159px 40px 90px;
+  }
+
+  .menu-auth__item {
+    margin-bottom: 28px;
   }
 }
 

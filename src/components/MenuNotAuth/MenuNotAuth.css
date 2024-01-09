@@ -37,3 +37,19 @@
 .menu-not-auth__link_type_login:hover {
   opacity: 0.8;
 }
+
+@media screen and (min-width: 768px) {
+  .menu-not-auth__list {
+    gap: 30px;
+    font-size: 12px;
+  }
+
+  .menu-not-auth__link_type_login {
+    padding: 8px 20px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .menu-not-auth__list {
+  }
+}

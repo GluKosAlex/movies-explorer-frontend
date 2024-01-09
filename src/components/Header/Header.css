@@ -17,3 +17,15 @@
   width: 38px;
   height: 38px;
 }
+
+@media screen and (min-width: 768px) {
+  .header {
+    padding: 18px 30px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .header {
+    padding: 18px 70px;
+  }
+}
