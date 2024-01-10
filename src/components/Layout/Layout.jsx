@@ -1,4 +1,3 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Header from './../Header/Header';
@@ -9,9 +8,7 @@ export default function Layout() {
     <>
       <Header />
 
-      <main className="page__content">
-        <Outlet />
-      </main>
+      <Outlet />
 
       <Footer />
     </>

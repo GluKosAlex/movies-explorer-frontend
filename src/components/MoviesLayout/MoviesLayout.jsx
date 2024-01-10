@@ -5,10 +5,10 @@ import SearchForm from './../SearchForm/SearchForm';
 
 export default function MoviesLayout() {
   return (
-    <>
+    <main className="page__content main">
       <SearchForm />
       {/* <Preloader /> */}
       <Outlet />
-    </>
+    </main>
   );
 }

@@ -2,10 +2,10 @@ import './AboutMe.css';
 import avatar from './../../images/avatar.jpg';
 import Portfolio from './../Portfolio/Portfolio';
 
-export default function AboutMe() {
+export default function AboutMe({ className: classList }) {
   return (
     <section className="about-me">
-      <h2 className="about-me__title">Студент</h2>
+      <h2 className={`${classList} about-me__title`}>Студент</h2>
 
       <section className="about-me__section">
         <img className="about-me__photo" src={avatar} alt="Фотография автора" />

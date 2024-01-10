@@ -16,7 +16,6 @@
 
 .nav-tab__list-item {
   font-size: 10px;
-  font-style: normal;
   font-weight: 500;
   line-height: 16px;
   text-align: center;
@@ -40,4 +39,28 @@
 
 .nav-tab__link:hover {
   opacity: 0.8;
+}
+
+@media screen and (min-width: 768px) {
+  .nav-tab {
+    padding: 0 30px 30px;
+  }
+
+  .nav-tab__list {
+    gap: 10px;
+  }
+
+  .nav-tab__list-item {
+    font-size: 12px;
+  }
+
+  .nav-tab__link {
+    padding: 10px;
+    min-width: 96px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .nav-tab {
+  }
 }
