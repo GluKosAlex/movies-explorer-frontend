@@ -6,7 +6,7 @@ import { MoviesFilterContext } from './../../contexts/MoviesFilterContext';
 // import Preloader from './../Preloader/Preloader';
 
 export default function MoviesLayout() {
-  const [moviesFilter, setMoviesFilter] = useState('');
+  const [moviesFilter, setMoviesFilter] = useState({ query: '', isShort: false });
 
   return (
     <main className="page__content main">

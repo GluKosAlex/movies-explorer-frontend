@@ -8,11 +8,12 @@ import { MoviesFilterContext } from './../../contexts/MoviesFilterContext';
 
 export default function SearchForm() {
   const { moviesFilter, setMoviesFilter } = useContext(MoviesFilterContext);
-  const [filterInput, setFilterInput] = useState(moviesFilter);
+  const [filterInput, setFilterInput] = useState(moviesFilter.query);
+  const [isShort, setIsShort] = useState(moviesFilter.isShort);
 
   const searchFormSubmitHandler = (e) => {
     e.preventDefault();
-    setMoviesFilter(filterInput);
+    setMoviesFilter({ query: filterInput, isShort });
   };
 
   return (
@@ -28,7 +29,7 @@ export default function SearchForm() {
           />
           <MyButton className="search-form__btn">Найти</MyButton>
         </fieldset>
-        <FilterCheckbox />
+        <FilterCheckbox isChecked={isShort} onSwitchState={setIsShort} />
       </form>
     </section>
   );

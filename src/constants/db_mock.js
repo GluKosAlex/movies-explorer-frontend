@@ -15,7 +15,7 @@ const MoviesMock = [
     saved: false,
   },
   {
-    duration: 5315,
+    duration: 1700,
     image: imgPlaceholder,
     nameRU: 'Киноальманах «100 лет дизайна»',
     nameEN: 'asd',
@@ -39,7 +39,7 @@ const MoviesMock = [
     saved: false,
   },
   {
-    duration: 5315,
+    duration: 1700,
     image: imgPlaceholder,
     nameRU: 'Бег это свобода',
     nameEN: 'asd',
@@ -63,7 +63,7 @@ const MoviesMock = [
     saved: false,
   },
   {
-    duration: 5315,
+    duration: 1700,
     image: imgPlaceholder,
     nameRU: 'Gimme Danger: История Игги и The Stooges',
     nameEN: 'asd',

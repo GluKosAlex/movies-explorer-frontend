@@ -1,27 +1,22 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 
 import MoviesCardList from './../MoviesCardList/MoviesCardList';
 import MyButton from './../ui/MyButton/MyButton';
+
 import { MoviesFilterContext } from '../../contexts/MoviesFilterContext';
-import './Movies.css';
+import { useFilteredMovies } from './../../hooks/useFilteredMovies';
 
 import { MoviesMock } from './../../constants/db_mock';
+import './Movies.css';
 
 export default function Movies() {
-  const [moviesList, setMoviesList] = useState([]);
-
+  const [moviesList, setMoviesList] = useState(MoviesMock);
   const { moviesFilter } = useContext(MoviesFilterContext);
-
-  useEffect(() => {
-    const filteredMoviesList = MoviesMock.filter((movie) =>
-      movie.nameRU.includes(moviesFilter.toLowerCase()),
-    );
-    setMoviesList(filteredMoviesList);
-  }, [moviesFilter, setMoviesList]);
+  const sortedAndSearchedMovies = useFilteredMovies(moviesList, moviesFilter.query, moviesFilter.isShort);
 
   return (
     <section className="movies">
-      <MoviesCardList moviesList={moviesList} onSetMoviesList={setMoviesList} />
+      <MoviesCardList moviesList={sortedAndSearchedMovies} onSetMoviesList={setMoviesList} />
       <MyButton className="movie__more-btn">Ещё</MyButton>
     </section>
   );
