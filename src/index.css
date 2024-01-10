@@ -5,4 +5,8 @@
 
 /* Global */
 
+html {
+  scroll-behavior: smooth;
+}
+
 @import url(./variables/variables.css);

@@ -1,4 +1,6 @@
 .portfolio {
+  display: flex;
+  flex-direction: column;
 }
 
 .portfolio__title {
@@ -54,4 +56,40 @@
 
 .portfolio__link:active {
   opacity: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .portfolio__title {
+    margin-bottom: 30px;
+
+    font-size: 18px;
+  }
+
+  .portfolio__list {
+    font-size: 28px;
+    line-height: 50px;
+    letter-spacing: -1.12px;
+  }
+
+  .portfolio__link {
+    background-position: 99% 54%;
+    background-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .portfolio {
+    margin-bottom: 125px;
+  }
+
+  .portfolio__list {
+    font-size: 30px;
+    line-height: 50px;
+    letter-spacing: -1.2px;
+  }
+
+  .portfolio__link {
+    background-position: 99.5% 54%;
+    background-size: 17px;
+  }
 }

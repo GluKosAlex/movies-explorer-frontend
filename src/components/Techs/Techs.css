@@ -1,4 +1,5 @@
 .techs {
+  box-sizing: border-box;
 }
 
 .techs__wrap {

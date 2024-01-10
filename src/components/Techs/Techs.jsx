@@ -2,7 +2,7 @@ import './Techs.css';
 
 export default function Techs({ className: classList }) {
   return (
-    <section className="techs">
+    <section id="techs" className="techs">
       <div className={`${classList} techs__wrap`}>
         <h2 className="techs__title">Технологии</h2>
         <h3 className="techs__lead">7 технологий</h3>
