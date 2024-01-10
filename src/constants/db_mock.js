@@ -1,4 +1,150 @@
-export const user = {
+import imgPlaceholder from './../images/video-movie-placeholder-image-grey.png';
+
+const user = {
   name: 'Константин',
   email: 'pochta@yandex.ru',
 };
+
+const MoviesMock = [
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: '33 слова о дизайне',
+    nameEN: 'asd',
+    movieId: '1',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Киноальманах «100 лет дизайна»',
+    nameEN: 'asd',
+    movieId: '2',
+    saved: true,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'В погоне за Бенкси',
+    nameEN: 'asd',
+    movieId: '3',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Баския: Взрыв реальности',
+    nameEN: 'asd',
+    movieId: '4',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Бег это свобода',
+    nameEN: 'asd',
+    movieId: '5',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Книготорговцы',
+    nameEN: 'asd',
+    movieId: '6',
+    saved: true,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Когда я думаю о Германии ночью',
+    nameEN: 'asd',
+    movieId: '7',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Gimme Danger: История Игги и The Stooges',
+    nameEN: 'asd',
+    movieId: '8',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Дженис: Маленькая девочка грустит',
+    nameEN: 'asd',
+    movieId: '9',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Соберись перед прыжком',
+    nameEN: 'asd',
+    movieId: '10',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Пи Джей Харви: A dog called money',
+    nameEN: 'asd',
+    movieId: '11',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'По волнам: Искусство звука в кино',
+    nameEN: 'asd',
+    movieId: '12',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'По волнам: Искусство звука в кино',
+    nameEN: 'asd',
+    movieId: '13',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'По волнам: Искусство звука в кино',
+    nameEN: 'asd',
+    movieId: '14',
+    saved: false,
+  },
+];
+
+const MoviesSavedMock = [
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: '33 слова о дизайне',
+    nameEN: 'asd',
+    movieId: '1',
+    saved: false,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'Киноальманах «100 лет дизайна»',
+    nameEN: 'asd',
+    movieId: '2',
+    saved: true,
+  },
+  {
+    duration: 5315,
+    image: imgPlaceholder,
+    nameRU: 'В погоне за Бенкси',
+    nameEN: 'asd',
+    movieId: '3',
+    saved: false,
+  },
+];
+
+export { user, MoviesMock, MoviesSavedMock };
