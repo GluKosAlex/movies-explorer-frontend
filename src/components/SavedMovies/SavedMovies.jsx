@@ -28,15 +28,9 @@ export default function SavedMovies() {
 
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [index, setIndex] = useState(nextCount);
-
-  console.count('rerender count');
-  console.log('🚀 ~ SavedMovies ~ index:', index);
-  console.log('🚀 ~ SavedMovies ~ isCompleted:', isCompleted);
-  console.log('🚀 ~ SavedMovies ~ nextCount:', nextCount);
+  const [index, setIndex] = useState(nextCount); // Index of the last movie
 
   const arrayForHoldingMovies = useRef([]);
-  console.log('🚀 ~ SavedMovies ~ arrayForHoldingMovies:', arrayForHoldingMovies.current);
 
   useEffect(() => {
     initialMoviesToShow(sortedAndSearchedMovies, 0, nextCount);
@@ -64,8 +58,6 @@ export default function SavedMovies() {
   };
 
   const showMoreHandler = useCallback(() => {
-    console.log('showMoreHandler');
-    console.log('index', index);
     addNextMoviesToShow(sortedAndSearchedMovies, index, index + nextCount);
     setIndex(index + nextCount);
     checkIfCompleted();
