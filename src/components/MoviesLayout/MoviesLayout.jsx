@@ -12,14 +12,34 @@ import { MoviesSavedMock } from './../../constants/db_mock';
 
 export default function MoviesLayout() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [moviesList, setMoviesList] = useState(MoviesMock);
-  const [savedMoviesList, setSavedMoviesList] = useState(MoviesSavedMock);
+  const [moviesList, setMoviesList] = useState([]);
+  const [savedMoviesList, setSavedMoviesList] = useState([]);
   const [moviesFilter, setMoviesFilter] = useState({ query: '', isShort: false });
 
+  const getMovies = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(MoviesMock);
+    }, 500);
+  });
+
+  const getSavedMovies = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(MoviesSavedMock);
+    }, 1000);
+  });
+
   useEffect(() => {
-    setIsLoaded(true);
+    Promise.all([getMovies, getSavedMovies])
+      .then(([movies, savedMovies]) => {
+        setMoviesList(movies);
+        setSavedMoviesList(savedMovies);
+        return true;
+      })
+      .then((isLoaded) => setIsLoaded(isLoaded))
+      .catch((e) => {
+        console.log(e);
+      });
   }, []);
-  console.count();
 
   return (
     <main className="page__content main">

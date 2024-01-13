@@ -1,21 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 
 export const useCountToShow = (
   width,
   { tabletWidth, desktopWidth },
   { mobileStep, tabletStep, desktopStep },
 ) => {
-  const [nextCount, setNextCount] = useState(); // Count of movies to show
-
-  useEffect(() => {
+  const nextCount = useMemo(() => {
     if (width >= tabletWidth) {
-      setNextCount(tabletStep);
-    }
-    if (width >= desktopWidth) {
-      setNextCount(desktopStep);
-    }
-    setNextCount(mobileStep);
-  }, [width, tabletWidth, desktopWidth, mobileStep, tabletStep, desktopStep]);
+      return tabletStep;
+    } else if (width >= desktopWidth) {
+      return desktopStep;
+    } else return mobileStep;
+  }, [width]);
 
   return { nextCount };
 };

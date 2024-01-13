@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export const useViewport = () => {
   const [width, setWidth] = useState(window.innerWidth);
-  const throttleInProgress = useRef(true);
+  const throttleInProgress = useRef();
 
   useEffect(() => {
     const resizeHandler = () => {

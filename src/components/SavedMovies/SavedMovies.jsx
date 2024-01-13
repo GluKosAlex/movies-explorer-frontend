@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 
 import { useFilteredMovies } from './../../hooks/useFilteredMovies';
 
-import { MoviesFilterContext } from '../../contexts/MoviesFilterContext';
+import { MoviesFilterContext } from './../../contexts/MoviesFilterContext';
 import { MoviesContext } from './../../contexts/MoviesContext';
 
 import MoviesCardList from './../MoviesCardList/MoviesCardList';
@@ -28,31 +28,38 @@ export default function SavedMovies() {
 
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [index, setIndex] = useState(0); // Index of the last movie
+  let index = moviesToShow.length;
+  console.log('🚀 ~ SavedMovies ~ index:', index);
 
   const arrayForHoldingMovies = useRef([]);
 
   useEffect(() => {
-    addNextMoviesToShow(sortedAndSearchedMovies, index, nextCount);
-    setIndex(nextCount);
+    index = 0;
+    initialMoviesToShow(sortedAndSearchedMovies, index, nextCount);
     index >= sortedAndSearchedMovies.length ? setIsCompleted(true) : setIsCompleted(false);
-  }, [index, nextCount]);
+  }, [moviesFilter.query, moviesFilter.isShort]);
 
-  useEffect(() => {
-    arrayForHoldingMovies.current = [];
-  }, [moviesFilter]);
+  const initialMoviesToShow = (movies, start, end) => {
+    console.log('🚀 ~ initialMoviesToShow ~ movies, start, end:', movies, start, end);
+    const slicedMovies = movies.slice(start, end);
+    arrayForHoldingMovies.current = slicedMovies;
+    setMoviesToShow(arrayForHoldingMovies.current);
+  };
 
-  const addNextMoviesToShow = (movies, start, end) => {
+  const addNextMoviesToShow = (movies, start, end = 0) => {
+    console.log('🚀 ~ addNextMoviesToShow ~ movies, start, end:', movies, start, end);
     const slicedMovies = movies.slice(start, end);
     arrayForHoldingMovies.current = [...arrayForHoldingMovies.current, ...slicedMovies];
     setMoviesToShow(arrayForHoldingMovies.current);
   };
 
-  const showMoreHandler = () => {
-    index >= sortedAndSearchedMovies.length ? setIsCompleted(true) : setIsCompleted(false);
+  const showMoreHandler = useCallback(() => {
+    const index = moviesToShow.length;
+    console.log('showMoreHandler');
+    console.log('index', index);
     addNextMoviesToShow(sortedAndSearchedMovies, index, index + nextCount);
-    setIndex(index + nextCount);
-  };
+  }, [nextCount, sortedAndSearchedMovies]);
+  console.count('rerender count');
 
   return (
     <section className="saved-movies">
