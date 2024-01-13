@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 
 import { useFilteredMovies } from './../../hooks/useFilteredMovies';
 

@@ -6,7 +6,7 @@ export const useCountToShow = (
   { mobileStep, tabletStep, desktopStep },
 ) => {
   const nextCount = useMemo(() => {
-    if (width >= tabletWidth) {
+    if (width >= tabletWidth && width < desktopWidth) {
       return tabletStep;
     } else if (width >= desktopWidth) {
       return desktopStep;

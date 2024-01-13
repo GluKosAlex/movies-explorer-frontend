@@ -7,6 +7,7 @@ export default function MoviesCardList({ moviesToRender }) {
       {moviesToRender.map((item) => (
         <MoviesCard
           key={item.movieId}
+          movieId={item.movieId}
           name={item.nameRU}
           image={item.image}
           duration={item.duration}

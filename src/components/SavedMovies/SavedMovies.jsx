@@ -28,38 +28,48 @@ export default function SavedMovies() {
 
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
-  let index = moviesToShow.length;
+  const [index, setIndex] = useState(nextCount);
+
+  console.count('rerender count');
   console.log('🚀 ~ SavedMovies ~ index:', index);
+  console.log('🚀 ~ SavedMovies ~ isCompleted:', isCompleted);
+  console.log('🚀 ~ SavedMovies ~ nextCount:', nextCount);
 
   const arrayForHoldingMovies = useRef([]);
+  console.log('🚀 ~ SavedMovies ~ arrayForHoldingMovies:', arrayForHoldingMovies.current);
 
   useEffect(() => {
-    index = 0;
-    initialMoviesToShow(sortedAndSearchedMovies, index, nextCount);
-    index >= sortedAndSearchedMovies.length ? setIsCompleted(true) : setIsCompleted(false);
+    initialMoviesToShow(sortedAndSearchedMovies, 0, nextCount);
+    checkIfCompleted();
   }, [moviesFilter.query, moviesFilter.isShort]);
 
+  useEffect(() => {
+    setIndex(nextCount);
+  }, [moviesFilter.query, moviesFilter.isShort]);
+
+  const checkIfCompleted = () => {
+    index >= sortedAndSearchedMovies.length ? setIsCompleted(true) : setIsCompleted(false);
+  };
+
   const initialMoviesToShow = (movies, start, end) => {
-    console.log('🚀 ~ initialMoviesToShow ~ movies, start, end:', movies, start, end);
     const slicedMovies = movies.slice(start, end);
     arrayForHoldingMovies.current = slicedMovies;
     setMoviesToShow(arrayForHoldingMovies.current);
   };
 
-  const addNextMoviesToShow = (movies, start, end = 0) => {
-    console.log('🚀 ~ addNextMoviesToShow ~ movies, start, end:', movies, start, end);
+  const addNextMoviesToShow = (movies, start, end) => {
     const slicedMovies = movies.slice(start, end);
     arrayForHoldingMovies.current = [...arrayForHoldingMovies.current, ...slicedMovies];
     setMoviesToShow(arrayForHoldingMovies.current);
   };
 
   const showMoreHandler = useCallback(() => {
-    const index = moviesToShow.length;
     console.log('showMoreHandler');
     console.log('index', index);
     addNextMoviesToShow(sortedAndSearchedMovies, index, index + nextCount);
-  }, [nextCount, sortedAndSearchedMovies]);
-  console.count('rerender count');
+    setIndex(index + nextCount);
+    checkIfCompleted();
+  }, [index, nextCount, sortedAndSearchedMovies]);
 
   return (
     <section className="saved-movies">
