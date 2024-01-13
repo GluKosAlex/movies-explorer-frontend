@@ -4,7 +4,7 @@ import { CONFIG } from './../constants/config';
 export const useShortMovies = (movies, isShort) => {
   const shortMovies = useMemo(() => {
     if (isShort) {
-      return [...movies].filter((movie) => movie.duration <= CONFIG.shortDuration);
+      return [...movies].filter((movie) => movie.duration <= CONFIG.shortMovieDuration);
     } else {
       return movies;
     }

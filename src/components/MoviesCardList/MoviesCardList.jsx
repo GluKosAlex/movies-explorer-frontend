@@ -1,10 +1,10 @@
 import MoviesCard from './../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
-export default function MoviesCardList({ moviesList }) {
+export default function MoviesCardList({ moviesToRender }) {
   return (
     <ul className="movie-card-list">
-      {moviesList.map((item) => (
+      {moviesToRender.map((item) => (
         <MoviesCard
           key={item.movieId}
           name={item.nameRU}
