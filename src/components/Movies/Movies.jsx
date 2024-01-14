@@ -76,7 +76,7 @@ export default function Movies() {
     <section className="movies">
       <MoviesCardList moviesToRender={moviesToShow} />
       {!isCompleted && (
-        <MyButton onClick={showMoreHandler} className="movie__more-btn">
+        <MyButton onClick={showMoreHandler} className="movies__more-btn">
           Ещё
         </MyButton>
       )}
