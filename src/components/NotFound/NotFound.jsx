@@ -15,7 +15,7 @@ export default function NotFound() {
           navigate(-1);
         }}
       >
-        назад
+        Назад
       </button>
     </main>
   );

@@ -5,7 +5,7 @@
   box-sizing: border-box;
 
   min-height: 100vh;
-  padding: 30px;
+  padding: 45px 30px 30px;
   text-align: center;
 }
 
@@ -45,4 +45,32 @@
 
 .not-found__back:hover {
   opacity: 0.8;
+}
+
+@media screen and (min-width: 768px) {
+  .not-found {
+    padding: 38px;
+    max-width: 400px;
+  }
+
+  .not-found__title {
+    margin-top: 370px;
+    font-size: 140px;
+  }
+
+  .not-found__text {
+    margin-top: 5px;
+    font-size: 16px;
+  }
+
+  .not-found__back {
+    margin-top: 184px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .not-found__title {
+    margin-top: 208px;
+  }
 }
