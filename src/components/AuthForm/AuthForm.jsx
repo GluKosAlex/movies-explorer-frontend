@@ -2,7 +2,6 @@ import './AuthForm.css';
 import MyButton from '../ui/MyButton/MyButton';
 
 export default function AuthForm({ submitBtnText, onSubmitHandler, className: classList, children }) {
-  console.log(children);
   const submitHandler = (e) => {
     e.preventDefault();
     onSubmitHandler();

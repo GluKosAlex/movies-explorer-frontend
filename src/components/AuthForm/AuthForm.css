@@ -6,6 +6,7 @@
 .auth-form__input-list {
   display: flex;
   flex-direction: column;
+  min-height: 266px;
 
   padding: 0;
   margin: 0;
@@ -16,6 +17,27 @@
   margin-bottom: 10px;
 }
 
+.auth-form__input-list-item:last-child {
+  margin-bottom: 0;
+}
+
 .auth-form__btn {
   margin-top: auto;
+
+  color: var(--main-text-color, #fff);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+@media screen and (min-width: 768px) {
+  .auth-form__btn {
+    margin-top: 69px;
+    font-size: 14px;
+    padding: 13px 15px 15px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
 }

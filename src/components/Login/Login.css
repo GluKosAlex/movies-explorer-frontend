@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  flex-grow: 1;
 
   width: 100%;
   max-width: 396px;
-  min-height: 100vh;
   margin: 0 auto;
   padding: 30px;
 }
@@ -62,4 +62,29 @@
 
 .login__footnote-link:hover {
   opacity: 0.8;
+}
+
+@media screen and (min-width: 768px) {
+  .login {
+    min-height: auto;
+    margin: auto;
+    flex-grow: 0;
+    padding: 0;
+  }
+
+  .login__logo-link {
+    align-self: start;
+    margin-bottom: 40px;
+  }
+
+  .login__title {
+    margin-bottom: 40px;
+
+    text-align: left;
+  }
+
+  .login__footnote {
+    margin-top: 16px;
+    font-size: 14px;
+  }
 }
