@@ -1,9 +1,12 @@
+import { useState } from 'react';
+
 import './MyInput.css';
 
-export default function MyInput({ value, onChange, className: classList = '', ...props }) {
+export default function MyInput({ value, className: classList = '', ...props }) {
+  const [inputValue, setInputValue] = useState(value);
   const changeHandler = (e) => {
-    onChange(e.target.value);
+    setInputValue(e.target.value);
   };
 
-  return <input value={value} onChange={changeHandler} className={`${classList} input`} {...props} />;
+  return <input value={inputValue} onChange={changeHandler} className={`${classList} input`} {...props} />;
 }
