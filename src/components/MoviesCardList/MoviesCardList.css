@@ -1,8 +1,10 @@
 .movie-card-list {
-  display: flex;
-  flex-direction: column;
-  /* align-items: center; */
-  gap: 36px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  grid-auto-columns: auto;
+  justify-content: center;
+  gap: 36px 30px;
 
   padding: 0;
   margin: 0;
@@ -11,6 +13,14 @@
   list-style: none;
 }
 
-.movie-card-list__item {
-  /* width: 100%; */
+@media screen and (min-width: 768px) {
+  .movie-card-list {
+    grid-template-columns: repeat(auto-fit, 339px);
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .movie-card-list {
+    grid-template-columns: repeat(auto-fit, 360px);
+  }
 }

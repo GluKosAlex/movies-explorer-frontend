@@ -68,6 +68,7 @@
   transition:
     background-color 0.2s ease,
     font-size 0.2s ease;
+  cursor: pointer;
 }
 
 .movie-card__btn:hover {
@@ -103,4 +104,30 @@
 
 .movie-card__btn_pending {
   animation: blink 0.5s infinite alternate ease-in-out;
+}
+
+@media screen and (min-width: 768px) and (pointer: fine) {
+  .movie-card {
+    cursor: pointer;
+  }
+
+  .movie-card__btn_type_delete,
+  .movie-card__btn_type_unsaved {
+    display: none;
+  }
+
+  .movie-card:hover .movie-card__btn_type_delete,
+  .movie-card:hover .movie-card__btn_type_unsaved {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .movie-card {
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .movie-card {
+  }
 }
