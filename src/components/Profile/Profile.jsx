@@ -35,7 +35,7 @@ export default function Profile() {
   return (
     <>
       <Header />
-      <main className="page__content profile">
+      <main className="page__content profile main">
         <h1 className="profile__header">Привет, {currentUser.name}!</h1>
         <form className="profile__form" onSubmit={formSubmitHandler}>
           <ul className="profile__input-list">
