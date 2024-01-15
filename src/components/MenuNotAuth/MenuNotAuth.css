@@ -23,6 +23,11 @@
 .menu-not-auth__link {
   text-decoration: none;
   color: var(--main-text-color);
+  transition: opacity 0.2s ease;
+}
+
+.menu-not-auth__link:hover {
+  opacity: 0.7;
 }
 
 .menu-not-auth__link_type_login {
@@ -31,7 +36,6 @@
 
   background-color: var(--main-accent-color, #3ddc84);
   border-radius: 3px;
-  transition: opacity 0.2s ease;
 }
 
 .menu-not-auth__link_type_login:hover {

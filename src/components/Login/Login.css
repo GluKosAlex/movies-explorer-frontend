@@ -18,6 +18,11 @@
   margin-top: 26px;
   margin-bottom: 50px;
   text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.login__logo-link:hover {
+  opacity: 0.8;
 }
 
 .login__logo-img {

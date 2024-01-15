@@ -6,6 +6,8 @@ import { CurrentUserContext } from './../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
 import MyButton from '../ui/MyButton/MyButton';
 
+import { useNavigate } from 'react-router-dom';
+
 import './Profile.css';
 import { validationOptions } from './../../constants/validationOptions';
 
@@ -22,6 +24,8 @@ export default function Profile() {
     formState: { errors },
   } = methods;
 
+  const navigate = useNavigate();
+
   const [editUserInfo, setEditUserInfo] = useState(false);
 
   const editUserInfoHandler = (e) => {
@@ -37,6 +41,7 @@ export default function Profile() {
   const logoutClickHandler = (e) => {
     e.preventDefault();
     setLoggedIn(false);
+    navigate('/', { replace: true });
   };
 
   useEffect(() => {

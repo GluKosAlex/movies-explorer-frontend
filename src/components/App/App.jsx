@@ -26,7 +26,6 @@ function App() {
 
   useEffect(() => {
     setCurrentUser(user); // mockup user data
-    // setLoggedIn(true); // mockup login
     localStorage.setItem('loggedIn', 'true');
   }, [loggedIn]);
 
