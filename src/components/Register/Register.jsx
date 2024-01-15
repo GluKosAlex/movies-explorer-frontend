@@ -3,11 +3,17 @@ import { Link } from 'react-router-dom';
 import logo from './../../images/logo.svg';
 import FormAuth from '../AuthForm/AuthForm';
 import AuthInput from './../AuthInput/AuthInput';
-import { user } from './../../constants/db_mock';
 
 import './Register.css';
+import { validationOptions } from './../../constants/validationOptions';
+
+const { nameValidOptions, emailValidOptions, passwordValidOptions } = validationOptions;
 
 export default function Register() {
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <>
       <main className="register">
@@ -20,10 +26,10 @@ export default function Register() {
         </a>
         <h1 className="register__title">Добро пожаловать!</h1>
 
-        <FormAuth className="register__form" submitBtnText={'Зарегистрироваться'} onSubmitHandler={() => {}}>
-          <AuthInput name={'name'} labelText="Имя" value={user.name} />
-          <AuthInput name={'email'} labelText="E-mail" value={user.email} />
-          <AuthInput name={'password'} labelText="Пароль" />
+        <FormAuth className="register__form" submitBtnText={'Зарегистрироваться'} onSubmit={onSubmit}>
+          <AuthInput name={'name'} registerOptions={nameValidOptions} labelText="Имя" />
+          <AuthInput name={'email'} registerOptions={emailValidOptions} labelText="E-mail" />
+          <AuthInput name={'password'} registerOptions={passwordValidOptions} labelText="Пароль" />
         </FormAuth>
 
         <p className="register__footnote">

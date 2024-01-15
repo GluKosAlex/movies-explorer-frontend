@@ -3,11 +3,17 @@ import { Link } from 'react-router-dom';
 import logo from './../../images/logo.svg';
 import FormAuth from '../AuthForm/AuthForm';
 import AuthInput from './../AuthInput/AuthInput';
-import { user } from './../../constants/db_mock';
 
 import './Login.css';
+import { validationOptions } from './../../constants/validationOptions';
+
+const { emailValidOptions, passwordValidOptions } = validationOptions;
 
 export default function Login() {
+  const onSubmitHandler = (data) => {
+    console.log(data);
+  };
+
   return (
     <>
       <main className="login">
@@ -20,9 +26,9 @@ export default function Login() {
         </a>
         <h1 className="login__title">Рады видеть!</h1>
 
-        <FormAuth className="login__form" submitBtnText={'Войти'} onSubmitHandler={() => {}}>
-          <AuthInput name={'email'} labelText="E-mail" value={user.email} />
-          <AuthInput name={'password'} labelText="Пароль" />
+        <FormAuth className="login__form" submitBtnText={'Войти'} onSubmit={onSubmitHandler}>
+          <AuthInput name={'email'} registerOptions={emailValidOptions} labelText="E-mail" />
+          <AuthInput registerOptions={passwordValidOptions} name={'password'} labelText="Пароль" />
         </FormAuth>
 
         <p className="login__footnote">
