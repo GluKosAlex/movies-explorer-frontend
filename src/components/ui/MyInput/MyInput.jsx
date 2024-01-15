@@ -1,5 +1,3 @@
-// import { useState } from 'react';
-
 import './MyInput.css';
 
 export default function MyInput({ register, name, registerOptions, className: classList = '', ...props }) {

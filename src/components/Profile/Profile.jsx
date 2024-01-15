@@ -1,12 +1,26 @@
 import { useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+import { CurrentUserContext } from './../../contexts/CurrentUserContext';
 
 import Header from '../Header/Header';
-import './Profile.css';
 import MyButton from '../ui/MyButton/MyButton';
-import { CurrentUserContext } from './../../contexts/CurrentUserContext';
+
+import './Profile.css';
+import { validationOptions } from './../../constants/validationOptions';
+
+const { nameValidOptions, emailValidOptions } = validationOptions;
 
 export default function Profile() {
   const { currentUser, setCurrentUser, setLoggedIn } = useContext(CurrentUserContext);
+  console.log(currentUser);
+
+  const methods = useForm({ values: { name: currentUser.name, email: currentUser.email } });
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = methods;
 
   const [editUserInfo, setEditUserInfo] = useState(false);
 
@@ -15,8 +29,8 @@ export default function Profile() {
     setEditUserInfo(true);
   };
 
-  const formSubmitHandler = (e) => {
-    e.preventDefault();
+  const formSubmitHandler = (data) => {
+    setCurrentUser(data);
     setEditUserInfo(false);
   };
 
@@ -37,33 +51,33 @@ export default function Profile() {
       <Header />
       <main className="page__content profile main">
         <h1 className="profile__header">Привет, {currentUser.name}!</h1>
-        <form className="profile__form" onSubmit={formSubmitHandler}>
+        <form className="profile__form" onSubmit={handleSubmit(formSubmitHandler)} noValidate={true}>
           <ul className="profile__input-list">
             <li className="profile__input-list-item">
               <label className="profile__input-label" htmlFor="userName">
                 Имя
               </label>
               <input
-                className="profile__input"
+                {...register('name', nameValidOptions)}
+                className={`profile__input ${errors['name'] && 'profile__input_error'}`}
                 id="userName"
                 type="text"
-                value={currentUser.name}
-                onChange={(e) => setCurrentUser({ ...currentUser, name: e.target.value })}
                 disabled={!editUserInfo}
               />
+              <span className={`profile__input-error`}>{errors?.['name']?.message}</span>
             </li>
             <li className="profile__input-list-item">
               <label className="profile__input-label" htmlFor="userEmail">
                 E-mail
               </label>
               <input
-                className="profile__input"
+                {...register('email', emailValidOptions)}
+                className={`profile__input ${errors['email'] && 'profile__input_error'}`}
                 id="userEmail"
                 type="email"
-                value={currentUser.email}
-                onChange={(e) => setCurrentUser({ ...currentUser, email: e.target.value })}
                 disabled={!editUserInfo}
               />
+              <span className={`profile__input-error`}>{errors?.['email']?.message}</span>
             </li>
           </ul>
           <MyButton className="profile__form-submit" hidden={!editUserInfo}>
