@@ -1,4 +1,5 @@
-import { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useContext } from 'react';
 
 import FilterCheckbox from './../FilterCheckbox/FilterCheckbox';
 import MyInput from './../ui/MyInput/MyInput';
@@ -8,28 +9,26 @@ import { MoviesFilterContext } from './../../contexts/MoviesFilterContext';
 
 export default function SearchForm() {
   const { moviesFilter, setMoviesFilter } = useContext(MoviesFilterContext);
-  const [filterInput, setFilterInput] = useState(moviesFilter.query);
-  const [isShort, setIsShort] = useState(moviesFilter.isShort);
 
-  const searchFormSubmitHandler = (e) => {
-    e.preventDefault();
-    setMoviesFilter({ query: filterInput, isShort });
+  const methods = useForm({
+    defaultValues: { search: '', isShort: false },
+    value: { search: moviesFilter.query, isShort: moviesFilter.isShort },
+  });
+  const { handleSubmit, register } = methods;
+
+  const searchFormSubmitHandler = (data) => {
+    setMoviesFilter({ query: data.search, isShort: data.isShort });
   };
 
   return (
     <section className="search-form">
-      <form className="search-form__form" onSubmit={searchFormSubmitHandler}>
+      <form className="search-form__form" onSubmit={handleSubmit(searchFormSubmitHandler)}>
         <h2 className="search-form__header">Форма поиска фильмов</h2>
         <fieldset className="search-form__fieldset">
-          <MyInput
-            value={filterInput}
-            onChange={setFilterInput}
-            className="search-form__input"
-            placeholder="Фильм"
-          />
+          <MyInput register={register} name={'search'} className="search-form__input" placeholder="Фильм" />
           <MyButton className="search-form__btn">Найти</MyButton>
         </fieldset>
-        <FilterCheckbox isChecked={isShort} onSwitchState={setIsShort} />
+        <FilterCheckbox name={'isShort'} register={register} />
       </form>
     </section>
   );

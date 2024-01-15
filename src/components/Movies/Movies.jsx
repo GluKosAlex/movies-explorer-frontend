@@ -24,7 +24,7 @@ export default function Movies() {
 
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [index, setIndex] = useState(nextCount); // Index of the last movie
+  const [index, setIndex] = useState(nextCount); // Index of the last showed movie
 
   const arrayForFlaggedMovies = useRef([]);
 
