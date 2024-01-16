@@ -5,12 +5,12 @@ import './AuthForm.css';
 import MyButton from '../ui/MyButton/MyButton';
 
 export default function AuthForm({ submitBtnText, defaultValues, className: classList, onSubmit, children }) {
-  const methods = useForm({ defaultValues });
+  const methods = useForm({ defaultValues, mode: 'all', reValidateMode: 'onChange' });
   const {
     handleSubmit,
     register,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = methods;
 
   return (
@@ -40,7 +40,9 @@ export default function AuthForm({ submitBtnText, defaultValues, className: clas
             : child;
         })}
       </ul>
-      <MyButton className="auth-form__btn">{submitBtnText}</MyButton>
+      <MyButton className="auth-form__btn" disabled={!isValid}>
+        {submitBtnText}
+      </MyButton>
     </form>
   );
 }

@@ -6,8 +6,10 @@ import AuthInput from './../AuthInput/AuthInput';
 
 import './Login.css';
 import { validationOptions } from './../../constants/validationOptions';
+import { inputPlaceholders } from './../../constants/constants';
 
 const { emailValidOptions, passwordValidOptions } = validationOptions;
+const { emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
 export default function Login() {
   const onSubmitHandler = (data) => {
@@ -27,8 +29,18 @@ export default function Login() {
         <h1 className="login__title">Рады видеть!</h1>
 
         <FormAuth className="login__form" submitBtnText={'Войти'} onSubmit={onSubmitHandler}>
-          <AuthInput name={'email'} registerOptions={emailValidOptions} labelText="E-mail" />
-          <AuthInput registerOptions={passwordValidOptions} name={'password'} labelText="Пароль" />
+          <AuthInput
+            name={'email'}
+            registerOptions={emailValidOptions}
+            labelText="E-mail"
+            placeholder={emailPlaceholder}
+          />
+          <AuthInput
+            registerOptions={passwordValidOptions}
+            name={'password'}
+            labelText="Пароль"
+            placeholder={passwordPlaceholder}
+          />
         </FormAuth>
 
         <p className="login__footnote">

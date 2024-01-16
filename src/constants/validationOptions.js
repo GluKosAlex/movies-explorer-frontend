@@ -1,4 +1,4 @@
-import { emailExpression } from './constants.js';
+import { emailExpression, userNameExpression } from './constants.js';
 
 const validationOptions = {
   nameValidOptions: {
@@ -11,8 +11,14 @@ const validationOptions = {
       value: 2,
       message: 'Минимальная длина строки 2 символа',
     },
+    pattern: {
+      value: userNameExpression,
+      message:
+        'Строка должна состоять только из цифр и букв, а так же не может содержать пробелы в начале и в конце',
+    },
   },
   emailValidOptions: {
+    required: 'Поле с адресом электронной почты является обязательным',
     pattern: {
       value: emailExpression,
       message: 'Не валидный адрес электронной почты!',

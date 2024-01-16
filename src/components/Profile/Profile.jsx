@@ -17,11 +17,11 @@ export default function Profile() {
   const { currentUser, setCurrentUser, setLoggedIn } = useContext(CurrentUserContext);
   console.log(currentUser);
 
-  const methods = useForm({ values: { name: currentUser.name, email: currentUser.email } });
+  const methods = useForm({ values: { name: currentUser.name, email: currentUser.email }, mode: 'onChange' });
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = methods;
 
   const navigate = useNavigate();
@@ -85,7 +85,7 @@ export default function Profile() {
               <span className={`profile__input-error`}>{errors?.['email']?.message}</span>
             </li>
           </ul>
-          <MyButton className="profile__form-submit" hidden={!editUserInfo}>
+          <MyButton className="profile__form-submit" hidden={!editUserInfo} disabled={!isValid}>
             Сохранить
           </MyButton>
         </form>

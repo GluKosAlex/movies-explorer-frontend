@@ -6,8 +6,10 @@ import AuthInput from './../AuthInput/AuthInput';
 
 import './Register.css';
 import { validationOptions } from './../../constants/validationOptions';
+import { inputPlaceholders } from './../../constants/constants';
 
 const { nameValidOptions, emailValidOptions, passwordValidOptions } = validationOptions;
+const { userNamePlaceholder, emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
 export default function Register() {
   const onSubmit = (data) => {
@@ -27,9 +29,30 @@ export default function Register() {
         <h1 className="register__title">Добро пожаловать!</h1>
 
         <FormAuth className="register__form" submitBtnText={'Зарегистрироваться'} onSubmit={onSubmit}>
-          <AuthInput name={'name'} registerOptions={nameValidOptions} labelText="Имя" />
-          <AuthInput name={'email'} registerOptions={emailValidOptions} labelText="E-mail" />
-          <AuthInput name={'password'} registerOptions={passwordValidOptions} labelText="Пароль" />
+          <AuthInput
+            name={'name'}
+            registerOptions={{
+              ...nameValidOptions,
+              onBlur: (e) => {
+                e.target.value = e.target.value.trim();
+                console.log(e.target.value);
+              },
+            }}
+            labelText="Имя"
+            placeholder={userNamePlaceholder}
+          />
+          <AuthInput
+            name={'email'}
+            registerOptions={emailValidOptions}
+            labelText="E-mail"
+            placeholder={emailPlaceholder}
+          />
+          <AuthInput
+            name={'password'}
+            registerOptions={passwordValidOptions}
+            labelText="Пароль"
+            placeholder={passwordPlaceholder}
+          />
         </FormAuth>
 
         <p className="register__footnote">
