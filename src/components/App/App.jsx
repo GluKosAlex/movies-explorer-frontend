@@ -11,9 +11,11 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import MoviesLayout from '../MoviesLayout/MoviesLayout';
 import NotFound from '../NotFound/NotFound';
+import InfoTooltip from './../InfoTooltip/InfoTooltip.jsx';
+
 import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
 
-import { user } from '../../constants/db_mock';
+import { user } from './../../constants/db_mock';
 
 function App() {
   const loggedInFromStorage = JSON.parse(localStorage.getItem('loggedIn'));
@@ -50,6 +52,12 @@ function App() {
 
         <Route path="signup" element={<Register />} />
       </Routes>
+      <InfoTooltip
+        title={infoTooltipContent.text}
+        icon={infoTooltipContent.icon}
+        isOpen={isInfoTooltipOpen}
+        onClose={closeAllModals}
+      />
     </CurrentUserContext.Provider>
   );
 }
