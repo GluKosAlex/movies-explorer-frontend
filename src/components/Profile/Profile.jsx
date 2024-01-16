@@ -85,19 +85,21 @@ export default function Profile() {
               <span className={`profile__input-error`}>{errors?.['email']?.message}</span>
             </li>
           </ul>
-          <MyButton className="profile__form-submit" hidden={!editUserInfo} disabled={!isValid}>
+          <p className={`profile__api-error ${!editUserInfo && 'profile__hidden-block'}`}>
+            {'При обновлении профиля произошла ошибка.'}
+          </p>
+          <MyButton
+            className={`profile__form-submit ${!editUserInfo && 'profile__hidden-block'}`}
+            disabled={!isValid}
+          >
             Сохранить
           </MyButton>
         </form>
-        <div className="profile__control">
-          <button className="profile__btn" onClick={editUserInfoHandler} hidden={editUserInfo}>
+        <div className={`profile__control ${editUserInfo && 'profile__hidden-block'}`}>
+          <button className="profile__btn" onClick={editUserInfoHandler}>
             Редактировать
           </button>
-          <button
-            className="profile__btn profile__btn_logout"
-            onClick={logoutClickHandler}
-            hidden={editUserInfo}
-          >
+          <button className="profile__btn profile__btn_logout" onClick={logoutClickHandler}>
             Выйти из аккаунта
           </button>
         </div>
