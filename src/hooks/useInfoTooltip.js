@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import successIcon from './../images/icon-success.svg';
-
-const useInfoTooltip = () => {
+const useInfoTooltip = (defaultText) => {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
-  const [infoTooltipContent, setInfoTooltipContent] = useState({ icon: successIcon, text: '' });
+  const [infoTooltipState, setInfoTooltipState] = useState({ success: false, text: defaultText });
 
-  return { isInfoTooltipOpen, setIsInfoTooltipOpen, infoTooltipContent, setInfoTooltipContent };
+  console.log(infoTooltipState);
+
+  return { isInfoTooltipOpen, setIsInfoTooltipOpen, infoTooltipState, setInfoTooltipState };
 };
 
 export { useInfoTooltip };

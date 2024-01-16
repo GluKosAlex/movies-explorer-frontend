@@ -8,4 +8,16 @@ const inputPlaceholders = {
   passwordPlaceholder: 'Введите пароль',
 };
 
-export { emailExpression, userNameExpression, inputPlaceholders };
+const apiErrorMessages = {
+  defaultError: 'Что-то пошло не так...',
+  authError: 'Вы ввели неправильный логин или пароль.',
+  authTokenFormatError: 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.',
+  authTokenError: 'При авторизации произошла ошибка. Переданный токен некорректен.',
+  emailExistError: 'Пользователь с таким email уже существует.',
+  userRegisterError: 'При регистрации пользователя произошла ошибка.',
+  userEditError: 'При обновлении профиля произошла ошибка.',
+  serverError: '500 На сервере произошла ошибка.',
+  notFoundError: '404 Страница по указанному маршруту не найдена.',
+};
+
+export { emailExpression, userNameExpression, inputPlaceholders, apiErrorMessages };
