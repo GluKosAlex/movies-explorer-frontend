@@ -44,13 +44,10 @@
   background-repeat: no-repeat;
   background-position: 98.5% 50%;
   background-size: 10px;
-  transition:
-    opacity 0.2s ease,
-    background-color 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .portfolio__link:hover {
-  background-color: var(--main-btn-mid-bg-color);
   opacity: 0.8;
 }
 
