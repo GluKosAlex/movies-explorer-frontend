@@ -40,18 +40,21 @@ export default function Register() {
             }}
             labelText="Имя"
             placeholder={userNamePlaceholder}
+            autoComplete="name"
           />
           <AuthInput
             name={'email'}
             registerOptions={emailValidOptions}
             labelText="E-mail"
             placeholder={emailPlaceholder}
+            autoComplete="email"
           />
           <AuthInput
             name={'password'}
             registerOptions={passwordValidOptions}
             labelText="Пароль"
             placeholder={passwordPlaceholder}
+            autoComplete="new-password"
           />
         </FormAuth>
 

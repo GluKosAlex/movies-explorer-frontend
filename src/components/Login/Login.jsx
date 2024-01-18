@@ -34,12 +34,14 @@ export default function Login() {
             registerOptions={emailValidOptions}
             labelText="E-mail"
             placeholder={emailPlaceholder}
+            autoComplete="email"
           />
           <AuthInput
             registerOptions={passwordValidOptions}
             name={'password'}
             labelText="Пароль"
             placeholder={passwordPlaceholder}
+            autoComplete="current-password"
           />
         </FormAuth>
 

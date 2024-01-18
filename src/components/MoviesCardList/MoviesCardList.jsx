@@ -4,17 +4,21 @@ import './MoviesCardList.css';
 export default function MoviesCardList({ moviesToRender }) {
   return (
     <ul className="movie-card-list">
-      {moviesToRender.map((item) => (
-        <MoviesCard
-          key={item.movieId}
-          movieId={item.movieId}
-          name={item.nameRU}
-          image={item.image}
-          duration={item.duration}
-          isSaved={item.saved}
-          className="movie-card-list__item"
-        />
-      ))}
+      {moviesToRender.map((item) => {
+        const { duration, image, nameRU, nameEN, movieId, trailerLink, saved } = item;
+        return (
+          <MoviesCard
+            key={movieId}
+            movieId={movieId}
+            nameRU={nameRU}
+            nameEN={nameEN}
+            image={image}
+            duration={duration}
+            isSaved={saved}
+            trailerLink={trailerLink}
+          />
+        );
+      })}
     </ul>
   );
 }

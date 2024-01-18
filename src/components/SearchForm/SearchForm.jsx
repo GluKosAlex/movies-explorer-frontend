@@ -25,7 +25,13 @@ export default function SearchForm() {
       <form className="search-form__form" onSubmit={handleSubmit(searchFormSubmitHandler)}>
         <h2 className="search-form__header">Форма поиска фильмов</h2>
         <fieldset className="search-form__fieldset">
-          <MyInput register={register} name={'search'} className="search-form__input" placeholder="Фильм" />
+          <MyInput
+            register={register}
+            name="search"
+            type="search"
+            className="search-form__input"
+            placeholder="Фильм"
+          />
           <MyButton className="search-form__btn">Найти</MyButton>
         </fieldset>
         <FilterCheckbox name={'isShort'} register={register} />

@@ -11,7 +11,7 @@ export default function MenuAuth() {
 
   const closeMenu = () => {
     document.querySelector(`.${menuClassName}`).classList.add(`${menuClassName}_closed`);
-    document.querySelector(`.${menuClassName}__toggle`).classList.add('menu-toggler_closed');
+    document.querySelector('.menu-toggler').classList.add('menu-toggler_closed');
   };
 
   useEscapeKey(closeMenu);
@@ -20,28 +20,28 @@ export default function MenuAuth() {
   return (
     <>
       <nav className={`${menuClassName} ${menuClassName}_closed`}>
-        <ul className={`${menuClassName}__list`}>
-          <div className={`${menuClassName}_links-group`}>
-            <li className={`${menuClassName}__item ${menuClassName}__item_type_home`}>
+        <div className={`${menuClassName}__nav-links`}>
+          <ul className={`${menuClassName}__links-list`}>
+            <li className={`${menuClassName}__nav-item ${menuClassName}__nav-item_type_home`}>
               <NavLink onClick={closeMenu} className={`${menuClassName}__link`} to="/">
                 Главная
               </NavLink>
             </li>
 
-            <li className={`${menuClassName}__item`}>
+            <li className={`${menuClassName}__nav-item`}>
               <NavLink onClick={closeMenu} className={`${menuClassName}__link`} to="/movies">
                 Фильмы
               </NavLink>
             </li>
 
-            <li className={`${menuClassName}__item`}>
+            <li className={`${menuClassName}__nav-item`}>
               <NavLink onClick={closeMenu} className={`${menuClassName}__link`} to="/saved-movies">
                 Сохранённые фильмы
               </NavLink>
             </li>
-          </div>
+          </ul>
 
-          <li className={`${menuClassName}__item ${menuClassName}__item_type_profile`}>
+          <div className={`${menuClassName}__nav-item ${menuClassName}__nav-item_type_profile`}>
             <Link
               onClick={closeMenu}
               className={`${menuClassName}__link ${menuClassName}__link_type_profile`}
@@ -49,11 +49,11 @@ export default function MenuAuth() {
             >
               Аккаунт
             </Link>
-          </li>
-        </ul>
+          </div>
+        </div>
       </nav>
 
-      <MenuToggler menuClassName={menuClassName} className={`${menuClassName}__toggle`} />
+      <MenuToggler menuClassName={menuClassName} />
     </>
   );
 }

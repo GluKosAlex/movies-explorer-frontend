@@ -1,14 +1,18 @@
 .movie-card {
+  position: relative;
+}
+
+.movie-card__link {
   display: flex;
   flex-direction: column;
-  position: relative;
+  color: var(--main-text-color);
+  text-decoration: none;
 }
 
 .movie-card__image {
   width: 100%;
   height: 168px;
 
-  color: var(--main-text-color);
   background-color: var(--main-text-mid-color);
   object-fit: cover;
   border-radius: 6px;

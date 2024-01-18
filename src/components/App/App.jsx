@@ -1,7 +1,5 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-
-import { useInfoTooltip } from './../../hooks/useInfoTooltip.js';
 
 import './App.css';
 import Main from '../Main/Main';
@@ -13,12 +11,10 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import MoviesLayout from '../MoviesLayout/MoviesLayout';
 import NotFound from '../NotFound/NotFound';
-import InfoTooltip from './../InfoTooltip/InfoTooltip.jsx';
 
 import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
 
 import { user } from './../../constants/db_mock';
-import { apiErrorMessages } from './../../constants/constants.js';
 
 function App() {
   const loggedInFromStorage = JSON.parse(localStorage.getItem('loggedIn'));
@@ -29,18 +25,8 @@ function App() {
     email: '...',
   });
 
-  const { isInfoTooltipOpen, setIsInfoTooltipOpen, infoTooltipState, setInfoTooltipState } = useInfoTooltip(
-    apiErrorMessages.defaultError,
-  );
-
-  const closeModalHandler = useCallback(() => {
-    setIsInfoTooltipOpen(false);
-  }, []);
-
   useEffect(() => {
     setCurrentUser(user); // mockup user data
-    setInfoTooltipState({ ...infoTooltipState, success: false });
-    setIsInfoTooltipOpen(true);
     localStorage.setItem('loggedIn', 'true');
   }, [loggedIn]);
 
@@ -65,12 +51,6 @@ function App() {
 
         <Route path="signup" element={<Register />} />
       </Routes>
-      <InfoTooltip
-        title={infoTooltipState.text}
-        isSuccess={infoTooltipState.success}
-        isOpen={isInfoTooltipOpen}
-        onClose={closeModalHandler}
-      />
     </CurrentUserContext.Provider>
   );
 }

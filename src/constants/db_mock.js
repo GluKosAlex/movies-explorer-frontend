@@ -12,6 +12,7 @@ const MoviesMock = [
     nameRU: '33 слова о дизайне',
     nameEN: 'asd',
     movieId: '1',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 1700,
@@ -19,6 +20,7 @@ const MoviesMock = [
     nameRU: 'Киноальманах «100 лет дизайна»',
     nameEN: 'asd',
     movieId: '2',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -26,6 +28,7 @@ const MoviesMock = [
     nameRU: 'В погоне за Бенкси',
     nameEN: 'asd',
     movieId: '3',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -33,6 +36,7 @@ const MoviesMock = [
     nameRU: 'Баския: Взрыв реальности',
     nameEN: 'asd',
     movieId: '4',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 1700,
@@ -40,6 +44,7 @@ const MoviesMock = [
     nameRU: 'Бег это свобода',
     nameEN: 'asd',
     movieId: '5',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -47,6 +52,7 @@ const MoviesMock = [
     nameRU: 'Книготорговцы',
     nameEN: 'asd',
     movieId: '6',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -54,6 +60,7 @@ const MoviesMock = [
     nameRU: 'Когда я думаю о Германии ночью',
     nameEN: 'asd',
     movieId: '7',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 1700,
@@ -61,6 +68,7 @@ const MoviesMock = [
     nameRU: 'Gimme Danger: История Игги и The Stooges',
     nameEN: 'asd',
     movieId: '8',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -68,6 +76,7 @@ const MoviesMock = [
     nameRU: 'Дженис: Маленькая девочка грустит',
     nameEN: 'asd',
     movieId: '9',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -75,6 +84,7 @@ const MoviesMock = [
     nameRU: 'Соберись перед прыжком',
     nameEN: 'asd',
     movieId: '10',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -82,6 +92,7 @@ const MoviesMock = [
     nameRU: 'Пи Джей Харви: A dog called money',
     nameEN: 'asd',
     movieId: '11',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -89,6 +100,7 @@ const MoviesMock = [
     nameRU: 'По волнам: Искусство звука в кино',
     nameEN: 'asd',
     movieId: '12',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -96,6 +108,7 @@ const MoviesMock = [
     nameRU: 'По волнам: Искусство звука в кино',
     nameEN: 'asd',
     movieId: '13',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -103,6 +116,7 @@ const MoviesMock = [
     nameRU: 'По волнам: Искусство звука в кино',
     nameEN: 'asd',
     movieId: '14',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
 ];
 
@@ -113,6 +127,7 @@ const MoviesSavedMock = [
     nameRU: '33 слова о дизайне',
     nameEN: 'asd',
     movieId: '1',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   // {
   //   duration: 1700,
@@ -120,6 +135,7 @@ const MoviesSavedMock = [
   //   nameRU: 'Киноальманах «100 лет дизайна»',
   //   nameEN: 'asd',
   //   movieId: '2',
+  // trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   // },
   // {
   //   duration: 5315,
@@ -127,6 +143,7 @@ const MoviesSavedMock = [
   //   nameRU: 'В погоне за Бенкси',
   //   nameEN: 'asd',
   //   movieId: '3',
+  // trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   // },
   {
     duration: 5315,
@@ -134,6 +151,7 @@ const MoviesSavedMock = [
     nameRU: 'Баския: Взрыв реальности',
     nameEN: 'asd',
     movieId: '4',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 1700,
@@ -141,6 +159,7 @@ const MoviesSavedMock = [
     nameRU: 'Бег это свобода',
     nameEN: 'asd',
     movieId: '5',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -148,6 +167,7 @@ const MoviesSavedMock = [
     nameRU: 'Книготорговцы',
     nameEN: 'asd',
     movieId: '6',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -155,6 +175,7 @@ const MoviesSavedMock = [
     nameRU: 'Когда я думаю о Германии ночью',
     nameEN: 'asd',
     movieId: '7',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   // {
   //   duration: 1700,
@@ -162,6 +183,7 @@ const MoviesSavedMock = [
   //   nameRU: 'Gimme Danger: История Игги и The Stooges',
   //   nameEN: 'asd',
   //   movieId: '8',
+  // trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   // },
   // {
   //   duration: 5315,
@@ -169,6 +191,7 @@ const MoviesSavedMock = [
   //   nameRU: 'Дженис: Маленькая девочка грустит',
   //   nameEN: 'asd',
   //   movieId: '9',
+  // trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   // },
   {
     duration: 5315,
@@ -176,6 +199,7 @@ const MoviesSavedMock = [
     nameRU: 'Соберись перед прыжком',
     nameEN: 'asd',
     movieId: '10',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -183,6 +207,7 @@ const MoviesSavedMock = [
     nameRU: 'Пи Джей Харви: A dog called money',
     nameEN: 'asd',
     movieId: '11',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
   {
     duration: 5315,
@@ -190,6 +215,7 @@ const MoviesSavedMock = [
     nameRU: 'По волнам: Искусство звука в кино',
     nameEN: 'asd',
     movieId: '12',
+    trailerLink: 'https://youtu.be/dQw4w9WgXcQ?si=ZFlEKucAl-jxjpR8',
   },
 ];
 
