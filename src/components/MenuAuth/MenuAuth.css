@@ -5,7 +5,7 @@
   inset: 0;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 2;
-  transition: all 0.5s ease;
+  /* transition: all 0.5s ease; */
 }
 
 .menu-auth_closed {
@@ -25,7 +25,7 @@
   padding: 144px 10px 46px;
 
   background-color: var(--main-bg-color);
-  transition: transform 0.5s ease;
+  /* transition: transform 0.5s ease; */
 }
 
 .menu-auth__links-list {
@@ -102,6 +102,7 @@
     position: relative;
     flex-grow: 1;
     opacity: 1;
+    transition: none;
   }
 
   .menu-auth_closed {
@@ -131,6 +132,7 @@
     padding: 0;
 
     list-style: none;
+    transition: none;
   }
 
   .menu-auth__nav-item {

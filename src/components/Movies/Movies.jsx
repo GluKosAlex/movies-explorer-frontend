@@ -19,7 +19,7 @@ export default function Movies() {
 
   const { screenBreakPoints, stepsToShow } = CONFIG;
   const { width } = useViewport();
-  const { nextCount } = useCountToShow(width, screenBreakPoints, stepsToShow);
+  const { nextCount } = useCountToShow(width, screenBreakPoints, stepsToShow); // count of movies to show
   const sortedAndSearchedMovies = useFilteredMovies(moviesList, moviesFilter.query, moviesFilter.isShort);
 
   const [moviesToShow, setMoviesToShow] = useState([]);

@@ -71,10 +71,10 @@
 
 @media screen and (min-width: 768px) {
   .register {
+    box-sizing: content-box;
     min-height: auto;
     margin: auto;
     flex-grow: 0;
-    padding: 0;
   }
 
   .register__logo-link {
