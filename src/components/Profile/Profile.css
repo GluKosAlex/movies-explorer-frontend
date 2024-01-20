@@ -69,10 +69,6 @@
   border: none;
 }
 
-.profile__input_error {
-  color: var(--main-error-color, #ee3465);
-}
-
 .profile__input-error {
   position: absolute;
   max-width: 300px;
