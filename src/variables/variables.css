@@ -1,0 +1,17 @@
+:root {
+  /* colors */
+  --main-bg-color: #202020;
+  --main-text-color: #ffffff;
+  --main-text-mid-color: #a0a0a0;
+  --main-accent-color: #3ddc84;
+  --main-btn-accent-bg-color: #4285f4;
+  --main-btn-mid-bg-color: #303030;
+  --main-error-color: #ee3465;
+  --main-section-bg-color: #272727;
+  --main-input-bg-color: #2f2f2f;
+  --main-footer-line-color: #424242;
+  --main-hr-color: #dadada;
+
+  /* sizes */
+  --main-max-width: 1280px;
+}

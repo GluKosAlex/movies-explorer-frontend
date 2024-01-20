@@ -1,0 +1,117 @@
+.menu-toggler {
+  position: fixed;
+  top: 28px;
+  right: 23px;
+
+  width: 22px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: opacity 0.1s ease;
+  z-index: 3;
+}
+
+.menu-toggler:hover {
+  opacity: 0.6;
+}
+
+.menu-toggler::before,
+.menu-toggler::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  margin: auto;
+  width: 26px;
+  height: 2px;
+  background-color: var(--main-text-color);
+  transition: all 0.2s ease;
+}
+
+.menu-toggler span {
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0 auto;
+
+  color: transparent;
+  background-color: var(--main-text-color);
+  font-size: 0;
+  line-height: 0;
+
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.menu-toggler::before {
+  top: 0;
+  transform-origin: top left;
+  transform: rotate(45deg);
+}
+
+.menu-toggler::after {
+  bottom: 0;
+  transform-origin: bottom left;
+  transform: rotate(-45deg);
+}
+
+.menu-toggler_closed {
+  position: absolute;
+}
+
+.menu-toggler_closed span {
+  width: 22px;
+  height: 2px;
+  opacity: 1;
+}
+
+.menu-toggler_closed::before {
+  width: 22px;
+  transform: rotate(0);
+}
+
+.menu-toggler_closed::after {
+  width: 22px;
+  transform: rotate(0);
+}
+
+@media screen and (min-width: 768px) {
+  .menu-toggler {
+    top: 26px;
+    right: 38px;
+
+    width: 28px;
+    height: 23px;
+  }
+
+  .menu-toggler::before,
+  .menu-toggler::after {
+    width: 30px;
+    height: 3px;
+  }
+
+  .menu-toggler_closed span {
+    width: 28px;
+    height: 3px;
+  }
+
+  .menu-toggler_closed::before {
+    width: 28px;
+    transform: rotate(0);
+  }
+
+  .menu-toggler_closed::after {
+    width: 28px;
+    transform: rotate(0);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .menu-toggler {
+    display: none;
+  }
+}

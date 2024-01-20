@@ -1,0 +1,36 @@
+.header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+
+  padding: 18px 14px;
+  width: 100%;
+  max-width: var(--main-max-width);
+}
+
+.header__logo-link {
+  margin-right: 14px;
+  line-height: 0;
+  transition: opacity 0.2s ease;
+}
+
+.header__logo-link:hover {
+  opacity: 0.8;
+}
+
+.header__logo-img {
+  width: 38px;
+  height: 38px;
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    padding: 18px 30px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .header {
+    padding: 18px 70px;
+  }
+}

@@ -1,0 +1,23 @@
+.button {
+  padding: 15px;
+  font-size: 12px;
+  text-align: center;
+  font-weight: 500;
+  border: none;
+  border-radius: 3px;
+  background-color: var(--main-btn-accent-bg-color);
+  color: var(--main-text-color);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.button:disabled {
+  background-color: var(--main-btn-accent-bg-color);
+  filter: grayscale();
+  opacity: 0.8;
+  cursor: default;
+}
+
+.button:hover {
+  opacity: 0.8;
+}

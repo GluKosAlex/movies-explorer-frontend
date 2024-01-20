@@ -1,0 +1,29 @@
+.auth-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
+}
+.auth-input__input-field {
+  padding: 15px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: normal;
+
+  color: var(--main-text-color, #fff);
+}
+
+.auth-input__input-field_error {
+  color: var(--main-error-color, #ee3465);
+}
+
+.auth-input__input-label {
+  color: var(--main-text-mid-color, #a0a0a0);
+}
+
+.auth-input__input-error {
+  color: var(--main-error-color, #ee3465);
+}

@@ -1,0 +1,9 @@
+.main {
+  width: 100%;
+}
+
+.main__section {
+  box-sizing: border-box;
+  max-width: var(--main-max-width);
+  margin: 0 auto;
+}
