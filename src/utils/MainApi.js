@@ -1,4 +1,4 @@
-import { config } from './../constants/constants.js';
+import { config } from './../constants/config.js';
 
 class MainApi {
   constructor({ baseUrl, headers }) {
