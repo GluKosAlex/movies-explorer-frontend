@@ -10,6 +10,18 @@ const CONFIG = {
     tabletStep: 8,
     desktopStep: 12,
   },
+  mainApiConfig: {
+    baseUrl: 'https://localhost:3001',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  },
+  movieApiConfig: {
+    baseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  },
 };
 
 export { CONFIG };
