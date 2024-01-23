@@ -1,4 +1,4 @@
-import { config } from './../constants/config.js';
+import { CONFIG } from './../constants/config.js';
 
 class MovieApi {
   constructor({ baseUrl, headers }) {
@@ -25,6 +25,6 @@ class MovieApi {
   }
 }
 
-const movieApi = new MovieApi(config.movieApiConfig);
+const movieApi = new MovieApi(CONFIG.movieApiConfig);
 
 export default movieApi;

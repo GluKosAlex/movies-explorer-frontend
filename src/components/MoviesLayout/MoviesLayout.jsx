@@ -7,23 +7,41 @@ import { MoviesContext } from './../../contexts/MoviesContext';
 import SearchForm from './../SearchForm/SearchForm';
 import Preloader from './../Preloader/Preloader';
 
+import mainApi from './../../utils/MainApi';
+import movieApi from '../../utils/MoviesApi';
+
 export default function MoviesLayout() {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [moviesList, setMoviesList] = useState([]);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
   const [moviesFilter, setMoviesFilter] = useState({ query: '', isShort: false });
+  const [isLoaded, setIsLoaded] = useState(true);
 
   useEffect(() => {
-    // Promise.all([getMovies, getSavedMovies])
-    //   .then(([movies, savedMovies]) => {
-    //     setMoviesList(movies);
-    //     setSavedMoviesList(savedMovies);
-    //     return true;
-    //   })
-    //   .then((isLoaded) => setIsLoaded(isLoaded))
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
+    setIsLoaded(false);
+    if (moviesFilter.query) {
+      console.log('hey', isLoaded);
+      movieApi
+        .getMovies()
+        .then((movies) => {
+          setMoviesList(movies);
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+        .finally(setIsLoaded(true));
+    }
+  }, [moviesFilter.query]);
+
+  useEffect(() => {
+    mainApi.setAuthorizationHeader(
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg4NGI0YTNiYzVjY2JlMWNjY2Y0MTEiLCJpYXQiOjE3MDU5NDQ5MzAsImV4cCI6MTcwNjU0OTczMH0.iPhZ46_YR_0R2za7Wmi8Y3D0K8i7E0AP9sxiIcUPkeU',
+    );
+    mainApi
+      .getMovies()
+      .then((savedMovies) => {
+        setSavedMoviesList(savedMovies);
+      })
+      .catch((err) => console.error('ОШИБКА СЕРВЕРА', err));
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import { config } from './../constants/config.js';
+import { CONFIG } from './../constants/config.js';
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -120,6 +120,6 @@ class MainApi {
   }
 }
 
-const mainApi = new MainApi(config.mainApiConfig);
+const mainApi = new MainApi(CONFIG.mainApiConfig);
 
 export default mainApi;

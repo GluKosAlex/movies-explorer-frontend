@@ -11,7 +11,7 @@ const CONFIG = {
     desktopStep: 12,
   },
   mainApiConfig: {
-    baseUrl: 'https://localhost:3001',
+    baseUrl: 'http://localhost:3001',
     headers: {
       'Content-Type': 'application/json',
     },

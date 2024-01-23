@@ -25,7 +25,11 @@ export default function SearchForm() {
   } = methods;
 
   const searchFormSubmitHandler = (data) => {
-    setMoviesFilter({ query: data.search, isShort: data.isShort });
+    setMoviesFilter({ ...moviesFilter, query: data.search });
+  };
+
+  const onIsShort = (e) => {
+    setMoviesFilter({ ...moviesFilter, isShort: e.target.checked });
   };
 
   return (
@@ -44,7 +48,7 @@ export default function SearchForm() {
           <span className={`search-form__input-error`}>{errors?.['search']?.message}</span>
           <MyButton className="search-form__btn">Найти</MyButton>
         </fieldset>
-        <FilterCheckbox name={'isShort'} register={register} />
+        <FilterCheckbox name={'isShort'} register={register} onCheckboxChange={onIsShort} />
       </form>
     </section>
   );

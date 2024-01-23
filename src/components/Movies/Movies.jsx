@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 
 import { useFilteredMovies } from './../../hooks/useFilteredMovies';
+import { useViewport } from './../../hooks/useViewport';
+import { useCountToShow } from './../../hooks/useCountToShow';
 
 import { MoviesFilterContext } from './../../contexts/MoviesFilterContext';
 import { MoviesContext } from './../../contexts/MoviesContext';
 
 import MoviesCardList from './../MoviesCardList/MoviesCardList';
 import MyButton from './../ui/MyButton/MyButton';
-import { useViewport } from './../../hooks/useViewport';
-import { useCountToShow } from './../../hooks/useCountToShow';
 
 import './Movies.css';
 import { CONFIG } from './../../constants/config';

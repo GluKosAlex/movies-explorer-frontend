@@ -1,5 +1,5 @@
-const timeConvertor = (s) => {
-  return `${Math.floor(s / 3600)}ч ${Math.floor((s / 60) % 60)}м`;
+const timeConvertor = (m) => {
+  return `${Math.floor(m / 60)}ч ${m % 60}м`;
 };
 
 export { timeConvertor };
