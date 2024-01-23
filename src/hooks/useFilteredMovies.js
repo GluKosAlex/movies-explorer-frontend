@@ -14,11 +14,15 @@ export const useShortMovies = (movies, isShort) => {
 };
 
 export const useFilteredMovies = (movies, query, isShort) => {
-  const shortMovies = useShortMovies(movies, isShort);
+  const sortedMovies = useShortMovies(movies, isShort);
 
   const sortedAndSearchedMovies = useMemo(() => {
-    return shortMovies.filter((movie) => movie.nameRU.toLowerCase().includes(query.toLowerCase()));
-  }, [query, shortMovies]);
+    return sortedMovies.filter(
+      (movie) =>
+        movie.nameRU.toLowerCase().includes(query.toLowerCase()) ||
+        movie.nameEN.toLowerCase().includes(query.toLowerCase()),
+    );
+  }, [query, sortedMovies]);
 
   return sortedAndSearchedMovies;
 };

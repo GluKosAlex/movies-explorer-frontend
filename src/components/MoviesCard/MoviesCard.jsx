@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { timeConvertor } from './../../utils/timeConvertor';
+import { timeConvertor } from './../../utils/timeConvertor.js';
 
 import './MoviesCard.css';
+import { movieApiURL } from './../../constants/constants.js';
 
 export default function MoviesCard({ nameRU, movieId, duration, image, isSaved, className: classList = '' }) {
   const [cardSaved, setCardSaved] = useState(isSaved);
+  const imageURL = `${movieApiURL}${image.url}`;
 
   const location = useLocation();
 
@@ -20,7 +22,7 @@ export default function MoviesCard({ nameRU, movieId, duration, image, isSaved, 
 
   return (
     <li className={`movie-card ${classList}`}>
-      <img className="movie-card__image" src={image} alt={nameRU} />
+      <img className="movie-card__image" src={imageURL} alt={nameRU} />
       <div className="movie-card__caption">
         <h2 className="movie-card__header">{nameRU}</h2>
         <span className="movie-card__time">{timeConvertor(duration)}</span>

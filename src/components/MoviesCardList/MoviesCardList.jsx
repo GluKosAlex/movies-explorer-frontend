@@ -5,7 +5,7 @@ export default function MoviesCardList({ moviesToRender }) {
   return (
     <ul className="movie-card-list">
       {moviesToRender.map((item) => {
-        const { duration, image, nameRU, nameEN, movieId, trailerLink, saved } = item;
+        const { duration, image, nameRU, nameEN, id: movieId, trailerLink, saved } = item;
         return (
           <MoviesCard
             key={movieId}

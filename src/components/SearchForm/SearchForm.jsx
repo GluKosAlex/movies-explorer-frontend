@@ -1,40 +1,29 @@
 import { useForm } from 'react-hook-form';
-import { useContext } from 'react';
 
 import FilterCheckbox from './../FilterCheckbox/FilterCheckbox';
 import MyInput from './../ui/MyInput/MyInput';
 import MyButton from './../ui/MyButton/MyButton';
-import { MoviesFilterContext } from '././../../contexts/MoviesFilterContext';
 import { validationOptions } from './../../constants/validationOptions';
 import './SearchForm.css';
 
 const { movieSearchValidOptions } = validationOptions;
 
-export default function SearchForm() {
-  const { moviesFilter, setMoviesFilter } = useContext(MoviesFilterContext);
-
+export default function SearchForm({ onSearchFormSubmit, onIsShortChangeHandler, moviesFilter }) {
   const methods = useForm({
     defaultValues: { search: '', isShort: false },
     value: { search: moviesFilter.query, isShort: moviesFilter.isShort },
     mode: 'onSubmit',
   });
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = methods;
 
-  const searchFormSubmitHandler = (data) => {
-    setMoviesFilter({ ...moviesFilter, query: data.search });
-  };
-
-  const onIsShort = (e) => {
-    setMoviesFilter({ ...moviesFilter, isShort: e.target.checked });
-  };
-
   return (
     <section className="search-form">
-      <form className="search-form__form" onSubmit={handleSubmit(searchFormSubmitHandler)}>
+      <form className="search-form__form" onSubmit={handleSubmit(onSearchFormSubmit)}>
         <h2 className="search-form__header">Форма поиска фильмов</h2>
         <fieldset className="search-form__fieldset">
           <MyInput
@@ -48,7 +37,7 @@ export default function SearchForm() {
           <span className={`search-form__input-error`}>{errors?.['search']?.message}</span>
           <MyButton className="search-form__btn">Найти</MyButton>
         </fieldset>
-        <FilterCheckbox name={'isShort'} register={register} onCheckboxChange={onIsShort} />
+        <FilterCheckbox name={'isShort'} register={register} onCheckboxChange={onIsShortChangeHandler} />
       </form>
     </section>
   );
