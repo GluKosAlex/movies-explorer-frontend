@@ -25,11 +25,14 @@ class MainApi {
   }
 
   // Get current user info
-  getUserInfo() {
+  getUserInfo(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      headers: this._headers,
-    }).then(this._getResponse);
+      headers: {
+        ...this._headers,
+        authorization: `Bearer ${jwt}`,
+      },
+    });
   }
 
   // Change current user data
@@ -56,17 +59,6 @@ class MainApi {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({ email, password }),
-    });
-  }
-
-  // Check JWT token
-  tokenCheck(jwt) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-      headers: {
-        ...this._headers,
-        authorization: `Bearer ${jwt}`,
-      },
     });
   }
 

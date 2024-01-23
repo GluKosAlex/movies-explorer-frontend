@@ -6,15 +6,13 @@ import { CurrentUserContext } from './../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
 import MyButton from '../ui/MyButton/MyButton';
 
-import { useNavigate } from 'react-router-dom';
-
 import './Profile.css';
 import { validationOptions } from './../../constants/validationOptions';
 
 const { nameValidOptions, emailValidOptions } = validationOptions;
 
-export default function Profile() {
-  const { currentUser, setCurrentUser, setLoggedIn } = useContext(CurrentUserContext);
+export default function Profile({ onLogout }) {
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   console.log(currentUser);
 
   const methods = useForm({ values: { name: currentUser.name, email: currentUser.email }, mode: 'onChange' });
@@ -23,8 +21,6 @@ export default function Profile() {
     register,
     formState: { errors, isValid },
   } = methods;
-
-  const navigate = useNavigate();
 
   const [editUserInfo, setEditUserInfo] = useState(false);
 
@@ -40,8 +36,7 @@ export default function Profile() {
 
   const logoutClickHandler = (e) => {
     e.preventDefault();
-    setLoggedIn(false);
-    navigate('/', { replace: true });
+    onLogout();
   };
 
   useEffect(() => {

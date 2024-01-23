@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import './App.css';
 import Main from '../Main/Main';
@@ -13,12 +13,15 @@ import NotFound from '../NotFound/NotFound';
 
 import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
 
-import { user } from './../../constants/db_mock';
+// import { user } from './../../constants/db_mock';
 import mainApi from './../../utils/MainApi';
 
 function App() {
-  const loggedInFromStorage = JSON.parse(localStorage.getItem('loggedIn'));
-  const [loggedIn, setLoggedIn] = useState(JSON.parse(loggedInFromStorage));
+  const navigate = useNavigate();
+
+  // const loggedInFromStorage = JSON.parse(localStorage.getItem('loggedIn'));
+  // const [loggedIn, setLoggedIn] = useState(JSON.parse(loggedInFromStorage));
+  const [loggedIn, setLoggedIn] = useState(false);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
 
   const [currentUser, setCurrentUser] = useState({
@@ -26,22 +29,88 @@ function App() {
     email: '...',
   });
 
-  useEffect(() => {
-    mainApi.setAuthorizationHeader(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg4NGI0YTNiYzVjY2JlMWNjY2Y0MTEiLCJpYXQiOjE3MDU5NDQ5MzAsImV4cCI6MTcwNjU0OTczMH0.iPhZ46_YR_0R2za7Wmi8Y3D0K8i7E0AP9sxiIcUPkeU',
-    );
+  function authToken(token) {
+    const path = location.pathname;
     mainApi
-      .getMovies()
-      .then((savedMovies) => {
-        setSavedMoviesList(savedMovies);
+      .getUserInfo(token)
+      .then((res) => {
+        if (!res.ok) {
+          console.log('🚀 ~ .then ~ res:', res);
+          return res.json().then((err) => {
+            return Promise.reject(`Ошибка: ${res.status} ${err.message}`);
+          });
+        } else {
+          setLoggedIn(true);
+          localStorage.setItem('loggedIn', 'true');
+        }
       })
-      .catch((err) => console.error('ОШИБКА СЕРВЕРА', err));
+      .catch((err) => {
+        console.error('ВОТ ЭТА!!', err);
+        navigate(path, { replace: true });
+      });
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      authToken(token);
+    }
   }, []);
 
   useEffect(() => {
-    setCurrentUser(user); // mockup user data
-    localStorage.setItem('loggedIn', 'true');
+    if (loggedIn) {
+      const token = localStorage.getItem('token');
+      mainApi.setAuthorizationHeader(token);
+      Promise.all([mainApi.getUserInfo(token), mainApi.getMovies()])
+        .then(([userData, savedMovies]) => {
+          console.log('🚀 ~ .then ~ savedMovies:', savedMovies);
+          console.log('🚀 ~ .then ~ userData:', userData);
+          setCurrentUser(userData);
+          setSavedMoviesList(savedMovies);
+        })
+        .catch((err) => console.error(err));
+    }
   }, [loggedIn]);
+
+  function handleLogin({ email, password }) {
+    return mainApi.authorize({ email, password }).then((res) => {
+      if (!res.ok) {
+        return res.json().then((err) => {
+          return Promise.reject(`Ошибка: ${res.status} ${err.message}`);
+        });
+      } else {
+        return res.json().then((res) => {
+          setLoggedIn(true);
+          localStorage.setItem('token', res.token);
+          navigate('/movies');
+        });
+      }
+    });
+  }
+
+  function handleRegister({ name, email, password }) {
+    return mainApi.register({ name, email, password }).then((res) => {
+      if (!res.ok) {
+        return res.json().then((err) => {
+          return Promise.reject(`Ошибка: ${res.status} ${err.message}`);
+        });
+      } else {
+        return res.json().then((res) => {
+          if (res._id) {
+            handleLogin({ email, password });
+          }
+        });
+      }
+    });
+  }
+
+  function handleLogout() {
+    setLoggedIn(false);
+    setCurrentUser({});
+    localStorage.setItem('loggedIn', 'false');
+    localStorage.removeItem('token');
+    navigate('/signin', { replace: true });
+  }
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loggedIn, setLoggedIn }}>
@@ -54,13 +123,13 @@ function App() {
           <Route path="saved-movies" savedMoviesList={savedMoviesList} element={<SavedMovies />} />
         </Route>
 
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile" element={<Profile onLogout={handleLogout} />} />
 
         <Route path="*" element={<NotFound />} />
 
-        <Route path="signin" element={<Login />} />
+        <Route path="signin" element={<Login onLogin={handleLogin} />} />
 
-        <Route path="signup" element={<Register />} />
+        <Route path="signup" element={<Register onRegister={handleRegister} />} />
       </Routes>
     </CurrentUserContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import logo from './../../images/logo.svg';
 import FormAuth from '../AuthForm/AuthForm';
@@ -11,9 +11,15 @@ import { inputPlaceholders } from './../../constants/constants';
 const { nameValidOptions, emailValidOptions, passwordValidOptions } = validationOptions;
 const { userNamePlaceholder, emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
-export default function Register() {
+export default function Register({ onRegister }) {
+  const navigate = useNavigate();
+
   const onSubmit = (data) => {
-    console.log(data);
+    onRegister(data)
+      .then(() => {
+        navigate('/movies');
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -35,7 +41,6 @@ export default function Register() {
               ...nameValidOptions,
               onBlur: (e) => {
                 e.target.value = e.target.value.trim();
-                console.log(e.target.value);
               },
             }}
             labelText="Имя"

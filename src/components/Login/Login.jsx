@@ -11,9 +11,9 @@ import { inputPlaceholders } from './../../constants/constants';
 const { emailValidOptions, passwordValidOptions } = validationOptions;
 const { emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
-export default function Login() {
+export default function Login({ onLogin }) {
   const onSubmitHandler = (data) => {
-    console.log(data);
+    onLogin(data);
   };
 
   return (
