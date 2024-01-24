@@ -13,7 +13,6 @@ const { nameValidOptions, emailValidOptions } = validationOptions;
 
 export default function Profile({ onLogout }) {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  console.log(currentUser);
 
   const methods = useForm({ values: { name: currentUser.name, email: currentUser.email }, mode: 'onChange' });
   const {

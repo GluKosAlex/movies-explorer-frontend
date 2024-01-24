@@ -4,7 +4,14 @@ import { useForm } from 'react-hook-form';
 import './AuthForm.css';
 import MyButton from '../ui/MyButton/MyButton';
 
-export default function AuthForm({ submitBtnText, defaultValues, className: classList, onSubmit, children }) {
+export default function AuthForm({
+  submitBtnText,
+  defaultValues,
+  className: classList,
+  onSubmit,
+  errorMessage,
+  children,
+}) {
   const methods = useForm({ defaultValues, mode: 'all', reValidateMode: 'onChange' });
   const {
     handleSubmit,
@@ -13,6 +20,7 @@ export default function AuthForm({ submitBtnText, defaultValues, className: clas
     formState: { errors, isValid },
   } = methods;
 
+  console.log(errorMessage.message);
   return (
     <form
       className={`auth-form ${classList}`}
@@ -40,6 +48,7 @@ export default function AuthForm({ submitBtnText, defaultValues, className: clas
             : child;
         })}
       </ul>
+      {errorMessage && <p>{errorMessage.message}</p>}
       <MyButton className="auth-form__btn" disabled={!isValid}>
         {submitBtnText}
       </MyButton>

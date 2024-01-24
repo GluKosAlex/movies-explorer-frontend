@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import './App.css';
+
 import Main from '../Main/Main';
 import Layout from '../Layout/Layout';
 import Movies from '../Movies/Movies';
@@ -13,7 +14,6 @@ import NotFound from '../NotFound/NotFound';
 
 import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
 
-// import { user } from './../../constants/db_mock';
 import mainApi from './../../utils/MainApi';
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
   // const [loggedIn, setLoggedIn] = useState(JSON.parse(loggedInFromStorage));
   const [loggedIn, setLoggedIn] = useState(false);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [currentUser, setCurrentUser] = useState({
     name: '...',
@@ -32,10 +33,9 @@ function App() {
   function authToken(token) {
     const path = location.pathname;
     mainApi
-      .getUserInfo(token)
+      .tokenCheck(token)
       .then((res) => {
         if (!res.ok) {
-          console.log('🚀 ~ .then ~ res:', res);
           return res.json().then((err) => {
             return Promise.reject(`Ошибка: ${res.status} ${err.message}`);
           });
@@ -45,7 +45,7 @@ function App() {
         }
       })
       .catch((err) => {
-        console.error('ВОТ ЭТА!!', err);
+        console.error(err);
         navigate(path, { replace: true });
       });
   }
@@ -60,11 +60,10 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       const token = localStorage.getItem('token');
+
       mainApi.setAuthorizationHeader(token);
-      Promise.all([mainApi.getUserInfo(token), mainApi.getMovies()])
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
         .then(([userData, savedMovies]) => {
-          console.log('🚀 ~ .then ~ savedMovies:', savedMovies);
-          console.log('🚀 ~ .then ~ userData:', userData);
           setCurrentUser(userData);
           setSavedMoviesList(savedMovies);
         })
@@ -82,6 +81,7 @@ function App() {
         return res.json().then((res) => {
           setLoggedIn(true);
           localStorage.setItem('token', res.token);
+          localStorage.setItem('loggedIn', 'true');
           navigate('/movies');
         });
       }
@@ -127,9 +127,23 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
 
-        <Route path="signin" element={<Login onLogin={handleLogin} />} />
+        <Route
+          path="signin"
+          element={
+            <Login onLogin={handleLogin} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
+          }
+        />
 
-        <Route path="signup" element={<Register onRegister={handleRegister} />} />
+        <Route
+          path="signup"
+          element={
+            <Register
+              onRegister={handleRegister}
+              errorMessage={errorMessage}
+              setErrorMessage={setErrorMessage}
+            />
+          }
+        />
       </Routes>
     </CurrentUserContext.Provider>
   );

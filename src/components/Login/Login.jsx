@@ -11,9 +11,12 @@ import { inputPlaceholders } from './../../constants/constants';
 const { emailValidOptions, passwordValidOptions } = validationOptions;
 const { emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin, errorMessage, setErrorMessage }) {
   const onSubmitHandler = (data) => {
-    onLogin(data);
+    onLogin(data).catch((err) => {
+      console.error(err);
+      setErrorMessage(err);
+    });
   };
 
   return (
@@ -28,7 +31,12 @@ export default function Login({ onLogin }) {
         </a>
         <h1 className="login__title">Рады видеть!</h1>
 
-        <FormAuth className="login__form" submitBtnText={'Войти'} onSubmit={onSubmitHandler}>
+        <FormAuth
+          className="login__form"
+          submitBtnText={'Войти'}
+          onSubmit={onSubmitHandler}
+          errorMessage={errorMessage}
+        >
           <AuthInput
             name={'email'}
             registerOptions={emailValidOptions}
