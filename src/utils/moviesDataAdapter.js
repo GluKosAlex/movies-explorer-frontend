@@ -1,3 +1,5 @@
+import { movieApiURL } from './../constants/constants.js';
+
 const moviesDataAdapter = (movie) => {
   const {
     country,
@@ -7,7 +9,6 @@ const moviesDataAdapter = (movie) => {
     description,
     image,
     trailerLink,
-    thumbnail,
     nameRU,
     nameEN,
     id: movieId,
@@ -19,12 +20,12 @@ const moviesDataAdapter = (movie) => {
     duration,
     year,
     description,
-    image,
+    image: `${movieApiURL}${image.url}`,
     trailerLink,
-    thumbnail,
+    thumbnail: `${movieApiURL}${image.formats.thumbnail.url}`,
     nameRU,
     nameEN,
-    id: movieId,
+    movieId,
   };
 };
 

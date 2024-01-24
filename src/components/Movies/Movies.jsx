@@ -1,4 +1,6 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, useContext } from 'react';
+
+import { MoviesContext } from '../../contexts/MoviesContext.js';
 
 import { useFilteredMovies } from './../../hooks/useFilteredMovies';
 import { useViewport } from './../../hooks/useViewport';
@@ -19,13 +21,15 @@ import {
   getStoreSearchedMovies,
 } from './../../utils/storeMovieSearchData';
 import moviesDataAdapter from './../../utils/moviesDataAdapter';
-import flagSavedMovies from './../../utils/flagSavedMovies';
 
 import { movieSearchErrorMessages } from './../../constants/constants.js';
 import { CONFIG } from './../../constants/config.js';
+
 const { screenBreakPoints, initialCountToShow, stepsToShow } = CONFIG;
 
-export default function Movies({ moviesList, setMoviesList, savedMoviesList }) {
+export default function Movies() {
+  const { moviesList, setMoviesList, savedMoviesList } = useContext(MoviesContext);
+
   const { width } = useViewport(); // Detect width of client's screen
   const { initialCount, nextCount } = useCountToShow(
     width,
@@ -94,10 +98,9 @@ export default function Movies({ moviesList, setMoviesList, savedMoviesList }) {
 
   const getMoviesToShow = (movies, savedMovies, start, end) => {
     const slicedMovies = movies.slice(start, end);
-    const adaptedMovies = slicedMovies.map((item) => moviesDataAdapter(item));
-    const slicedAndFlaggedMovies = flagSavedMovies(adaptedMovies, savedMovies);
+    const adaptedAndSlicedMovies = slicedMovies.map((item) => moviesDataAdapter(item));
     arrayForFlaggedMovies.current =
-      start === 0 ? slicedAndFlaggedMovies : [...arrayForFlaggedMovies.current, ...slicedAndFlaggedMovies];
+      start === 0 ? adaptedAndSlicedMovies : [...arrayForFlaggedMovies.current, ...adaptedAndSlicedMovies];
     return arrayForFlaggedMovies.current;
   };
 

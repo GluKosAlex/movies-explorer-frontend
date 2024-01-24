@@ -2,7 +2,6 @@ import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 
 import { useFilteredMovies } from './../../hooks/useFilteredMovies';
 
-import { MoviesFilterContext } from './../../contexts/MoviesFilterContext';
 import { MoviesContext } from './../../contexts/MoviesContext';
 
 import MoviesCardList from './../MoviesCardList/MoviesCardList';
@@ -14,7 +13,7 @@ import './SavedMovies.css';
 import { CONFIG } from './../../constants/config';
 
 export default function SavedMovies() {
-  const { moviesFilter } = useContext(MoviesFilterContext);
+  const { moviesFilter } = useContext(MoviesContext);
   const { savedMoviesList } = useContext(MoviesContext);
 
   const { screenBreakPoints, stepsToShow } = CONFIG;
