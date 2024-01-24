@@ -18,6 +18,8 @@ import {
   getStoreMovieSearchQuery,
   getStoreSearchedMovies,
 } from './../../utils/storeMovieSearchData';
+import moviesDataAdapter from './../../utils/moviesDataAdapter';
+import flagSavedMovies from './../../utils/flagSavedMovies';
 
 import { movieSearchErrorMessages } from './../../constants/constants.js';
 import { CONFIG } from './../../constants/config.js';
@@ -90,20 +92,10 @@ export default function Movies({ moviesList, setMoviesList, savedMoviesList }) {
     i >= sortedAndSearchedMovies.length ? setIsCompleted(true) : setIsCompleted(false);
   };
 
-  const flagSavedMovies = (movies, savedMovies) => {
-    const flaggedMovies = movies.map((movie) => {
-      return savedMovies?.some((savedMovie) => {
-        return savedMovie.movieId === movie.movieId;
-      })
-        ? { ...movie, saved: true }
-        : { ...movie, saved: false };
-    });
-    return flaggedMovies;
-  };
-
   const getMoviesToShow = (movies, savedMovies, start, end) => {
     const slicedMovies = movies.slice(start, end);
-    const slicedAndFlaggedMovies = flagSavedMovies(slicedMovies, savedMovies);
+    const adaptedMovies = slicedMovies.map((item) => moviesDataAdapter(item));
+    const slicedAndFlaggedMovies = flagSavedMovies(adaptedMovies, savedMovies);
     arrayForFlaggedMovies.current =
       start === 0 ? slicedAndFlaggedMovies : [...arrayForFlaggedMovies.current, ...slicedAndFlaggedMovies];
     return arrayForFlaggedMovies.current;
