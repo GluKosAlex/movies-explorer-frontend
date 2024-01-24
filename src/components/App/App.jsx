@@ -22,6 +22,7 @@ function App() {
   // const loggedInFromStorage = JSON.parse(localStorage.getItem('loggedIn'));
   // const [loggedIn, setLoggedIn] = useState(JSON.parse(loggedInFromStorage));
   const [loggedIn, setLoggedIn] = useState(false);
+  const [moviesList, setMoviesList] = useState([]); // All movies fetched from server
   const [savedMoviesList, setSavedMoviesList] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -107,8 +108,8 @@ function App() {
   function handleLogout() {
     setLoggedIn(false);
     setCurrentUser({});
+    localStorage.clear();
     localStorage.setItem('loggedIn', 'false');
-    localStorage.removeItem('token');
     navigate('/signin', { replace: true });
   }
 
@@ -118,9 +119,18 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
 
-          <Route path="movies" savedMoviesList={savedMoviesList} element={<Movies />} />
+          <Route
+            path="movies"
+            element={
+              <Movies
+                moviesList={moviesList}
+                setMoviesList={setMoviesList}
+                savedMoviesList={savedMoviesList}
+              />
+            }
+          />
 
-          <Route path="saved-movies" savedMoviesList={savedMoviesList} element={<SavedMovies />} />
+          <Route path="saved-movies" element={<SavedMovies savedMoviesList={savedMoviesList} />} />
         </Route>
 
         <Route path="profile" element={<Profile onLogout={handleLogout} />} />

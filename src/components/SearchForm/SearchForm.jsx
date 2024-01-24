@@ -10,7 +10,7 @@ const { movieSearchValidOptions } = validationOptions;
 
 export default function SearchForm({ onSearchFormSubmit, onIsShortChangeHandler, moviesFilter }) {
   const methods = useForm({
-    defaultValues: { search: '', isShort: false },
+    defaultValues: { search: moviesFilter.query, isShort: moviesFilter.isShort },
     value: { search: moviesFilter.query, isShort: moviesFilter.isShort },
     mode: 'onSubmit',
   });

@@ -20,7 +20,7 @@
   color: var(--main-error-color);
 }
 
-.movies__more-btn {
+.movies__more-btn.button {
   min-width: 240px;
   padding: 10px;
   margin: 0 auto;
