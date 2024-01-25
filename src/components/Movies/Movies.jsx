@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback, useContext } from 'react';
+import { useEffect, useState, useCallback, useContext } from 'react';
 
 import { MoviesContext } from '../../contexts/MoviesContext.js';
 
@@ -20,15 +20,16 @@ import {
   getStoreMovieSearchQuery,
   getStoreSearchedMovies,
 } from './../../utils/storeMovieSearchData';
-import moviesDataAdapter from './../../utils/moviesDataAdapter';
+// import getMoviesToShow from './../../utils/getMoviesToShow';
 
 import { movieSearchErrorMessages } from './../../constants/constants.js';
 import { CONFIG } from './../../constants/config.js';
+import moviesDataAdapter from './../../utils/moviesDataAdapter';
 
 const { screenBreakPoints, initialCountToShow, stepsToShow } = CONFIG;
 
 export default function Movies() {
-  const { moviesList, setMoviesList, savedMoviesList } = useContext(MoviesContext);
+  const { moviesList, setMoviesList } = useContext(MoviesContext);
 
   const { width } = useViewport(); // Detect width of client's screen
   const { initialCount, nextCount } = useCountToShow(
@@ -45,36 +46,55 @@ export default function Movies() {
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [isCompleted, setIsCompleted] = useState(true);
   const [isApiError, setIsApiError] = useState(false);
+  const [sortedAndSearchedMovies, setSortedAndSearchedMovies] = useState([]);
 
   const [index, setIndex] = useState(initialCount); // Index of the last showed movie
-  let sortedAndSearchedMovies = useFilteredMovies(moviesList, moviesFilter.query, moviesFilter.isShort); // Array of searched and filtered movies
-
-  const arrayForFlaggedMovies = useRef([]);
+  const sortedAndSearched = useFilteredMovies(moviesList, moviesFilter.query, moviesFilter.isShort); // Array of searched and filtered movies
 
   useEffect(() => {
-    const searchedMoviesFromStore = getStoreSearchedMovies(); // Get Searched movies from localStorage
-    if (searchedMoviesFromStore) {
-      sortedAndSearchedMovies = searchedMoviesFromStore;
+    const searchedMoviesFormStore = getStoreSearchedMovies();
+    if (searchedMoviesFormStore) {
+      setSortedAndSearchedMovies(searchedMoviesFormStore);
     }
   }, []);
 
   useEffect(() => {
+    if (sortedAndSearched.length !== 0) {
+      setSortedAndSearchedMovies(sortedAndSearched);
+    }
+  }, [moviesFilter.query, moviesFilter.isShort]);
+
+  useEffect(() => {
     setIndex(initialCount); // Reset count of movies to show
-    setMoviesToShow(getMoviesToShow(sortedAndSearchedMovies, savedMoviesList, 0, index));
+    setMoviesToShow(getMoviesToShow(sortedAndSearchedMovies, moviesToShow, 0, index));
     checkIfCompleted(initialCount);
-    setStoreSearchedMovies(sortedAndSearchedMovies);
-  }, [moviesFilter.query, moviesFilter.isShort, sortedAndSearchedMovies]);
+    if (sortedAndSearchedMovies.length !== 0) {
+      setStoreSearchedMovies(sortedAndSearchedMovies);
+    }
+  }, [sortedAndSearchedMovies]);
+
+  const checkIfCompleted = (i) => {
+    i >= sortedAndSearchedMovies.length ? setIsCompleted(true) : setIsCompleted(false);
+  };
+
+  const getMoviesToShow = (movies, showedMovies, start, end) => {
+    const slicedMovies = movies.slice(start, end);
+    const result = start === 0 ? slicedMovies : [...showedMovies, ...slicedMovies];
+    return result;
+  };
 
   const searchFormSubmitHandler = (data) => {
+    const newMoviesFilter = { ...moviesFilter, query: data.search };
     if (moviesList.length === 0) {
       setIsLoading(true);
       movieApi
         .getMovies()
         .then((movies) => {
-          setMoviesList(movies);
+          const adaptedMovies = movies.map((movie) => moviesDataAdapter(movie)); // Convert movies data for frontend and main api
+          setMoviesList(adaptedMovies);
           setIsApiError(false);
-          setStoreMovieSearchQuery({ ...moviesFilter, query: data.search });
-          setMoviesFilter({ ...moviesFilter, query: data.search });
+          setStoreMovieSearchQuery(newMoviesFilter);
+          setMoviesFilter(newMoviesFilter);
         })
         .catch((err) => {
           console.error(err);
@@ -82,33 +102,22 @@ export default function Movies() {
         })
         .finally(() => setIsLoading(false));
     } else {
-      setStoreMovieSearchQuery({ ...moviesFilter, query: data.search });
-      setMoviesFilter({ ...moviesFilter, query: data.search });
+      setStoreMovieSearchQuery(newMoviesFilter);
+      setMoviesFilter(newMoviesFilter);
     }
   };
 
   const isShortChangeHandler = (e) => {
-    setMoviesFilter({ ...moviesFilter, isShort: e.target.checked });
-    setStoreMovieSearchQuery({ ...moviesFilter, isShort: e.target.checked });
-  };
-
-  const checkIfCompleted = (i) => {
-    i >= sortedAndSearchedMovies.length ? setIsCompleted(true) : setIsCompleted(false);
-  };
-
-  const getMoviesToShow = (movies, savedMovies, start, end) => {
-    const slicedMovies = movies.slice(start, end);
-    const adaptedAndSlicedMovies = slicedMovies.map((item) => moviesDataAdapter(item));
-    arrayForFlaggedMovies.current =
-      start === 0 ? adaptedAndSlicedMovies : [...arrayForFlaggedMovies.current, ...adaptedAndSlicedMovies];
-    return arrayForFlaggedMovies.current;
+    const newMoviesFilter = { ...moviesFilter, isShort: e.target.checked };
+    setMoviesFilter(newMoviesFilter);
+    setStoreMovieSearchQuery(newMoviesFilter);
   };
 
   const showMoreHandler = useCallback(() => {
-    setMoviesToShow(getMoviesToShow(sortedAndSearchedMovies, savedMoviesList, index, index + nextCount));
+    setMoviesToShow(getMoviesToShow(sortedAndSearchedMovies, moviesToShow, index, index + nextCount));
     setIndex(index + nextCount);
     checkIfCompleted(index + nextCount);
-  }, [index, nextCount, sortedAndSearchedMovies]);
+  }, [index, nextCount, sortedAndSearchedMovies, moviesToShow]);
 
   return (
     <main className="page__content main">
