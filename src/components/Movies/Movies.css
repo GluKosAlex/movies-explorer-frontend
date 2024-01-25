@@ -20,24 +20,6 @@
   color: var(--main-error-color);
 }
 
-.movies__more-btn.button {
-  min-width: 240px;
-  padding: 10px;
-  margin: 0 auto;
-  margin-top: 50px;
-  margin-bottom: 80px;
-
-  color: var(--main-text-color, #fff);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: normal;
-
-  text-align: center;
-  border-radius: 6px;
-  border: 1px solid var(--main-footer-line-color, #424242);
-  background-color: transparent;
-}
-
 @media screen and (min-width: 768px) {
   .movies {
     padding: 70px 30px 0px;
@@ -45,10 +27,6 @@
 
   .movies__message {
     font-size: 16px;
-  }
-
-  .movies__more-btn {
-    min-width: 320px;
   }
 }
 

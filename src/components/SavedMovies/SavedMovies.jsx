@@ -2,58 +2,33 @@ import { useEffect, useState, useRef, useCallback, useContext } from 'react';
 
 import { MoviesContext } from '../../contexts/MoviesContext.js';
 
-import { useFilteredMovies } from './../../hooks/useFilteredMovies';
-import { useViewport } from './../../hooks/useViewport';
-import { useCountToShow } from './../../hooks/useCountToShow';
-
 import './SavedMovies.css';
 
 import Preloader from './../Preloader/Preloader';
 import SearchForm from './../SearchForm/SearchForm';
 import MoviesCardList from './../MoviesCardList/MoviesCardList';
-import MyButton from './../ui/MyButton/MyButton';
 
-import getMoviesToShow from './../../utils/getMoviesToShow';
-
+import { filterMoviesByName, filterShortMovies } from './../../utils/filterMovies.js';
 import { movieSearchErrorMessages } from './../../constants/constants.js';
-import { CONFIG } from './../../constants/config.js';
-
-const { screenBreakPoints, initialCountToShow, stepsToShow } = CONFIG;
 
 export default function SavedMovies() {
   const { savedMoviesList } = useContext(MoviesContext);
 
-  const { width } = useViewport(); // Detect width of client's screen
-  const { initialCount, nextCount } = useCountToShow(
-    width,
-    screenBreakPoints,
-    initialCountToShow,
-    stepsToShow,
-  ); // Get count of movies to show depending on screen width
-
   const [moviesFilter, setMoviesFilter] = useState({ query: '', isShort: false }); // Search form data
-  // const [isLoading, setIsLoading] = useState(false); // Loading state for Preloader
-  const [moviesToShow, setMoviesToShow] = useState([]);
-  const [isCompleted, setIsCompleted] = useState(true);
-
-  const [index, setIndex] = useState(initialCount); // Index of the last showed movie
-  let sortedAndSearchedMovies = useFilteredMovies(savedMoviesList, moviesFilter.query, moviesFilter.isShort); // Array of searched and filtered movies
-
-  const arrayForHoldingSavedMovies = useRef([]);
-
-  useEffect(() => {
-    console.log('🚀 ~ SavedMovies ~ moviesToShow:', moviesToShow);
-    setIndex(initialCount); // Reset count of movies to show
-    setMoviesToShow(getMoviesToShow(sortedAndSearchedMovies, arrayForHoldingSavedMovies.current, 0, index));
-    checkIfCompleted(initialCount);
-  }, [moviesFilter.query, moviesFilter.isShort]);
-
-  const checkIfCompleted = (i) => {
-    i >= sortedAndSearchedMovies.length ? setIsCompleted(true) : setIsCompleted(false);
-  };
+  const [searchedMovies, setSearchedMovies] = useState([]);
+  const [moviesToRender, setMoviesToRender] = useState([]);
 
   const searchFormSubmitHandler = (data) => {
-    setMoviesFilter({ ...moviesFilter, query: data.search });
+    const newMoviesFilter = { ...moviesFilter, query: data.search };
+
+    const filteredMoviesByName = filterMoviesByName(savedMoviesList, newMoviesFilter.query);
+    setSearchedMovies(filteredMoviesByName);
+    if (!newMoviesFilter.isShort) {
+      setMoviesToRender(filteredMoviesByName);
+    } else {
+      const filteredMoviesByNameAndShort = filterShortMovies(filteredMoviesByName);
+      setMoviesToRender(filteredMoviesByNameAndShort);
+    }
   };
 
   const isShortChangeHandler = (e) => {
