@@ -25,7 +25,6 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [moviesList, setMoviesList] = useState([]); // All movies fetched from server
   const [savedMoviesList, setSavedMoviesList] = useState([]); // Saved movies
-  console.log('🚀 ~ App ~ savedMoviesList:', savedMoviesList);
   const [errorMessage, setErrorMessage] = useState('');
 
   const [currentUser, setCurrentUser] = useState({
