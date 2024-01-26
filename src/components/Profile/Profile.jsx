@@ -28,8 +28,11 @@ export default function Profile({ onLogout }) {
   const [apiErrorMessage, setApiErrorMessage] = useState(apiErrorMessages.userEditError);
 
   const getErrorMessage = (err) => {
+    console.log('🚀 ~ getErrorMessage ~ err:', err);
     if (err.message === 'Validation failed') {
       return `Не корректно введено значение ${err.validation.body.keys.join(', ')}`;
+    } else if (err.message) {
+      return err.message;
     } else {
       return apiErrorMessages.userEditError;
     }
@@ -53,7 +56,7 @@ export default function Profile({ onLogout }) {
         const message = getErrorMessage(err);
         setApiErrorMessage(message);
       })
-      .finally();
+      .finally(setApiError(false));
   };
 
   const logoutClickHandler = (e) => {

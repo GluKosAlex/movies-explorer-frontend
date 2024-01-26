@@ -21,8 +21,19 @@
   margin-bottom: 0;
 }
 
-.auth-form__btn {
+.auth-form__error {
+  min-height: 16px;
+  margin: 0;
   margin-top: auto;
+
+  color: var(--main-error-color);
+  font-size: 12px;
+  line-height: normal;
+  text-align: center;
+}
+
+.auth-form__btn {
+  margin-top: 14px;
 
   color: var(--main-text-color, #fff);
   text-align: center;
@@ -33,9 +44,15 @@
 
 @media screen and (min-width: 768px) {
   .auth-form__btn {
-    margin-top: 69px;
+    margin-top: 16px;
     font-size: 14px;
     padding: 13px 15px 15px;
+  }
+
+  .auth-form__error {
+    margin-top: 36px;
+    min-height: 17px;
+    font-size: 14px;
   }
 }
 

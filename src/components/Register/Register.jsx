@@ -11,18 +11,13 @@ import { inputPlaceholders } from './../../constants/constants';
 const { nameValidOptions, emailValidOptions, passwordValidOptions } = validationOptions;
 const { userNamePlaceholder, emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
-export default function Register({ onRegister, errorMessage, setErrorMessage }) {
+export default function Register({ onRegister }) {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    onRegister(data)
-      .then(() => {
-        navigate('/movies');
-      })
-      .catch((err) => {
-        console.error(err);
-        setErrorMessage(err);
-      });
+    return onRegister(data).then(() => {
+      navigate('/movies');
+    });
   };
 
   return (
@@ -37,12 +32,7 @@ export default function Register({ onRegister, errorMessage, setErrorMessage }) 
         </a>
         <h1 className="register__title">Добро пожаловать!</h1>
 
-        <FormAuth
-          className="register__form"
-          submitBtnText={'Зарегистрироваться'}
-          onSubmit={onSubmit}
-          errorMessage={errorMessage}
-        >
+        <FormAuth className="register__form" submitBtnText={'Зарегистрироваться'} onSubmit={onSubmit}>
           <AuthInput
             name={'name'}
             registerOptions={{

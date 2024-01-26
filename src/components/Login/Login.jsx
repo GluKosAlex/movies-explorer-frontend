@@ -11,14 +11,7 @@ import { inputPlaceholders } from './../../constants/constants';
 const { emailValidOptions, passwordValidOptions } = validationOptions;
 const { emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
-export default function Login({ onLogin, errorMessage, setErrorMessage }) {
-  const onSubmitHandler = (data) => {
-    onLogin(data).catch((err) => {
-      console.error(err);
-      setErrorMessage(err);
-    });
-  };
-
+export default function Login({ onLogin }) {
   return (
     <>
       <main className="login">
@@ -31,12 +24,7 @@ export default function Login({ onLogin, errorMessage, setErrorMessage }) {
         </a>
         <h1 className="login__title">Рады видеть!</h1>
 
-        <FormAuth
-          className="login__form"
-          submitBtnText={'Войти'}
-          onSubmit={onSubmitHandler}
-          errorMessage={errorMessage}
-        >
+        <FormAuth className="login__form" submitBtnText={'Войти'} onSubmit={onLogin}>
           <AuthInput
             name={'email'}
             registerOptions={emailValidOptions}

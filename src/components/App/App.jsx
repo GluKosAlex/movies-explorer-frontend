@@ -13,9 +13,9 @@ import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
 
 import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
+import { MoviesContext } from '../../contexts/MoviesContext.js';
 
 import mainApi from './../../utils/MainApi';
-import { MoviesContext } from '../../contexts/MoviesContext.js';
 
 function App() {
   const navigate = useNavigate();
@@ -25,7 +25,6 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [moviesList, setMoviesList] = useState([]); // All movies fetched from server
   const [savedMoviesList, setSavedMoviesList] = useState([]); // Saved movies
-  const [errorMessage, setErrorMessage] = useState('');
 
   const [currentUser, setCurrentUser] = useState({
     name: '...',
@@ -76,9 +75,7 @@ function App() {
   function handleLogin({ email, password }) {
     return mainApi.authorize({ email, password }).then((res) => {
       if (!res.ok) {
-        return res.json().then((err) => {
-          return Promise.reject(`Ошибка: ${res.status} ${err.message}`);
-        });
+        return Promise.reject(res);
       } else {
         return res.json().then((res) => {
           setLoggedIn(true);
@@ -93,9 +90,7 @@ function App() {
   function handleRegister({ name, email, password }) {
     return mainApi.register({ name, email, password }).then((res) => {
       if (!res.ok) {
-        return res.json().then((err) => {
-          return Promise.reject(`Ошибка: ${res.status} ${err.message}`);
-        });
+        return Promise.reject(res);
       } else {
         return res.json().then((res) => {
           if (res._id) {
@@ -120,16 +115,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Main />} />
-            <Route
-              path="movies"
-              element={
-                <Movies
-                // moviesList={moviesList}
-                // setMoviesList={setMoviesList}
-                // savedMoviesList={savedMoviesList}
-                />
-              }
-            />
+            <Route path="movies" element={<Movies />} />
 
             <Route path="saved-movies" element={<SavedMovies />} />
           </Route>
@@ -137,23 +123,9 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
 
-          <Route
-            path="signin"
-            element={
-              <Login onLogin={handleLogin} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
-            }
-          />
+          <Route path="signin" element={<Login onLogin={handleLogin} />} />
 
-          <Route
-            path="signup"
-            element={
-              <Register
-                onRegister={handleRegister}
-                errorMessage={errorMessage}
-                setErrorMessage={setErrorMessage}
-              />
-            }
-          />
+          <Route path="signup" element={<Register onRegister={handleRegister} />} />
         </Routes>
       </MoviesContext.Provider>
     </CurrentUserContext.Provider>
