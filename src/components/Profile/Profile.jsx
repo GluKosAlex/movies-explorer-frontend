@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form';
 
 import { CurrentUserContext } from './../../contexts/CurrentUserContext';
 
-import Header from '../Header/Header';
-import MyButton from '../ui/MyButton/MyButton';
+import Header from './../Header/Header';
+import MyButton from './../ui/MyButton/MyButton';
 
 import './Profile.css';
-import { validationOptions } from './../../constants/validationOptions';
+import { validationOptions } from './../../constants/validationOptions.js';
+import mainApi from './../../utils/MainApi.js';
+import { apiErrorMessages } from './../../constants/constants.js';
 
 const { nameValidOptions, emailValidOptions } = validationOptions;
 
@@ -18,10 +20,20 @@ export default function Profile({ onLogout }) {
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
   } = methods;
 
   const [editUserInfo, setEditUserInfo] = useState(false);
+  const [apiError, setApiError] = useState(false);
+  const [apiErrorMessage, setApiErrorMessage] = useState(apiErrorMessages.userEditError);
+
+  const getErrorMessage = (err) => {
+    if (err.message === 'Validation failed') {
+      return `Не корректно введено значение ${err.validation.body.keys.join(', ')}`;
+    } else {
+      return apiErrorMessages.userEditError;
+    }
+  };
 
   const editUserInfoHandler = (e) => {
     e.preventDefault();
@@ -29,8 +41,19 @@ export default function Profile({ onLogout }) {
   };
 
   const formSubmitHandler = (data) => {
-    setCurrentUser(data);
-    setEditUserInfo(false);
+    mainApi
+      .setUserInfo(data)
+      .then(({ name, email }) => {
+        setCurrentUser({ name, email });
+        setApiError(false);
+        setEditUserInfo(false);
+      })
+      .catch((err) => {
+        setApiError(true);
+        const message = getErrorMessage(err);
+        setApiErrorMessage(message);
+      })
+      .finally();
   };
 
   const logoutClickHandler = (e) => {
@@ -80,11 +103,11 @@ export default function Profile({ onLogout }) {
             </li>
           </ul>
           <p className={`profile__api-error ${!editUserInfo && 'profile__hidden-block'}`}>
-            {'При обновлении профиля произошла ошибка.'}
+            {apiError && apiErrorMessage}
           </p>
           <MyButton
             className={`profile__form-submit ${!editUserInfo && 'profile__hidden-block'}`}
-            disabled={!isValid}
+            disabled={!isValid || !isDirty}
           >
             Сохранить
           </MyButton>

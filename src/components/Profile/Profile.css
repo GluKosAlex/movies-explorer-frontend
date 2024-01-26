@@ -69,6 +69,10 @@
   border: none;
 }
 
+.profile__input:disabled {
+  opacity: 0.6;
+}
+
 .profile__input-error {
   position: absolute;
   max-width: 300px;
@@ -84,6 +88,7 @@
 .profile__api-error {
   margin: 0;
   padding: 0;
+  min-height: 14px;
   margin-top: auto;
 
   color: var(--main-error-color, #ee3465);

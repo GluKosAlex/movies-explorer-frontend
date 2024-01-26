@@ -38,7 +38,15 @@ class MainApi {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({ name, email }),
-    }).then(this._getResponse);
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return res.json().then((err) => {
+          return Promise.reject(err);
+        });
+      }
+    });
   }
 
   // Create new user
