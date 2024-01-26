@@ -45,3 +45,5 @@ npm start
 - [Фронтенд](glukosmovies.nomoredomainsmonster.ru)
 
 - [Бэкенд](api.glukosmovies.nomoredomainsmonster.ru)
+
+- [Пул-реквест](https://github.com/GluKosAlex/movies-explorer-frontend/pull/2)
