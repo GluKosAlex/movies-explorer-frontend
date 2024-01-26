@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { MoviesContext } from '../../contexts/MoviesContext.js';
 
@@ -11,11 +11,16 @@ import { filterMoviesByName, filterShortMovies } from './../../utils/filterMovie
 import { movieSearchErrorMessages } from './../../constants/constants.js';
 
 export default function SavedMovies() {
-  const { savedMoviesList } = useContext(MoviesContext);
+  const { savedMoviesList } = useContext(MoviesContext); // List of saved movies
 
   const [moviesFilter, setMoviesFilter] = useState({ query: '', isShort: false }); // Search form data
-  const [searchedMovies, setSearchedMovies] = useState([]);
-  const [moviesToRender, setMoviesToRender] = useState([]);
+  const [searchedMovies, setSearchedMovies] = useState([]); // List of movies filtered by name
+  const [moviesToRender, setMoviesToRender] = useState([]); // List of movies filtered by name and shortness
+
+  useEffect(() => {
+    setSearchedMovies(savedMoviesList);
+    setMoviesToRender(savedMoviesList);
+  }, [savedMoviesList]);
 
   const filterMoviesHandler = (movies, filterQuery) => {
     const filteredMoviesByName = filterMoviesByName(movies, filterQuery.query);
@@ -23,7 +28,7 @@ export default function SavedMovies() {
     if (!filterQuery.isShort) {
       setMoviesToRender(filteredMoviesByName);
     } else {
-      const filteredMoviesByNameAndShort = filterShortMovies(filteredMoviesByName);
+      const filteredMoviesByNameAndShort = filterShortMovies(filteredMoviesByName, filterQuery.isShort);
       setMoviesToRender(filteredMoviesByNameAndShort);
     }
   };
@@ -31,17 +36,15 @@ export default function SavedMovies() {
   const searchFormSubmitHandler = (data) => {
     const newMoviesFilter = { ...moviesFilter, query: data.search };
     setMoviesFilter(newMoviesFilter);
-    filterMoviesHandler(searchedMovies, newMoviesFilter);
+    filterMoviesHandler(savedMoviesList, newMoviesFilter);
   };
 
   const isShortChangeHandler = (e) => {
     const newMoviesFilter = { ...moviesFilter, isShort: e.target.checked };
     setMoviesFilter(newMoviesFilter);
 
-    if (newMoviesFilter.isShort) {
-      const filteredMoviesByNameAndShort = filterShortMovies(searchedMovies);
-      setMoviesToRender(filteredMoviesByNameAndShort);
-    }
+    const filteredMoviesByNameAndShort = filterShortMovies(searchedMovies, newMoviesFilter.isShort);
+    setMoviesToRender(filteredMoviesByNameAndShort);
   };
 
   return (
@@ -52,15 +55,17 @@ export default function SavedMovies() {
         moviesFilter={moviesFilter}
       />
 
-      <section className="saved-movies">
-        {moviesToRender.length !== 0 ? (
-          <MoviesCardList moviesToRender={moviesToRender} />
-        ) : (
-          savedMoviesList.length !== 0 && (
-            <p className="movies__message">{movieSearchErrorMessages.notFoundError}</p>
-          )
-        )}
-      </section>
+      {savedMoviesList.length !== 0 && (
+        <section className="saved-movies">
+          {moviesToRender.length !== 0 ? (
+            <MoviesCardList moviesToShow={moviesToRender} />
+          ) : (
+            savedMoviesList.length !== 0 && (
+              <p className="saved-movies__message">{movieSearchErrorMessages.notFoundError}</p>
+            )
+          )}
+        </section>
+      )}
     </main>
   );
 }

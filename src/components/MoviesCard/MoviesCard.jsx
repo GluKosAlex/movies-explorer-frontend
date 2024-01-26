@@ -45,7 +45,15 @@ export default function MoviesCard({ movie, className: classList = '' }) {
   };
 
   const deleteMovieHandler = () => {
-    console.log(movieId);
+    const savedMovie = savedMoviesList.find((item) => item.movieId === movieId);
+    mainApi
+      .deleteMovie(savedMovie._id)
+      .then((res) => {
+        console.log(res.message);
+        setSavedMoviesList(savedMoviesList.filter((movie) => movie._id !== savedMovie._id));
+        setIsMovieSaved(false);
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
