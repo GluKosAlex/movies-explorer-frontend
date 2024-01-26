@@ -11,7 +11,7 @@ import './MoviesCard.css';
 export default function MoviesCard({ movie, className: classList = '' }) {
   const { savedMoviesList, setSavedMoviesList } = useContext(MoviesContext);
 
-  const { duration, image: imageURL, nameRU, movieId } = movie;
+  const { duration, image: imageURL, nameRU, movieId, trailerLink } = movie;
 
   useEffect(() => {
     const isSaved = savedMoviesList.some((savedMovie) => savedMovie.movieId === movie.movieId);
@@ -58,6 +58,13 @@ export default function MoviesCard({ movie, className: classList = '' }) {
 
   return (
     <li className={`movie-card ${classList}`}>
+      <a
+        className="movie-card__link"
+        href={trailerLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Трейлер к фильму ${nameRU}`}
+      ></a>
       <img className="movie-card__image" src={imageURL} alt={nameRU} />
       <div className="movie-card__caption">
         <h2 className="movie-card__header">{nameRU}</h2>
