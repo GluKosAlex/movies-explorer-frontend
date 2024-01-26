@@ -106,7 +106,7 @@ function App() {
     setCurrentUser({});
     localStorage.clear();
     localStorage.setItem('loggedIn', 'false');
-    navigate('/signin', { replace: true });
+    navigate('/', { replace: true });
   }
 
   return (
