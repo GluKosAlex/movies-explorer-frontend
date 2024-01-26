@@ -1,10 +1,9 @@
-import { useEffect, useState, useRef, useCallback, useContext } from 'react';
+import { useState, useContext } from 'react';
 
 import { MoviesContext } from '../../contexts/MoviesContext.js';
 
 import './SavedMovies.css';
 
-import Preloader from './../Preloader/Preloader';
 import SearchForm from './../SearchForm/SearchForm';
 import MoviesCardList from './../MoviesCardList/MoviesCardList';
 
@@ -18,12 +17,10 @@ export default function SavedMovies() {
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [moviesToRender, setMoviesToRender] = useState([]);
 
-  const searchFormSubmitHandler = (data) => {
-    const newMoviesFilter = { ...moviesFilter, query: data.search };
-
-    const filteredMoviesByName = filterMoviesByName(savedMoviesList, newMoviesFilter.query);
+  const filterMoviesHandler = (movies, filterQuery) => {
+    const filteredMoviesByName = filterMoviesByName(movies, filterQuery.query);
     setSearchedMovies(filteredMoviesByName);
-    if (!newMoviesFilter.isShort) {
+    if (!filterQuery.isShort) {
       setMoviesToRender(filteredMoviesByName);
     } else {
       const filteredMoviesByNameAndShort = filterShortMovies(filteredMoviesByName);
@@ -31,17 +28,21 @@ export default function SavedMovies() {
     }
   };
 
-  const isShortChangeHandler = (e) => {
-    setMoviesFilter({ ...moviesFilter, isShort: e.target.checked });
+  const searchFormSubmitHandler = (data) => {
+    const newMoviesFilter = { ...moviesFilter, query: data.search };
+    setMoviesFilter(newMoviesFilter);
+    filterMoviesHandler(searchedMovies, newMoviesFilter);
   };
 
-  const showMoreHandler = useCallback(() => {
-    setMoviesToShow(
-      getMoviesToShow(sortedAndSearchedMovies, arrayForHoldingSavedMovies.current, index, index + nextCount),
-    );
-    setIndex(index + nextCount);
-    checkIfCompleted(index + nextCount);
-  }, [index, nextCount, sortedAndSearchedMovies]);
+  const isShortChangeHandler = (e) => {
+    const newMoviesFilter = { ...moviesFilter, isShort: e.target.checked };
+    setMoviesFilter(newMoviesFilter);
+
+    if (newMoviesFilter.isShort) {
+      const filteredMoviesByNameAndShort = filterShortMovies(searchedMovies);
+      setMoviesToRender(filteredMoviesByNameAndShort);
+    }
+  };
 
   return (
     <main className="page__content main">
@@ -50,24 +51,16 @@ export default function SavedMovies() {
         onIsShortChangeHandler={isShortChangeHandler}
         moviesFilter={moviesFilter}
       />
-      {moviesToShow.length === 0 ? (
-        <Preloader />
-      ) : (
-        <section className="saved-movies">
-          {moviesToShow.length !== 0 ? (
-            <MoviesCardList moviesToRender={moviesToShow} />
-          ) : (
-            savedMoviesList.length !== 0 && (
-              <p className="movies__message">{movieSearchErrorMessages.notFoundError}</p>
-            )
-          )}
-          {!isCompleted && (
-            <MyButton onClick={showMoreHandler} className="saved-movies__more-btn">
-              Ещё
-            </MyButton>
-          )}
-        </section>
-      )}
+
+      <section className="saved-movies">
+        {moviesToRender.length !== 0 ? (
+          <MoviesCardList moviesToRender={moviesToRender} />
+        ) : (
+          savedMoviesList.length !== 0 && (
+            <p className="movies__message">{movieSearchErrorMessages.notFoundError}</p>
+          )
+        )}
+      </section>
     </main>
   );
 }

@@ -20,7 +20,6 @@ export default function AuthForm({
     formState: { errors, isValid },
   } = methods;
 
-  console.log(errorMessage.message);
   return (
     <form
       className={`auth-form ${classList}`}

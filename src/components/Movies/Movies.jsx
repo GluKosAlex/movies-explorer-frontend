@@ -33,8 +33,9 @@ export default function Movies() {
 
   useEffect(() => {
     const searchedMoviesFormStore = getStoreSearchedMovies();
-    if (searchedMoviesFormStore) {
-      setSearchedMovies(searchedMoviesFormStore);
+    const searchQueryFormStore = getStoreMovieSearchQuery();
+    if (searchedMoviesFormStore && searchedMoviesFormStore.length !== 0 && searchedMoviesFormStore) {
+      filterMoviesHandler(searchedMoviesFormStore, searchQueryFormStore);
     }
   }, []);
 
@@ -43,6 +44,17 @@ export default function Movies() {
       setStoreSearchedMovies(searchedMovies);
     }
   }, [searchedMovies]);
+
+  const filterMoviesHandler = (movies, filterQuery) => {
+    const filteredMoviesByName = filterMoviesByName(movies, filterQuery.query);
+    setSearchedMovies(filteredMoviesByName);
+    if (!filterQuery.isShort) {
+      setMoviesToRender(filteredMoviesByName);
+    } else {
+      const filteredMoviesByNameAndShort = filterShortMovies(filteredMoviesByName);
+      setMoviesToRender(filteredMoviesByNameAndShort);
+    }
+  };
 
   const searchFormSubmitHandler = (data) => {
     const newMoviesFilter = { ...moviesFilter, query: data.search };
@@ -55,15 +67,9 @@ export default function Movies() {
           setMoviesList(adaptedMovies);
           setIsApiError(false);
           setStoreMovieSearchQuery(newMoviesFilter);
+          setMoviesFilter(newMoviesFilter);
 
-          const filteredMoviesByName = filterMoviesByName(movies, newMoviesFilter.query);
-          setSearchedMovies(filteredMoviesByName);
-          if (!newMoviesFilter.isShort) {
-            setMoviesToRender(filteredMoviesByName);
-          } else {
-            const filteredMoviesByNameAndShort = filterShortMovies(filteredMoviesByName);
-            setMoviesToRender(filteredMoviesByNameAndShort);
-          }
+          filterMoviesHandler(adaptedMovies, newMoviesFilter);
         })
         .catch((err) => {
           console.error(err);
@@ -73,6 +79,8 @@ export default function Movies() {
     } else {
       setStoreMovieSearchQuery(newMoviesFilter);
       setMoviesFilter(newMoviesFilter);
+
+      filterMoviesHandler(moviesList, newMoviesFilter);
     }
   };
 
