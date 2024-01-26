@@ -21,9 +21,8 @@ import ProtectedRoute from './../ProtectedRoute/ProtectedRoute';
 function App() {
   const navigate = useNavigate();
 
-  // const loggedInFromStorage = JSON.parse(localStorage.getItem('loggedIn'));
-  // const [loggedIn, setLoggedIn] = useState(JSON.parse(loggedInFromStorage));
-  const [loggedIn, setLoggedIn] = useState(false);
+  const loggedInFromStorage = JSON.parse(localStorage.getItem('loggedIn'));
+  const [loggedIn, setLoggedIn] = useState(JSON.parse(loggedInFromStorage));
   const [moviesList, setMoviesList] = useState([]); // All movies fetched from server
   const [savedMoviesList, setSavedMoviesList] = useState([]); // Saved movies
 
