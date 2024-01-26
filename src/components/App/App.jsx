@@ -16,6 +16,7 @@ import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
 import { MoviesContext } from '../../contexts/MoviesContext.js';
 
 import mainApi from './../../utils/MainApi';
+import ProtectedRoute from './../ProtectedRoute/ProtectedRoute';
 
 function App() {
   const navigate = useNavigate();
@@ -115,11 +116,33 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Main />} />
-            <Route path="movies" element={<Movies />} />
 
-            <Route path="saved-movies" element={<SavedMovies />} />
+            <Route
+              path="movies"
+              element={
+                <ProtectedRoute loggedIn={loggedIn}>
+                  <Movies />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="saved-movies"
+              element={
+                <ProtectedRoute loggedIn={loggedIn}>
+                  <SavedMovies />
+                </ProtectedRoute>
+              }
+            />
           </Route>
-          <Route path="profile" element={<Profile onLogout={handleLogout} />} />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Profile onLogout={handleLogout} />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="*" element={<NotFound />} />
 
