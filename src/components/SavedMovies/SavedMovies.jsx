@@ -18,8 +18,7 @@ export default function SavedMovies() {
   const [moviesToRender, setMoviesToRender] = useState([]); // List of movies filtered by name and shortness
 
   useEffect(() => {
-    setSearchedMovies(savedMoviesList);
-    setMoviesToRender(savedMoviesList);
+    filterMoviesHandler(savedMoviesList, moviesFilter);
   }, [savedMoviesList]);
 
   const filterMoviesHandler = (movies, filterQuery) => {
