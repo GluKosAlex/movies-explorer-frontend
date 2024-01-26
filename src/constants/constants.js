@@ -27,7 +27,7 @@ const movieSearchErrorMessages = {
 };
 
 const movieApiURL = 'https://api.nomoreparties.co';
-const mainApiURL = 'http://localhost:3001';
+const mainApiURL = 'http://localhost:3000';
 
 export {
   emailExpression,

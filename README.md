@@ -41,3 +41,7 @@ npm start
 ## Ссылки:
 
 - [Макет: Тема dark-2](https://www.figma.com/file/rqCkosSFnF0PVpaBdiTFSh/Дипломный-проект-dark-2?type=design&node-id=1-7266&mode=design)
+
+- [Фронтенд](glukosmovies.nomoredomainsmonster.ru)
+
+- [Бэкенд](api.glukosmovies.nomoredomainsmonster.ru)

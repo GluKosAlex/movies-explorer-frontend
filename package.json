@@ -16,7 +16,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* glukosalex@158.160.144.183:/home/glukosalex/movies-explorer-frontend/frontend",
+    "deploy": "npm run build && scp -r ./build/* glukosalex@158.160.144.183:/home/glukosalex/movies-explorer-frontend",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
