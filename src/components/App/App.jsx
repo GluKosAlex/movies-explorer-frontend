@@ -11,17 +11,21 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
+import ProtectedRoute from './../ProtectedRoute/ProtectedRoute';
 
 import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
 import { MoviesContext } from '../../contexts/MoviesContext.js';
 
 import mainApi from './../../utils/MainApi';
-import ProtectedRoute from './../ProtectedRoute/ProtectedRoute';
+import movieApi from './../../utils/MoviesApi';
+import moviesDataAdapter from './../../utils/moviesDataAdapter';
 
 function App() {
   const navigate = useNavigate();
 
   const loggedInFromStorage = JSON.parse(localStorage.getItem('loggedIn'));
+
+  const [isApiError, setIsApiError] = useState(false); // Indicate if there is api error
   const [loggedIn, setLoggedIn] = useState(JSON.parse(loggedInFromStorage));
   const [moviesList, setMoviesList] = useState([]); // All movies fetched from server
   const [savedMoviesList, setSavedMoviesList] = useState([]); // Saved movies
@@ -72,6 +76,15 @@ function App() {
     }
   }, [loggedIn]);
 
+  const fetchAllMovies = () => {
+    return movieApi.getMovies().then((movies) => {
+      const adaptedMovies = movies.map((movie) => moviesDataAdapter(movie)); // Convert movies data for frontend and main api
+      setMoviesList(adaptedMovies);
+      setIsApiError(false);
+      return adaptedMovies;
+    });
+  };
+
   function handleLogin({ email, password }) {
     return mainApi.authorize({ email, password }).then((res) => {
       if (!res.ok) {
@@ -120,7 +133,11 @@ function App() {
               path="movies"
               element={
                 <ProtectedRoute loggedIn={loggedIn}>
-                  <Movies />
+                  <Movies
+                    fetchAllMovies={fetchAllMovies}
+                    isApiError={isApiError}
+                    setIsApiError={setIsApiError}
+                  />
                 </ProtectedRoute>
               }
             />

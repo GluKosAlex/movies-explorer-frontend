@@ -12,7 +12,6 @@ import MyButton from './../ui/MyButton/MyButton';
 import { useViewport } from './../../hooks/useViewport';
 import { useCountToShow } from './../../hooks/useCountToShow';
 
-import movieApi from './../../utils/MoviesApi';
 import {
   setStoreMovieSearchQuery,
   setStoreSearchedMovies,
@@ -22,12 +21,11 @@ import {
 import { filterMoviesByName, filterShortMovies } from './../../utils/filterMovies.js';
 
 import { movieSearchErrorMessages } from './../../constants/constants.js';
-import moviesDataAdapter from './../../utils/moviesDataAdapter';
 import { CONFIG } from './../../constants/config.js';
 const { screenBreakPoints, initialCountToShow, stepsToShow } = CONFIG;
 
-export default function Movies() {
-  const { moviesList, setMoviesList } = useContext(MoviesContext); // Lists of all movies from server and saved movies
+export default function Movies({ fetchAllMovies, isApiError, setIsApiError }) {
+  const { moviesList } = useContext(MoviesContext); // Lists of all movies from server and saved movies
 
   const { width } = useViewport(); // Detect width of client's screen
   const { initialCount, nextCount } = useCountToShow(
@@ -45,7 +43,6 @@ export default function Movies() {
     getStoreMovieSearchQuery() || { query: '', isShort: false },
   ); // Search form query data
   const [isLoading, setIsLoading] = useState(false); // Loading data from server state for Preloader
-  const [isApiError, setIsApiError] = useState(false); // Indicate if there is api error
   const [searchedMovies, setSearchedMovies] = useState([]); // List of movies filtered by name
   const [moviesToRender, setMoviesToRender] = useState([]); // List of movies filtered by name and shortness
 
@@ -59,7 +56,7 @@ export default function Movies() {
 
   useEffect(() => {
     if (searchedMovies.length !== 0) {
-      setStoreSearchedMovies(searchedMovies);
+      setStoreSearchedMovies(searchedMovies); // Save searched movies list to local storage
     }
   }, [searchedMovies]);
 
@@ -99,13 +96,9 @@ export default function Movies() {
     const newMoviesFilter = { ...moviesFilter, query: data.search };
     if (moviesList.length === 0) {
       setIsLoading(true);
-      movieApi
-        .getMovies()
-        .then((movies) => {
-          const adaptedMovies = movies.map((movie) => moviesDataAdapter(movie)); // Convert movies data for frontend and main api
-          setMoviesList(adaptedMovies);
-          setIsApiError(false);
-          setStoreMovieSearchQuery(newMoviesFilter);
+      fetchAllMovies()
+        .then((adaptedMovies) => {
+          setStoreMovieSearchQuery(newMoviesFilter); // Save search filter query to local storage
           setMoviesFilter(newMoviesFilter);
 
           filterMoviesHandler(adaptedMovies, newMoviesFilter);
@@ -116,7 +109,7 @@ export default function Movies() {
         })
         .finally(() => setIsLoading(false));
     } else {
-      setStoreMovieSearchQuery(newMoviesFilter);
+      setStoreMovieSearchQuery(newMoviesFilter); // Save search filter query to local storage
       setMoviesFilter(newMoviesFilter);
 
       filterMoviesHandler(moviesList, newMoviesFilter);
@@ -126,7 +119,7 @@ export default function Movies() {
   const isShortChangeHandler = (e) => {
     const newMoviesFilter = { ...moviesFilter, isShort: e.target.checked };
     setMoviesFilter(newMoviesFilter);
-    setStoreMovieSearchQuery(newMoviesFilter);
+    setStoreMovieSearchQuery(newMoviesFilter); // Save search filter query to local storage
 
     const filteredMoviesByNameAndShort = filterShortMovies(searchedMovies, newMoviesFilter.isShort);
     setMoviesToRender(filteredMoviesByNameAndShort);
