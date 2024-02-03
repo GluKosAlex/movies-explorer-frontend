@@ -1,6 +1,7 @@
 import { useEffect, useCallback, useState, useContext } from 'react';
 
 import { MoviesContext } from '../../contexts/MoviesContext.js';
+import { IsLoadingContext } from './../../contexts/IsLoadingContext';
 
 import './Movies.css';
 
@@ -26,6 +27,7 @@ const { screenBreakPoints, initialCountToShow, stepsToShow } = CONFIG;
 
 export default function Movies({ fetchAllMovies, isApiError, setIsApiError }) {
   const { moviesList } = useContext(MoviesContext); // Lists of all movies from server and saved movies
+  const { isLoading, setIsLoading } = useContext(IsLoadingContext);
 
   const { width } = useViewport(); // Detect width of client's screen
   const { initialCount, nextCount } = useCountToShow(
@@ -42,7 +44,6 @@ export default function Movies({ fetchAllMovies, isApiError, setIsApiError }) {
   const [moviesFilter, setMoviesFilter] = useState(
     getStoreMovieSearchQuery() || { query: '', isShort: false },
   ); // Search form query data
-  const [isLoading, setIsLoading] = useState(false); // Loading data from server state for Preloader
   const [searchedMovies, setSearchedMovies] = useState([]); // List of movies filtered by name
   const [moviesToRender, setMoviesToRender] = useState([]); // List of movies filtered by name and shortness
 
@@ -95,7 +96,6 @@ export default function Movies({ fetchAllMovies, isApiError, setIsApiError }) {
   const searchFormSubmitHandler = (data) => {
     const newMoviesFilter = { ...moviesFilter, query: data.search };
     if (moviesList.length === 0) {
-      setIsLoading(true);
       fetchAllMovies()
         .then((adaptedMovies) => {
           setStoreMovieSearchQuery(newMoviesFilter); // Save search filter query to local storage
@@ -109,10 +109,12 @@ export default function Movies({ fetchAllMovies, isApiError, setIsApiError }) {
         })
         .finally(() => setIsLoading(false));
     } else {
+      setIsLoading(true);
       setStoreMovieSearchQuery(newMoviesFilter); // Save search filter query to local storage
       setMoviesFilter(newMoviesFilter);
 
       filterMoviesHandler(moviesList, newMoviesFilter);
+      setIsLoading(false);
     }
   };
 

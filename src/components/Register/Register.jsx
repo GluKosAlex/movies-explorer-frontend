@@ -1,4 +1,7 @@
+import { useContext } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+
+import { IsLoadingContext } from './../../contexts/IsLoadingContext';
 
 import logo from './../../images/logo.svg';
 import FormAuth from '../AuthForm/AuthForm';
@@ -12,6 +15,7 @@ const { nameValidOptions, emailValidOptions, passwordValidOptions } = validation
 const { userNamePlaceholder, emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
 export default function Register({ onRegister, loggedIn }) {
+  const { isLoading } = useContext(IsLoadingContext);
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -34,7 +38,11 @@ export default function Register({ onRegister, loggedIn }) {
         </a>
         <h1 className="register__title">Добро пожаловать!</h1>
 
-        <FormAuth className="register__form" submitBtnText={'Зарегистрироваться'} onSubmit={onSubmit}>
+        <FormAuth
+          className="register__form"
+          submitBtnText={!isLoading ? 'Зарегистрироваться' : 'Регистрация...'}
+          onSubmit={onSubmit}
+        >
           <AuthInput
             name={'name'}
             registerOptions={{

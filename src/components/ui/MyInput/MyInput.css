@@ -8,3 +8,7 @@
   background: var(--main-input-bg-color);
   color: var(--main-text-mid-color);
 }
+
+.input:disabled {
+  color: var(--main-text-mid-color);
+}

@@ -2,19 +2,20 @@ import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { CurrentUserContext } from './../../contexts/CurrentUserContext';
+import { IsLoadingContext } from './../../contexts/IsLoadingContext';
 
 import Header from './../Header/Header';
 import MyButton from './../ui/MyButton/MyButton';
 
 import './Profile.css';
 import { validationOptions } from './../../constants/validationOptions.js';
-import mainApi from './../../utils/MainApi.js';
 import { apiErrorMessages } from './../../constants/constants.js';
 
 const { nameValidOptions, emailValidOptions } = validationOptions;
 
-export default function Profile({ onLogout }) {
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+export default function Profile({ onLogout, onEditUserInfo, isApiError, setIsApiError }) {
+  const { currentUser } = useContext(CurrentUserContext);
+  const { isLoading, setIsLoading } = useContext(IsLoadingContext);
 
   const methods = useForm({ values: { name: currentUser.name, email: currentUser.email }, mode: 'onChange' });
   const {
@@ -24,11 +25,16 @@ export default function Profile({ onLogout }) {
   } = methods;
 
   const [editUserInfo, setEditUserInfo] = useState(false);
-  const [apiError, setApiError] = useState(false);
   const [apiErrorMessage, setApiErrorMessage] = useState(apiErrorMessages.userEditError);
 
+  useEffect(() => {
+    if (editUserInfo) {
+      const formInputs = document.querySelectorAll('input');
+      formInputs[0].focus();
+    }
+  }, [editUserInfo, isApiError]);
+
   const getErrorMessage = (err) => {
-    console.log('🚀 ~ getErrorMessage ~ err:', err);
     if (err.message === 'Validation failed') {
       return `Не корректно введено значение ${err.validation.body.keys.join(', ')}`;
     } else if (err.message) {
@@ -40,23 +46,24 @@ export default function Profile({ onLogout }) {
 
   const editUserInfoHandler = (e) => {
     e.preventDefault();
+    setIsApiError(false);
     setEditUserInfo(true);
   };
 
   const formSubmitHandler = (data) => {
-    mainApi
-      .setUserInfo(data)
-      .then(({ name, email }) => {
-        setCurrentUser({ name, email });
-        setApiError(false);
+    onEditUserInfo(data)
+      .then(() => {
         setEditUserInfo(false);
       })
       .catch((err) => {
-        setApiError(true);
+        setIsApiError(true);
         const message = getErrorMessage(err);
         setApiErrorMessage(message);
       })
-      .finally(setApiError(false));
+      .finally(() => {
+        setIsApiError(true);
+        setIsLoading(false);
+      });
   };
 
   const logoutClickHandler = (e) => {
@@ -64,16 +71,10 @@ export default function Profile({ onLogout }) {
     onLogout();
   };
 
-  useEffect(() => {
-    if (editUserInfo) {
-      const userNameInput = document.querySelector('#userName');
-      userNameInput.focus();
-    }
-  }, [editUserInfo]);
-
   return (
     <>
       <Header />
+
       <main className="page__content profile main">
         <h1 className="profile__header">Привет, {currentUser.name}!</h1>
         <form className="profile__form" onSubmit={handleSubmit(formSubmitHandler)} noValidate={true}>
@@ -87,7 +88,7 @@ export default function Profile({ onLogout }) {
                 className={`profile__input ${errors['name'] && 'profile__input_error'}`}
                 id="userName"
                 type="text"
-                disabled={!editUserInfo}
+                disabled={!editUserInfo || isLoading}
               />
               <span className={`profile__input-error`}>{errors?.['name']?.message}</span>
             </li>
@@ -100,21 +101,24 @@ export default function Profile({ onLogout }) {
                 className={`profile__input ${errors['email'] && 'profile__input_error'}`}
                 id="userEmail"
                 type="email"
-                disabled={!editUserInfo}
+                disabled={!editUserInfo || isLoading}
               />
               <span className={`profile__input-error`}>{errors?.['email']?.message}</span>
             </li>
           </ul>
           <p className={`profile__api-error ${!editUserInfo && 'profile__hidden-block'}`}>
-            {apiError && apiErrorMessage}
+            {isApiError && apiErrorMessage}
           </p>
           <MyButton
-            className={`profile__form-submit ${!editUserInfo && 'profile__hidden-block'}`}
-            disabled={!isValid || !isDirty}
+            className={`profile__form-submit ${!editUserInfo && 'profile__hidden-block'} ${
+              isLoading && 'button_loading'
+            }`}
+            disabled={!isValid || !isDirty || isLoading}
           >
-            Сохранить
+            {isLoading ? 'Сохранение...' : 'Сохранить'}
           </MyButton>
         </form>
+
         <div className={`profile__control ${editUserInfo && 'profile__hidden-block'}`}>
           <button className="profile__btn" onClick={editUserInfoHandler}>
             Редактировать

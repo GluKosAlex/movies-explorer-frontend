@@ -1,4 +1,7 @@
+import { useContext } from 'react';
 import { Link, Navigate } from 'react-router-dom';
+
+import { IsLoadingContext } from './../../contexts/IsLoadingContext';
 
 import logo from './../../images/logo.svg';
 import FormAuth from '../AuthForm/AuthForm';
@@ -12,6 +15,8 @@ const { emailValidOptions, passwordValidOptions } = validationOptions;
 const { emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
 export default function Login({ onLogin, loggedIn }) {
+  const { isLoading } = useContext(IsLoadingContext);
+
   return loggedIn ? (
     <Navigate to="/" replace />
   ) : (
@@ -26,7 +31,7 @@ export default function Login({ onLogin, loggedIn }) {
         </a>
         <h1 className="login__title">Рады видеть!</h1>
 
-        <FormAuth className="login__form" submitBtnText={'Войти'} onSubmit={onLogin}>
+        <FormAuth className="login__form" submitBtnText={!isLoading ? 'Войти' : 'Вход...'} onSubmit={onLogin}>
           <AuthInput
             name={'email'}
             registerOptions={emailValidOptions}

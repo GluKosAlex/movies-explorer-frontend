@@ -1,3 +1,13 @@
+@keyframes loading {
+  from {
+    opacity: 0.8;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
 .button {
   padding: 15px;
   font-size: 12px;
@@ -12,10 +22,13 @@
 }
 
 .button:disabled {
-  background-color: var(--main-btn-accent-bg-color);
   filter: grayscale();
   opacity: 0.8;
   cursor: default;
+}
+
+.button_loading {
+  animation: 0.5s linear infinite alternate loading;
 }
 
 .button:hover {

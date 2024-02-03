@@ -1,7 +1,9 @@
 import React from 'react';
-import { useState, createElement } from 'react';
+import { useState, createElement, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
+
+import { IsLoadingContext } from './../../contexts/IsLoadingContext';
 
 import './AuthForm.css';
 import MyButton from './../ui/MyButton/MyButton';
@@ -9,7 +11,9 @@ import { apiErrorMessages } from './../../constants/constants';
 const { defaultError, authError, emailExistError, userRegisterError, serverError } = apiErrorMessages;
 
 export default function AuthForm({ submitBtnText, defaultValues, className: classList, onSubmit, children }) {
-  const [apiError, setApiError] = useState(false);
+  const { isLoading, setIsLoading } = useContext(IsLoadingContext);
+
+  const [isApiError, setIsApiError] = useState(false); // Indicate if there is api error
   const [apiErrorMessage, setApiErrorMessage] = useState(defaultError);
 
   const location = useLocation();
@@ -47,12 +51,15 @@ export default function AuthForm({ submitBtnText, defaultValues, className: clas
     onSubmit(data)
       .then(() => {
         reset();
+        setIsApiError(false);
       })
       .catch((err) => {
-        setApiError(true);
+        setIsApiError(true);
         getErrorMessage(err).then((message) => setApiErrorMessage(message));
       })
-      .finally(setApiError(false));
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -75,8 +82,11 @@ export default function AuthForm({ submitBtnText, defaultValues, className: clas
             : child;
         })}
       </ul>
-      {<p className="auth-form__error">{apiError && apiErrorMessage}</p>}
-      <MyButton className="auth-form__btn" disabled={!isValid}>
+      {<p className="auth-form__error">{isApiError && apiErrorMessage}</p>}
+      <MyButton
+        className={`auth-form__btn ${isLoading && 'button_loading'}`}
+        disabled={!isValid || isLoading}
+      >
         {submitBtnText}
       </MyButton>
     </form>

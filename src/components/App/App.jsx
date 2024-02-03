@@ -14,6 +14,7 @@ import NotFound from '../NotFound/NotFound';
 import ProtectedRoute from './../ProtectedRoute/ProtectedRoute';
 
 import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
+import { IsLoadingContext } from './../../contexts/IsLoadingContext.js';
 import { MoviesContext } from '../../contexts/MoviesContext.js';
 
 import mainApi from './../../utils/MainApi';
@@ -29,6 +30,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(JSON.parse(loggedInFromStorage));
   const [moviesList, setMoviesList] = useState([]); // All movies fetched from server
   const [savedMoviesList, setSavedMoviesList] = useState([]); // Saved movies
+  const [isLoading, setIsLoading] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({
     name: '...',
@@ -76,16 +78,29 @@ function App() {
     }
   }, [loggedIn]);
 
-  const fetchAllMovies = () => {
+  function fetchAllMovies() {
+    setIsLoading(true);
+
     return movieApi.getMovies().then((movies) => {
       const adaptedMovies = movies.map((movie) => moviesDataAdapter(movie)); // Convert movies data for frontend and main api
       setMoviesList(adaptedMovies);
       setIsApiError(false);
       return adaptedMovies;
     });
-  };
+  }
+
+  function editUserInfo(data) {
+    setIsLoading(true);
+
+    return mainApi.setUserInfo(data).then(({ name, email }) => {
+      setCurrentUser({ name, email });
+      setIsApiError(false);
+    });
+  }
 
   function handleLogin({ email, password }) {
+    setIsLoading(true);
+
     return mainApi.authorize({ email, password }).then((res) => {
       if (!res.ok) {
         return Promise.reject(res);
@@ -101,6 +116,8 @@ function App() {
   }
 
   function handleRegister({ name, email, password }) {
+    setIsLoading(true);
+
     return mainApi.register({ name, email, password }).then((res) => {
       if (!res.ok) {
         return Promise.reject(res);
@@ -124,17 +141,42 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loggedIn, setLoggedIn }}>
-      <MoviesContext.Provider value={{ moviesList, setMoviesList, savedMoviesList, setSavedMoviesList }}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Main />} />
+      <IsLoadingContext.Provider value={{ isLoading, setIsLoading }}>
+        <MoviesContext.Provider value={{ moviesList, setMoviesList, savedMoviesList, setSavedMoviesList }}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Main />} />
+
+              <Route
+                path="movies"
+                element={
+                  <ProtectedRoute loggedIn={loggedIn}>
+                    <Movies
+                      fetchAllMovies={fetchAllMovies}
+                      isApiError={isApiError}
+                      setIsApiError={setIsApiError}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="saved-movies"
+                element={
+                  <ProtectedRoute loggedIn={loggedIn}>
+                    <SavedMovies />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
 
             <Route
-              path="movies"
+              path="profile"
               element={
                 <ProtectedRoute loggedIn={loggedIn}>
-                  <Movies
-                    fetchAllMovies={fetchAllMovies}
+                  <Profile
+                    onLogout={handleLogout}
+                    onEditUserInfo={editUserInfo}
                     isApiError={isApiError}
                     setIsApiError={setIsApiError}
                   />
@@ -142,32 +184,14 @@ function App() {
               }
             />
 
-            <Route
-              path="saved-movies"
-              element={
-                <ProtectedRoute loggedIn={loggedIn}>
-                  <SavedMovies />
-                </ProtectedRoute>
-              }
-            />
-          </Route>
+            <Route path="*" element={<NotFound />} />
 
-          <Route
-            path="profile"
-            element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <Profile onLogout={handleLogout} />
-              </ProtectedRoute>
-            }
-          />
+            <Route path="signin" element={<Login onLogin={handleLogin} loggedIn={loggedIn} />} />
 
-          <Route path="*" element={<NotFound />} />
-
-          <Route path="signin" element={<Login onLogin={handleLogin} loggedIn={loggedIn} />} />
-
-          <Route path="signup" element={<Register onRegister={handleRegister} loggedIn={loggedIn} />} />
-        </Routes>
-      </MoviesContext.Provider>
+            <Route path="signup" element={<Register onRegister={handleRegister} loggedIn={loggedIn} />} />
+          </Routes>
+        </MoviesContext.Provider>
+      </IsLoadingContext.Provider>
     </CurrentUserContext.Provider>
   );
 }
