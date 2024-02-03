@@ -146,9 +146,9 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
 
-          <Route path="signin" element={<Login onLogin={handleLogin} />} />
+          <Route path="signin" element={<Login onLogin={handleLogin} loggedIn={loggedIn} />} />
 
-          <Route path="signup" element={<Register onRegister={handleRegister} />} />
+          <Route path="signup" element={<Register onRegister={handleRegister} loggedIn={loggedIn} />} />
         </Routes>
       </MoviesContext.Provider>
     </CurrentUserContext.Provider>

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import logo from './../../images/logo.svg';
 import FormAuth from '../AuthForm/AuthForm';
@@ -11,7 +11,7 @@ import { inputPlaceholders } from './../../constants/constants';
 const { nameValidOptions, emailValidOptions, passwordValidOptions } = validationOptions;
 const { userNamePlaceholder, emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
-export default function Register({ onRegister }) {
+export default function Register({ onRegister, loggedIn }) {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -20,7 +20,9 @@ export default function Register({ onRegister }) {
     });
   };
 
-  return (
+  return loggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <>
       <main className="register">
         <a className="register__logo-link" href="/">

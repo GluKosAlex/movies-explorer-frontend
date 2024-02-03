@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import logo from './../../images/logo.svg';
 import FormAuth from '../AuthForm/AuthForm';
@@ -11,8 +11,10 @@ import { inputPlaceholders } from './../../constants/constants';
 const { emailValidOptions, passwordValidOptions } = validationOptions;
 const { emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
-export default function Login({ onLogin }) {
-  return (
+export default function Login({ onLogin, loggedIn }) {
+  return loggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <>
       <main className="login">
         <a className="login__logo-link" href="/">
