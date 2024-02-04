@@ -4,12 +4,11 @@ import { useLocation } from 'react-router-dom';
 import { MoviesContext } from './../../contexts/MoviesContext';
 
 import { timeConvertor } from './../../utils/timeConvertor.js';
-import mainApi from './../../utils/MainApi.js';
 
 import './MoviesCard.css';
 
 export default function MoviesCard({ movie, className: classList = '' }) {
-  const { savedMoviesList, setSavedMoviesList } = useContext(MoviesContext);
+  const { savedMoviesList, saveMovie, deleteMovie } = useContext(MoviesContext);
 
   const { duration, image: imageURL, nameRU, movieId, trailerLink } = movie;
 
@@ -24,34 +23,23 @@ export default function MoviesCard({ movie, className: classList = '' }) {
 
   const saveMovieHandler = () => {
     if (!isMovieSaved) {
-      mainApi
-        .createMovie(movie)
-        .then((movieData) => {
-          setSavedMoviesList([...savedMoviesList, movieData]);
-          setIsMovieSaved(true);
-        })
+      saveMovie(movie)
+        .then(setIsMovieSaved(true))
         .catch((err) => console.error(err));
     } else {
-      const savedMovie = savedMoviesList.find((item) => item.movieId === movieId);
-      mainApi
-        .deleteMovie(savedMovie._id)
+      deleteMovie(movieId)
         .then((res) => {
-          console.log(res.message);
-          setSavedMoviesList(savedMoviesList.filter((movie) => movie._id !== savedMovie._id));
           setIsMovieSaved(false);
+          console.log(res.message);
         })
         .catch((err) => console.error(err));
     }
   };
 
   const deleteMovieHandler = () => {
-    const savedMovie = savedMoviesList.find((item) => item.movieId === movieId);
-    mainApi
-      .deleteMovie(savedMovie._id)
+    deleteMovie(movieId)
       .then((res) => {
         console.log(res.message);
-        setSavedMoviesList(savedMoviesList.filter((movie) => movie._id !== savedMovie._id));
-        setIsMovieSaved(false);
       })
       .catch((err) => console.error(err));
   };
