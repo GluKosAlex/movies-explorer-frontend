@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
 import { MoviesContext } from '../../contexts/MoviesContext.js';
 import { IsLoadingContext } from './../../contexts/IsLoadingContext';
@@ -76,11 +76,11 @@ export default function Movies({ fetchAllMovies, isApiError, setIsApiError }) {
     i >= moviesToRender.length ? setIsCompleted(true) : setIsCompleted(false);
   };
 
-  const showMoreHandler = useCallback(() => {
+  const showMoreHandler = () => {
     setMoviesToShow(getMoviesToShow(moviesToRender, moviesToShow, index, index + nextCount));
     setIndex(index + nextCount);
     checkIfCompleted(index + nextCount); // Check if list complete
-  }, [index, nextCount, moviesToRender, moviesToShow]);
+  };
 
   const filterMoviesHandler = (movies, filterQuery) => {
     const filteredMoviesByName = filterMoviesByName(movies, filterQuery.query);

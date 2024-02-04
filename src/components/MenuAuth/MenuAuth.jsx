@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import useEscapeKey from './../../hooks/useEscapeKey';
@@ -9,10 +10,10 @@ import './MenuAuth.css';
 export default function MenuAuth() {
   const menuClassName = 'menu-auth';
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     document.querySelector(`.${menuClassName}`).classList.add(`${menuClassName}_closed`);
     document.querySelector('.menu-toggler').classList.add('menu-toggler_closed');
-  };
+  }, []);
 
   useEscapeKey(closeMenu);
   useOutsideClick(closeMenu, menuClassName);
