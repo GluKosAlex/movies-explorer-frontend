@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { MoviesContext } from './../../contexts/MoviesContext';
+import { InfoTooltipContext } from './../../contexts/InfoTooltipContext.js';
 
 import { timeConvertor } from './../../utils/timeConvertor.js';
 
@@ -9,6 +10,7 @@ import './MoviesCard.css';
 
 export default function MoviesCard({ movie, className: classList = '' }) {
   const { savedMoviesList, saveMovie, deleteMovie } = useContext(MoviesContext);
+  const { setInfoTooltipContent, setIsInfoTooltipOpen } = useContext(InfoTooltipContext);
 
   const { duration, image: imageURL, nameRU, movieId, trailerLink } = movie;
 
@@ -24,15 +26,23 @@ export default function MoviesCard({ movie, className: classList = '' }) {
   const saveMovieHandler = () => {
     if (!isMovieSaved) {
       saveMovie(movie)
-        .then(setIsMovieSaved(true))
-        .catch((err) => console.error(err));
+        .then(() => setIsMovieSaved(true))
+        .catch((err) => {
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipContent({ isFail: true, text: err.message });
+          console.error(err);
+        });
     } else {
       deleteMovie(movieId)
         .then((res) => {
           setIsMovieSaved(false);
           console.log(res.message);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipContent({ isFail: true, text: err.message });
+          console.error(err);
+        });
     }
   };
 
@@ -41,7 +51,11 @@ export default function MoviesCard({ movie, className: classList = '' }) {
       .then((res) => {
         console.log(res.message);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setIsInfoTooltipOpen(true);
+        setInfoTooltipContent({ isFail: true, text: err.message });
+        console.error(err);
+      });
   };
 
   return (

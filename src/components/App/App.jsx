@@ -8,24 +8,24 @@ import './App.css';
 
 import Main from '../Main/Main';
 import Layout from '../Layout/Layout';
-import Movies from '../Movies/Movies';
-import SavedMovies from '../SavedMovies/SavedMovies';
-import Profile from '../Profile/Profile';
-import Login from '../Login/Login';
-import Register from '../Register/Register';
-import NotFound from '../NotFound/NotFound';
+import Movies from './../Movies/Movies';
+import SavedMovies from './../SavedMovies/SavedMovies';
+import Profile from './../Profile/Profile';
+import Login from './../Login/Login';
+import Register from './../Register/Register';
+import NotFound from './../NotFound/NotFound';
 import InfoTooltip from './../InfoTooltip/InfoTooltip';
 import ProtectedRoute from './../ProtectedRoute/ProtectedRoute';
 
 import { CurrentUserContext } from './../../contexts/CurrentUserContext.js';
 import { IsLoadingContext } from './../../contexts/IsLoadingContext.js';
 import { MoviesContext } from '../../contexts/MoviesContext.js';
+import { InfoTooltipContext } from './../../contexts/InfoTooltipContext.js';
 
 import mainApi from './../../utils/MainApi';
 import movieApi from './../../utils/MoviesApi';
 import moviesDataAdapter from './../../utils/moviesDataAdapter';
-import successIcon from './../../images/icon-success.svg';
-import failIcon from './../../images/icon-fail.svg';
+import { apiErrorMessages } from './../../constants/constants.js';
 
 function App() {
   const navigate = useNavigate();
@@ -38,7 +38,10 @@ function App() {
   const [savedMoviesList, setSavedMoviesList] = useState([]); // Saved movies
   const [isLoading, setIsLoading] = useState(false);
 
-  const [infoTooltipContent, setInfoTooltipContent] = useState({ icon: successIcon, text: '' });
+  const [infoTooltipContent, setInfoTooltipContent] = useState({
+    isFail: true,
+    text: apiErrorMessages.defaultError,
+  });
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({
@@ -62,7 +65,7 @@ function App() {
       })
       .catch((err) => {
         setIsInfoTooltipOpen(true);
-        setInfoTooltipContent({ icon: failIcon, text: err });
+        setInfoTooltipContent({ isFail: true, text: err });
         console.error(err);
         navigate(path, { replace: true });
       });
@@ -87,7 +90,7 @@ function App() {
         })
         .catch((err) => {
           setIsInfoTooltipOpen(true);
-          setInfoTooltipContent({ icon: failIcon, text: err });
+          setInfoTooltipContent({ isFail: true, text: err });
           console.error(err);
         });
     }
@@ -179,19 +182,53 @@ function App() {
     <>
       <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loggedIn, setLoggedIn }}>
         <IsLoadingContext.Provider value={{ isLoading, setIsLoading }}>
-          <MoviesContext.Provider
-            value={{ moviesList, setMoviesList, savedMoviesList, setSavedMoviesList, saveMovie, deleteMovie }}
+          <InfoTooltipContext.Provider
+            value={{ infoTooltipContent, setInfoTooltipContent, isInfoTooltipOpen, setIsInfoTooltipOpen }}
           >
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Main />} />
+            <MoviesContext.Provider
+              value={{
+                moviesList,
+                setMoviesList,
+                savedMoviesList,
+                setSavedMoviesList,
+                saveMovie,
+                deleteMovie,
+              }}
+            >
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Main />} />
+
+                  <Route
+                    path="movies"
+                    element={
+                      <ProtectedRoute loggedIn={loggedIn}>
+                        <Movies
+                          fetchAllMovies={fetchAllMovies}
+                          isApiError={isApiError}
+                          setIsApiError={setIsApiError}
+                        />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="saved-movies"
+                    element={
+                      <ProtectedRoute loggedIn={loggedIn}>
+                        <SavedMovies />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Route>
 
                 <Route
-                  path="movies"
+                  path="profile"
                   element={
                     <ProtectedRoute loggedIn={loggedIn}>
-                      <Movies
-                        fetchAllMovies={fetchAllMovies}
+                      <Profile
+                        onLogout={handleLogout}
+                        onEditUserInfo={editUserInfo}
                         isApiError={isApiError}
                         setIsApiError={setIsApiError}
                       />
@@ -199,43 +236,20 @@ function App() {
                   }
                 />
 
-                <Route
-                  path="saved-movies"
-                  element={
-                    <ProtectedRoute loggedIn={loggedIn}>
-                      <SavedMovies />
-                    </ProtectedRoute>
-                  }
-                />
-              </Route>
+                <Route path="*" element={<NotFound />} />
 
-              <Route
-                path="profile"
-                element={
-                  <ProtectedRoute loggedIn={loggedIn}>
-                    <Profile
-                      onLogout={handleLogout}
-                      onEditUserInfo={editUserInfo}
-                      isApiError={isApiError}
-                      setIsApiError={setIsApiError}
-                    />
-                  </ProtectedRoute>
-                }
-              />
+                <Route path="signin" element={<Login onLogin={handleLogin} loggedIn={loggedIn} />} />
 
-              <Route path="*" element={<NotFound />} />
-
-              <Route path="signin" element={<Login onLogin={handleLogin} loggedIn={loggedIn} />} />
-
-              <Route path="signup" element={<Register onRegister={handleRegister} loggedIn={loggedIn} />} />
-            </Routes>
-          </MoviesContext.Provider>
+                <Route path="signup" element={<Register onRegister={handleRegister} loggedIn={loggedIn} />} />
+              </Routes>
+            </MoviesContext.Provider>
+          </InfoTooltipContext.Provider>
         </IsLoadingContext.Provider>
       </CurrentUserContext.Provider>
 
       <InfoTooltip
         title={infoTooltipContent.text}
-        icon={infoTooltipContent.icon}
+        isFail={infoTooltipContent.isFail}
         isOpen={isInfoTooltipOpen}
         onClose={closeModal}
       />
