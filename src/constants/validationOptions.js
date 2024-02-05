@@ -31,6 +31,7 @@ const validationOptions = {
       message: 'Минимальная длина пароля 3 символов',
     },
   },
+  movieSearchValidOptions: { required: 'Нужно ввести ключевое слово' },
 };
 
 export { validationOptions };

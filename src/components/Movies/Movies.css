@@ -7,7 +7,16 @@
   padding: 40px 10px 0px;
 }
 
-.movies__more-btn {
+.movies__message {
+  margin: 10px auto;
+  max-width: 500px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.movies__more-btn.button {
   min-width: 240px;
   padding: 10px;
   margin: 0 auto;
@@ -25,12 +34,20 @@
   background-color: transparent;
 }
 
+.movies__message_type_error {
+  color: var(--main-error-color);
+}
+
 @media screen and (min-width: 768px) {
   .movies {
     padding: 70px 30px 0px;
   }
 
-  .movies__more-btn {
+  .movies__message {
+    font-size: 16px;
+  }
+
+  .movies__more-btn.button {
     min-width: 320px;
   }
 }
@@ -38,5 +55,9 @@
 @media screen and (min-width: 1280px) {
   .movies {
     padding: 70px 70px 0px;
+  }
+
+  .movies__message {
+    font-size: 18px;
   }
 }

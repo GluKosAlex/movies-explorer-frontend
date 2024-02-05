@@ -1,23 +1,12 @@
 import MoviesCard from './../MoviesCard/MoviesCard';
+
 import './MoviesCardList.css';
 
-export default function MoviesCardList({ moviesToRender }) {
+export default function MoviesCardList({ moviesToShow }) {
   return (
     <ul className="movie-card-list">
-      {moviesToRender.map((item) => {
-        const { duration, image, nameRU, nameEN, movieId, trailerLink, saved } = item;
-        return (
-          <MoviesCard
-            key={movieId}
-            movieId={movieId}
-            nameRU={nameRU}
-            nameEN={nameEN}
-            image={image}
-            duration={duration}
-            isSaved={saved}
-            trailerLink={trailerLink}
-          />
-        );
+      {moviesToShow.map((item) => {
+        return <MoviesCard key={item.movieId} movie={item} />;
       })}
     </ul>
   );

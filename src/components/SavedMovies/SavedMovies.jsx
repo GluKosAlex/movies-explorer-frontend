@@ -1,76 +1,70 @@
-import { useContext, useEffect, useState, useRef, useCallback } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
-import { useFilteredMovies } from './../../hooks/useFilteredMovies';
-
-import { MoviesFilterContext } from './../../contexts/MoviesFilterContext';
-import { MoviesContext } from './../../contexts/MoviesContext';
-
-import MoviesCardList from './../MoviesCardList/MoviesCardList';
-import MyButton from './../ui/MyButton/MyButton';
-import { useViewport } from './../../hooks/useViewport';
-import { useCountToShow } from './../../hooks/useCountToShow';
+import { MoviesContext } from '../../contexts/MoviesContext.js';
 
 import './SavedMovies.css';
-import { CONFIG } from './../../constants/config';
+
+import SearchForm from './../SearchForm/SearchForm';
+import MoviesCardList from './../MoviesCardList/MoviesCardList';
+
+import { filterMoviesByName, filterShortMovies } from './../../utils/filterMovies.js';
+import { movieSearchErrorMessages } from './../../constants/constants.js';
 
 export default function SavedMovies() {
-  const { moviesFilter } = useContext(MoviesFilterContext);
-  const { savedMoviesList } = useContext(MoviesContext);
+  const { savedMoviesList } = useContext(MoviesContext); // List of saved movies
 
-  const { screenBreakPoints, stepsToShow } = CONFIG;
-  const { width } = useViewport();
-  const { nextCount } = useCountToShow(width, screenBreakPoints, stepsToShow);
-  const sortedAndSearchedMovies = useFilteredMovies(
-    savedMoviesList,
-    moviesFilter.query,
-    moviesFilter.isShort,
-  );
-
-  const [moviesToShow, setMoviesToShow] = useState([]);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [index, setIndex] = useState(nextCount); // Index of the last movie
-
-  const arrayForHoldingMovies = useRef([]);
+  const [moviesFilter, setMoviesFilter] = useState({ query: '', isShort: false }); // Search form data
+  const [searchedMovies, setSearchedMovies] = useState([]); // List of movies filtered by name
+  const [moviesToRender, setMoviesToRender] = useState([]); // List of movies filtered by name and shortness
 
   useEffect(() => {
-    initialMoviesToShow(sortedAndSearchedMovies, 0, nextCount);
-    checkIfCompleted();
-  }, [moviesFilter.query, moviesFilter.isShort]);
+    filterMoviesHandler(savedMoviesList, moviesFilter);
+  }, [savedMoviesList]);
 
-  useEffect(() => {
-    setIndex(nextCount);
-  }, [moviesFilter.query, moviesFilter.isShort]);
-
-  const checkIfCompleted = () => {
-    index >= sortedAndSearchedMovies.length ? setIsCompleted(true) : setIsCompleted(false);
+  const filterMoviesHandler = (movies, filterQuery) => {
+    const filteredMoviesByName = filterMoviesByName(movies, filterQuery.query);
+    setSearchedMovies(filteredMoviesByName);
+    if (!filterQuery.isShort) {
+      setMoviesToRender(filteredMoviesByName);
+    } else {
+      const filteredMoviesByNameAndShort = filterShortMovies(filteredMoviesByName, filterQuery.isShort);
+      setMoviesToRender(filteredMoviesByNameAndShort);
+    }
   };
 
-  const initialMoviesToShow = (movies, start, end) => {
-    const slicedMovies = movies.slice(start, end);
-    arrayForHoldingMovies.current = slicedMovies;
-    setMoviesToShow(arrayForHoldingMovies.current);
+  const searchFormSubmitHandler = (data) => {
+    const newMoviesFilter = { ...moviesFilter, query: data.search };
+    setMoviesFilter(newMoviesFilter);
+    filterMoviesHandler(savedMoviesList, newMoviesFilter);
   };
 
-  const addNextMoviesToShow = (movies, start, end) => {
-    const slicedMovies = movies.slice(start, end);
-    arrayForHoldingMovies.current = [...arrayForHoldingMovies.current, ...slicedMovies];
-    setMoviesToShow(arrayForHoldingMovies.current);
-  };
+  const isShortChangeHandler = (e) => {
+    const newMoviesFilter = { ...moviesFilter, isShort: e.target.checked };
+    setMoviesFilter(newMoviesFilter);
 
-  const showMoreHandler = useCallback(() => {
-    addNextMoviesToShow(sortedAndSearchedMovies, index, index + nextCount);
-    setIndex(index + nextCount);
-    checkIfCompleted();
-  }, [index, nextCount, sortedAndSearchedMovies]);
+    const filteredMoviesByNameAndShort = filterShortMovies(searchedMovies, newMoviesFilter.isShort);
+    setMoviesToRender(filteredMoviesByNameAndShort);
+  };
 
   return (
-    <section className="saved-movies">
-      <MoviesCardList moviesToRender={moviesToShow} />
-      {!isCompleted && (
-        <MyButton onClick={showMoreHandler} className="saved-movies__more-btn">
-          Ещё
-        </MyButton>
+    <main className="page__content main">
+      <SearchForm
+        onSearchFormSubmit={searchFormSubmitHandler}
+        onIsShortChangeHandler={isShortChangeHandler}
+        moviesFilter={moviesFilter}
+      />
+
+      {savedMoviesList.length !== 0 && (
+        <section className="saved-movies">
+          {moviesToRender.length !== 0 ? (
+            <MoviesCardList moviesToShow={moviesToRender} />
+          ) : (
+            savedMoviesList.length !== 0 && (
+              <p className="saved-movies__message">{movieSearchErrorMessages.notFoundError}</p>
+            )
+          )}
+        </section>
       )}
-    </section>
+    </main>
   );
 }

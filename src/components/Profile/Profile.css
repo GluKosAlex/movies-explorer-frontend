@@ -69,8 +69,8 @@
   border: none;
 }
 
-.profile__input_error {
-  color: var(--main-error-color, #ee3465);
+.profile__input:disabled {
+  opacity: 0.6;
 }
 
 .profile__input-error {
@@ -88,6 +88,7 @@
 .profile__api-error {
   margin: 0;
   padding: 0;
+  min-height: 14px;
   margin-top: auto;
 
   color: var(--main-error-color, #ee3465);

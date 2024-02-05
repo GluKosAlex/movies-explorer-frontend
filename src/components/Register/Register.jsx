@@ -1,4 +1,7 @@
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+
+import { IsLoadingContext } from './../../contexts/IsLoadingContext';
 
 import logo from './../../images/logo.svg';
 import FormAuth from '../AuthForm/AuthForm';
@@ -11,12 +14,19 @@ import { inputPlaceholders } from './../../constants/constants';
 const { nameValidOptions, emailValidOptions, passwordValidOptions } = validationOptions;
 const { userNamePlaceholder, emailPlaceholder, passwordPlaceholder } = inputPlaceholders;
 
-export default function Register() {
+export default function Register({ onRegister, loggedIn }) {
+  const { isLoading } = useContext(IsLoadingContext);
+  const navigate = useNavigate();
+
   const onSubmit = (data) => {
-    console.log(data);
+    return onRegister(data).then(() => {
+      navigate('/movies');
+    });
   };
 
-  return (
+  return loggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <>
       <main className="register">
         <a className="register__logo-link" href="/">
@@ -28,14 +38,17 @@ export default function Register() {
         </a>
         <h1 className="register__title">Добро пожаловать!</h1>
 
-        <FormAuth className="register__form" submitBtnText={'Зарегистрироваться'} onSubmit={onSubmit}>
+        <FormAuth
+          className="register__form"
+          submitBtnText={!isLoading ? 'Зарегистрироваться' : 'Регистрация...'}
+          onSubmit={onSubmit}
+        >
           <AuthInput
             name={'name'}
             registerOptions={{
               ...nameValidOptions,
               onBlur: (e) => {
                 e.target.value = e.target.value.trim();
-                console.log(e.target.value);
               },
             }}
             labelText="Имя"

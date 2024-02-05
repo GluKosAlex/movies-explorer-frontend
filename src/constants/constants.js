@@ -20,4 +20,21 @@ const apiErrorMessages = {
   notFoundError: '404 Страница по указанному маршруту не найдена.',
 };
 
-export { emailExpression, userNameExpression, inputPlaceholders, apiErrorMessages };
+const movieSearchErrorMessages = {
+  notFoundError: 'Ничего не найдено',
+  serverError:
+    'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз',
+};
+
+const movieApiURL = 'https://api.nomoreparties.co';
+const mainApiURL = 'https://api.glukosmovies.nomoredomainsmonster.ru';
+
+export {
+  emailExpression,
+  userNameExpression,
+  inputPlaceholders,
+  apiErrorMessages,
+  movieSearchErrorMessages,
+  movieApiURL,
+  mainApiURL,
+};
